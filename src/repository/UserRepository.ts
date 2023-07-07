@@ -1,10 +1,10 @@
-import { UserDto } from './../dto/UserDto';
+import { CreateUserDto } from './../dto/UserDto';
 import User from "../models/User";
-import { searchDto } from '../dto/GeneralDto';
+import { UpdateManyDto, UpdateOneDto, searchDto } from '../dto/GeneralDto';
 
 export class UserRepository{
     // Create a User
-    async Create(user: UserDto){
+    async Create(user: CreateUserDto){
       try {
         const userObj = {
           fullName: user.fullName,
@@ -57,13 +57,26 @@ export class UserRepository{
      }
 
      // Update one user
-     async UpdateOne(){
-
+     async UpdateOne(updateOne: UpdateOneDto){
+      try {
+        const update = await User.updateOne({__id: updateOne.__id},updateOne.update)
+        return update
+      } catch (error) {
+        console.log(error)
+      }
      }
 
      // Update many users
-     async UpdateMany(){
-        
+     async UpdateMany(updateMany: UpdateManyDto){
+      try {
+        const field = updateMany.field
+        const value = updateMany.value
+        const searchObj = {[field]: value}
+        const update = await User.updateOne(searchObj,updateMany.update)
+        return update
+      } catch (error) {
+        console.log(error)
+      }
      }
 
      // Update All users
