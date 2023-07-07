@@ -24,20 +24,25 @@ const User = new Schema<UserDoc>({
       },
 
     fullName: {
-        type: String
+        type: String,
+        required: true
     },
     login: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     active: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     type: {
         type: String, 
-        enum:["Customer","Vendor","Staff"]
+        enum:["Customer","Vendor","Staff"],
+        default: "Customer"
     },
     status: {
         type: String,
