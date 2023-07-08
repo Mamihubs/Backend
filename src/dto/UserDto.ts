@@ -4,4 +4,6 @@ export interface CreateUserDto{
     login: string;
     password: string;
     type: string;
+    profile_id: object;
+    created_by: object;
 }

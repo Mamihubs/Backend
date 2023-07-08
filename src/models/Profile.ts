@@ -34,7 +34,7 @@ const Profile = new Schema<ProfileDoc>({
     identification_num: {type:String},
     identification_name: {type:String},
     passport: {type:String},
-    active: {type:Boolean},
+    active: {type:Boolean,default: false},
     created_by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
