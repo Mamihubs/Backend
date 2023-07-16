@@ -1,0 +1,18 @@
+export interface ProfileDoc{
+    first_name: string,
+    middle_name?: string,
+    last_name: string,
+    email: string,
+    phone_no?: string,
+    street1?: string,
+    street2?: string,
+    date_of_birth?: string,
+    state_of_origin?: string,
+    identification_doc?: string,
+    identification_num?: string,
+    identification_name?: string,
+    passport?: string,
+    active?: boolean,
+    created_by?: object,
+    updated_by?: object,
+}

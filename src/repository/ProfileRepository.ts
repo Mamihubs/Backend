@@ -1,6 +1,6 @@
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import Profile from "../models/Profile";
-import { ProfileDoc } from "../models/Profile";
+import { ProfileDoc } from "../dto/ProfileDto";
 
 export class ProfileRepository{
     // Create a Profile
