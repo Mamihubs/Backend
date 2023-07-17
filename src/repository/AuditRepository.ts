@@ -69,7 +69,7 @@ export class AuditRepository{
       } catch (error) {
         console.log(error)
       }
-     }
+     }  
 
      // Update All Audits
      async UpdateAll(){
