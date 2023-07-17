@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
 
 
-class UserController{
+export default class UserController{
     constructor(private userService: UserService, private general: GeneralUtils){}
 
     async createUser(req: Request, res:Response){
@@ -94,5 +94,3 @@ class UserController{
     }
 
 }
-
-module.exports = UserController;
