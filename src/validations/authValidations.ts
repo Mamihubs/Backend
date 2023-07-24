@@ -10,3 +10,12 @@ export const userRegistrationValidation = (data: object) => {
     });
     return schema.validate(data);
 };
+
+// User Login Validation
+export const userLoginValidation = (data: object) => {
+    const schema = Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().min(8).required()
+    });
+    return schema.validate(data);
+};

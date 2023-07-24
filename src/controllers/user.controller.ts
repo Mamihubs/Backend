@@ -1,16 +1,11 @@
-import { userRegistrationValidation } from "../validations/authValidations";
+import { userLoginValidation, userRegistrationValidation } from "../validations/authValidations";
 import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
 
 
-export class UserController{
-    private userService: UserService;
-    private general: GeneralUtils;
-    constructor(){
-        this.userService =new UserService();
-        this.general =new GeneralUtils();
-    }
+export default class UserController{
+    constructor(private userService: UserService, private general: GeneralUtils){}
 
     public async createUser(req: Request, res:Response){
         const service = new UserService();
@@ -33,7 +28,7 @@ export class UserController{
         }
 
         // create user
-        const newUser = await service.createUser({first_name: req.body.first_name,last_name: req.body.last_name,login: req.body.email,password: req.body.password})
+        const newUser = await this.userService.createUser({firstName: req.body.firstName, lastName: req.body.lastName, login: req.body.email,password: req.body.password})
 
         if(!newUser){
             return res.status(500).json({
@@ -56,4 +51,47 @@ export class UserController{
         })
 
     }
+
+    async loginUser(req: Request, res: Response){
+        // Data Validation
+        const { error } = userLoginValidation(req.body)
+        if(error){
+            return res.status(400).json({
+                status: false,
+                message: error.details[0].message.toUpperCase()
+            })
+        }
+
+
+        // Check if user exists
+        const user = await this.userService.getOneUser('login',req.body.email);
+        if(!user){
+            return res.status(401).json({
+                status: false,
+                message: 'Incorrect credentials',
+            })
+        }else{
+            user.matchPassword(req.body.password).then(isMatch => {
+                if(isMatch){
+                    return res.status(200).json({
+                        status: true,
+                        message: "Login successful",
+                        user,
+                        token: this.general.generateBearerToken(user._id)
+                    })
+                }else{
+                    return res.status(401).json({
+                        status: false,
+                        message: "Incorrect credentials"
+                    })
+                }
+            }).catch((err) => {
+                return res.status(500).json({
+                    status: false,
+                    message: "Server error occured"
+                })
+            })
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 import otpGenerator from "otp-generator";
 import nodemailer from "nodemailer";
+import jwt from "jsonwebtoken"
 
 export class GeneralUtils{
     generateOtp(){
@@ -9,6 +10,13 @@ export class GeneralUtils{
           });
           // console.log(otp, "from otp it self");
           return otp;
+    }
+
+    generateBearerToken(userId: string){
+      return jwt.sign({
+        // exp: Math.floor(Date.now() / 1000) + 3600,
+        data: userId,
+      }, process.env.JWT_SECRET as string);
     }
 
     async sendEmail(email: string, subject: string, text: string){

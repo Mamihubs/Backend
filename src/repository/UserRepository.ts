@@ -11,8 +11,8 @@ export class UserRepository{
           login: user.login,
           password: user.password,
           type: user.type,
-          profile_id: user.profile_id,
-          created_by: user.created_by || null
+          profileID: user.profileID,
+          createdBy: user.createdBy || null
         }
         
         const newUser = await User.create(userObj)
