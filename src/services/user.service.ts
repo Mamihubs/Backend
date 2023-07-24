@@ -12,16 +12,16 @@ export class UserService{
     async createUser(newUser: CreateNewUserDto){
         try {
             const newProfileData = {
-                first_name: newUser.first_name,
-                last_name: newUser.last_name,
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
                 email: newUser.login
             }
             const profile = await this.profileRepository.Create(newProfileData);
             const newUserData = {
-                fullName: newUser.first_name+' '+newUser.last_name,
+                fullName: newUser.firstName+' '+newUser.lastName,
                 login: newUser.login,
                 password: await bcrypt.hash(newUser.password, 10),
-                profile_id: profile?._id
+                profileID: profile?._id
             }
             const user = await this.userRepository.Create(newUserData);
             return user;
