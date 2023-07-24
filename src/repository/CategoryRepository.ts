@@ -1,9 +1,10 @@
+import { CreateNewCategoryDto } from "../dto/CategoryDto";
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import Category, { CategoryDoc } from "../models/Category";
 
 export class CategoryRepository{
     // Create an Category
-    async Create(category: CategoryDoc){
+    async Create(category: CreateNewCategoryDto){
       try {
         const newCategory = await Category.create(category)
         return newCategory
