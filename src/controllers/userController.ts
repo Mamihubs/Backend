@@ -3,11 +3,15 @@ import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
 import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
+import { VerificationCodeRepository } from "../repository/VerificationCodeRepository";
+import { VerificationCodeService } from "../services/verificationcode.service";
 
 
 const general = new GeneralUtils()
+const verificationCodeRepo = new VerificationCodeRepository()
 
 const userService = new UserService() 
+const verificationCodeService = new VerificationCodeService(verificationCodeRepo)
  
 export const createUser = async (req: Request, res: Response) => {
     // Data Validation
@@ -47,6 +51,7 @@ export const createUser = async (req: Request, res: Response) => {
     // await general.sendEmail(req.body.email, 'Confirm Account', message);
 
     await sendConfirmationEmail(newUser)
+    await verificationCodeService.CreateCode({code: otp, user: newUser._id})
     await verificationEmail(otp, newUser)
     
     return res.status(200).json({
