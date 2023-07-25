@@ -27,6 +27,9 @@ app.use("/api/code", verificationCodeRouter);
 
 app.get("/", (req: Request, res: Response) => {
     console.log("Just to make sure it's all running.")
+    return res.status(200).json({
+        message: "All is well"
+    })
 })
 
 // Start Server on port 8081
