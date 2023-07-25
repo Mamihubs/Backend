@@ -20,7 +20,7 @@ export class CategoryService{
 
     async updateCategory(id: string,data: UpdateCategoryDto){
         try {
-            const updatedCategory = await this.categoryRepository.UpdateOne({__id: id, update: data});
+            const updatedCategory = await this.categoryRepository.UpdateOne({_id: id, update: data});
             return updatedCategory;
         } catch (error) {
             console.log(error);

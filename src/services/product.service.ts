@@ -31,7 +31,7 @@ export class ProductService{
 
     async updateProductAttribute(id: string,data: ProductAttributeDto){
         try {
-            return await this.productAttributeRepository.UpdateOne({__id: id, update: data});
+            return await this.productAttributeRepository.UpdateOne({_id: id, update: data});
         } catch (error) {
             console.log(error);
         }
@@ -55,7 +55,7 @@ export class ProductService{
 
     async updateProductAttributeValue(id: string,data: ProductAttributeValueDto){
         try {
-            return await this.productAttributeValueRepository.UpdateOne({__id: id, update: data});
+            return await this.productAttributeValueRepository.UpdateOne({_id: id, update: data});
         } catch (error) {
             console.log(error);
         }
