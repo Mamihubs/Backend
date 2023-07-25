@@ -2,56 +2,67 @@ import { userLoginValidation, userRegistrationValidation } from "../validations/
 import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
+import { UserRepository } from "../repository/UserRepository";
+import { ProfileRepository } from "../repository/ProfileRepository";
+import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
 
 
-export default class UserController{
-    constructor(private userService: UserService, private general: GeneralUtils){}
 
-    async createUser(req: Request, res:Response){
-        // Data Validation
-        const { error } = userRegistrationValidation(req.body)
-        if(error){
-            return res.status(400).json({
-                status: false,
-                message: error.details[0].message.toUpperCase(),
-            })
-        }
+const userRepo = new UserRepository()
+const profileRepo = new ProfileRepository()
+const general = new GeneralUtils()
 
-        // Check if user exists
-        const user = await this.userService.getOneUser('login',req.body.email);
-        if(user){
-            return res.status(400).json({
-                status: false,
-                message: 'User already exists',
-            })
-        }
-
-        // create user
-        const newUser = await this.userService.createUser({firstName: req.body.firstName, lastName: req.body.lastName, login: req.body.email,password: req.body.password})
-
-        if(!newUser){
-            return res.status(500).json({
-                status: false,
-                message: 'Something went wrong while creating user',
-            })
-        }
-
-        // Generate otp
-        const otp = this.general.generateOtp()
-
-        // send otp to email
-        const message = '<h2>Hi '+req.body.first_name+' kindly confirm your account by using this otp '+otp
-        await this.general.sendEmail(req.body.email, 'Confirm Account', message);
-
-        return res.status(200).json({
-            status: true,
-            message: 'User created successfully',
-            data: newUser
+const userService = new UserService(userRepo, profileRepo) 
+ 
+export const createUser = async (req: Request, res: Response) => {
+    // Data Validation
+    const { error } = userRegistrationValidation(req.body)
+    if(error){
+        return res.status(400).json({
+            status: false,
+            message: error.details[0].message.toUpperCase(),
         })
-
     }
+    
+    // Check if user exists
+    const user = await userService.getOneUser('login',req.body.email);
+    
+    if(user){
+        return res.status(400).json({
+            status: false,
+            message: 'User already exists',
+        })
+    }
+    
+    // create user
+    const newUser = await userService.createUser({firstName: req.body.firstName, lastName: req.body.lastName, login: req.body.email,password: req.body.password})
+    
+    if(!newUser){
+        return res.status(500).json({
+            status: false,
+            message: 'Something went wrong while creating user',
+        })
+    }
+    
+    // Generate otp
+    const otp = general.generateOtp()
+    
+    // send otp to email
+    const message = '<h2>Hi '+req.body.first_name+' kindly confirm your account by using this otp '+otp
+    // await general.sendEmail(req.body.email, 'Confirm Account', message);
 
-    async loginUser(req: Request, res: Response){
+    await sendConfirmationEmail(newUser)
+    await verificationEmail(otp, newUser)
+    
+    return res.status(200).json({
+        status: true,
+        message: 'User created successfully',
+        data: newUser
+    })
+
+}
+
+export const loginUser = async (req: Request, res: Response) => {
         // Data Validation
         const { error } = userLoginValidation(req.body)
         if(error){
@@ -63,7 +74,7 @@ export default class UserController{
 
 
         // Check if user exists
-        const user = await this.userService.getOneUser('login',req.body.email);
+        const user = await userService.getOneUser('login',req.body.email);
         if(!user){
             return res.status(401).json({
                 status: false,
@@ -76,7 +87,7 @@ export default class UserController{
                         status: true,
                         message: "Login successful",
                         user,
-                        token: this.general.generateBearerToken(user._id)
+                        token: general.generateBearerToken(user._id)
                     })
                 }else{
                     return res.status(401).json({
@@ -91,6 +102,100 @@ export default class UserController{
                 })
             })
         }
-    }
-
 }
+
+
+// export default class UserController{
+//     constructor(private userService: UserService, private general: GeneralUtils){}
+
+    
+//     async createUser(req: Request, res:Response){
+//         console.log(this)
+//         // Data Validation
+//         const { error } = userRegistrationValidation(req.body)
+//         if(error){
+//             return res.status(400).json({
+//                 status: false,
+//                 message: error.details[0].message.toUpperCase(),
+//             })
+//         }
+
+//         console.log("Checking if user exist ")
+//         // Check if user exists
+//         const user = await this.userService.getOneUser('login',req.body.email);
+        
+//         if(user){
+//             return res.status(400).json({
+//                 status: false,
+//                 message: 'User already exists',
+//             })
+//         }
+
+//         // create user
+//         const newUser = await this.userService.createUser({firstName: req.body.firstName, lastName: req.body.lastName, login: req.body.email,password: req.body.password})
+
+//         if(!newUser){
+//             return res.status(500).json({
+//                 status: false,
+//                 message: 'Something went wrong while creating user',
+//             })
+//         }
+
+//         // Generate otp
+//         const otp = this.general.generateOtp()
+
+//         // send otp to email
+//         const message = '<h2>Hi '+req.body.first_name+' kindly confirm your account by using this otp '+otp
+//         await this.general.sendEmail(req.body.email, 'Confirm Account', message);
+
+//         return res.status(200).json({
+//             status: true,
+//             message: 'User created successfully',
+//             data: newUser
+//         })
+
+//     }
+
+//     async loginUser(req: Request, res: Response){
+//         // Data Validation
+//         const { error } = userLoginValidation(req.body)
+//         if(error){
+//             return res.status(400).json({
+//                 status: false,
+//                 message: error.details[0].message.toUpperCase()
+//             })
+//         }
+
+
+//         // Check if user exists
+//         const user = await this.userService.getOneUser('login',req.body.email);
+//         if(!user){
+//             return res.status(401).json({
+//                 status: false,
+//                 message: 'Incorrect credentials',
+//             })
+//         }else{
+//             user.matchPassword(req.body.password).then(isMatch => {
+//                 if(isMatch){
+//                     return res.status(200).json({
+//                         status: true,
+//                         message: "Login successful",
+//                         user,
+//                         token: this.general.generateBearerToken(user._id)
+//                     })
+//                 }else{
+//                     return res.status(401).json({
+//                         status: false,
+//                         message: "Incorrect credentials"
+//                     })
+//                 }
+//             }).catch((err) => {
+//                 return res.status(500).json({
+//                     status: false,
+//                     message: "Server error occured"
+//                 })
+//             })
+//         }
+//     }
+
+// }

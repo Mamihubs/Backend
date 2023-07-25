@@ -7,6 +7,8 @@ export class GeneralUtils{
         const otp = otpGenerator.generate(6, {
             upperCaseAlphabets: false,
             specialChars: false,
+            digits: true,
+            lowerCaseAlphabets: false
           });
           // console.log(otp, "from otp it self");
           return otp;
