@@ -3,26 +3,26 @@ const Schema = mongoose.Schema
 
 export interface CategoryDoc extends Document{
     name: string,
-    complete_name: string,
-    parent_id: object,
-    parent_path: string,
-    created_by: object,
-    updated_by: object
+    completeName: string,
+    parentId: object,
+    parentPath: string,
+    createdBy: object,
+    updatedBy: object
 }
 
 const Category = new Schema<CategoryDoc>({
     name: {type: String},
-    complete_name: {type: String},
-    parent_id: {
+    completeName: {type: String},
+    parentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },
-    parent_path: {type: String},
-    created_by: {
+    parentPath: {type: String},
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    updated_by: {
+    updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

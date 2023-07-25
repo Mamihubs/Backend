@@ -4,10 +4,16 @@ import { CreateNewUserDto } from "../dto/UserDto";
 import { ProfileRepository } from '../repository/ProfileRepository';
 
 export class UserService{
-    constructor(private userRepository: UserRepository,
-        private profileRepository: ProfileRepository){
-        // this.userRepository = new UserRepository()
-        // this.profileRepository = new ProfileRepository()
+    private userRepository: UserRepository;
+    private profileRepository: ProfileRepository;
+    // constructor(private userRepository: UserRepository,
+    //     private profileRepository: ProfileRepository){
+    //     // this.userRepository = new UserRepository()
+    //     // this.profileRepository = new ProfileRepository()
+    // }
+    constructor(){
+        this.userRepository =new UserRepository();
+        this.profileRepository =new ProfileRepository();
     }
     async createUser(newUser: CreateNewUserDto){
         try {
@@ -43,6 +49,14 @@ export class UserService{
             return bcrypt.compare(enteredPassword,databasePassword);
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    async beAVendor(){
+        try {
+            
+        } catch (error) {
+            
         }
     }
 }

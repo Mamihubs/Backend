@@ -4,19 +4,14 @@ import User from "../models/User"
 import mongoose from "mongoose"
 import { UserService } from "../services/user.service";
 import { GeneralUtils } from "../utils/general";
-import { UserRepository } from "../repository/UserRepository";
-import { ProfileRepository } from "../repository/ProfileRepository";
 import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
 import { VerificationCodeService } from "../services/verificationcode.service";
 import { VerificationCodeRepository } from "../repository/VerificationCodeRepository";
 import { createVerificationCodeValidation, verifyCodeValidation } from "../validations/verificationCodeValidations";
 
-
-const userRepo = new UserRepository()
-const profileRepo = new ProfileRepository()
 const verificationCodeRepo = new VerificationCodeRepository
 const general = new GeneralUtils()
-const userService = new UserService(userRepo, profileRepo) 
+const userService = new UserService() 
 const verificationCodeService = new VerificationCodeService(verificationCodeRepo)
 
 export const generateCode = async (req: Request, res: Response, next: NextFunction) => {

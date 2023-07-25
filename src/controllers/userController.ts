@@ -2,17 +2,12 @@ import { userLoginValidation, userRegistrationValidation } from "../validations/
 import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
-import { UserRepository } from "../repository/UserRepository";
-import { ProfileRepository } from "../repository/ProfileRepository";
 import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
 
 
-
-const userRepo = new UserRepository()
-const profileRepo = new ProfileRepository()
 const general = new GeneralUtils()
 
-const userService = new UserService(userRepo, profileRepo) 
+const userService = new UserService() 
  
 export const createUser = async (req: Request, res: Response) => {
     // Data Validation
