@@ -13,7 +13,7 @@ const VerificationCode = new Schema(
     },
     isValid: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     maxAge: {
       type: Number,

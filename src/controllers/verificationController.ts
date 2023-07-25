@@ -109,7 +109,6 @@ export const verifyUser = async (req: Request, res: Response) => {
         })
     }
 
-
   const codeExist = await VerificationCode.findOne({ code: req.body.code, user: req.body.user })
   if (!codeExist) {
     return res.status(400).json({

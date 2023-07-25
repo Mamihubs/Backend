@@ -12,9 +12,7 @@ export class VerificationCodeService{
         try {
             const newCodeData = {
                 user: newCode.user,
-                code: newCode.code,
-                isValid: newCode.isValid,
-                maxAge: newCode.maxAge
+                code: newCode.code
             }
             const user = await this.verificationCodeRepository.Create(newCodeData);
             return user;
