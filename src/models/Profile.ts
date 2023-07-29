@@ -21,20 +21,20 @@ export interface ProfileDoc extends Document {
 }
 
 const Profile = new Schema<ProfileDoc>({
-    first_name: {type:String},
-    middle_name: {type:String},
-    last_name: {type:String},
-    email: {type:String},
-    phone_no: {type:String},
-    street1: {type:String},
-    street2: {type:String},
-    date_of_birth: {type:String},
-    state_of_origin: {type:String},
-    identification_doc: {type:String},
-    identification_num: {type:String},
-    identification_name: {type:String},
-    passport: {type:String},
-    active: {type:Boolean,default: false},
+    first_name: { type: String },
+    middle_name: { type: String },
+    last_name: { type: String },
+    email: { type: String, unique: true },
+    phone_no: { type: String},
+    street1: { type: String },
+    street2: { type: String },
+    date_of_birth: { type: String },
+    state_of_origin: { type: String },
+    identification_doc: { type: String },
+    identification_num: { type: String },
+    identification_name: { type: String },
+    passport: { type: String },
+    active: { type: Boolean, default: false },
     created_by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -43,6 +43,18 @@ const Profile = new Schema<ProfileDoc>({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-},{timestamps: true})
+}, { timestamps: true })
 
-export default mongoose.model<ProfileDoc>("Profile", Profile)
+const ProfileModel = mongoose.model<ProfileDoc>("Profile", Profile)
+
+export default ProfileModel;
+export const getProfileByEmail = async (email: string) => await ProfileModel.findOne({ email })
+export const createProfile = (values: Record<string, any>) => new ProfileModel(values).save()
+    .then(user => user.toObject());
+export const updateProfile = async (email: string, values: Record<string, any>) =>
+    await ProfileModel.findOneAndUpdate({ email }, values, { new: true })
+
+export const deleteProfile = async (email: string) =>
+    await ProfileModel.findOneAndDelete({ email })
+
+export const getProfiles = async ()=> await ProfileModel.find()

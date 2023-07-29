@@ -1,4 +1,4 @@
-import { userRegistrationValidation } from "../validations/authValidations";
+import { userRegistrationValidation, profileValidation } from "../validations/authValidations";
 import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
@@ -6,6 +6,8 @@ import { GeneralUtils } from "../utils/general";
 
 class UserController{
     constructor(private userService: UserService, private general: GeneralUtils){}
+
+
 
     async createUser(req: Request, res:Response){
         // Data Validation

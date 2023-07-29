@@ -16,12 +16,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routers
-import authRouter from "./routes/authRoutes"
-
+import authRouter from "./routes/authRoutes";
+import profileRouter from "./routes/profileRoutes";
 
 // Middlewares
 
 app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
+
 
 app.get("/", (req: Request, res: Response) => {
     console.log("Just to make sure it's all running.")
