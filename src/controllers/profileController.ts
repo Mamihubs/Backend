@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-// model importation
+// model basic crud importation
 import { getProfileByEmail, updateProfile, getProfiles, deleteProfile } from "../models/Profile";
 //importing field validations
 import { profileValidation } from "../validations/authValidations";
