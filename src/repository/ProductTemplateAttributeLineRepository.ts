@@ -51,7 +51,7 @@ export class ProductTemplateAttributeLineRepository{
      // Update one ProductTemplateAttributeLine
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await ProductTemplateAttributeLine.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await ProductTemplateAttributeLine.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

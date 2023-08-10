@@ -51,7 +51,7 @@ export class ProductProductRepository{
      // Update one ProductProduct
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await ProductProduct.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await ProductProduct.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

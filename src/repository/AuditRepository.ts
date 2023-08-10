@@ -51,7 +51,7 @@ export class AuditRepository{
      // Update one Audit
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await Audit.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await Audit.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

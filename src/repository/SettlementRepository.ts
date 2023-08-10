@@ -51,7 +51,7 @@ export class SettlementRepository{
      // Update one Settlement
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await Settlement.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await Settlement.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

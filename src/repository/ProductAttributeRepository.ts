@@ -52,7 +52,7 @@ export class ProductAttributeRepository{
      // Update one ProductAttribute
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await ProductAttribute.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await ProductAttribute.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

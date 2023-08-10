@@ -1,11 +1,12 @@
+import { CompanyDto } from "../dto/CompanyDto";
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import Company, { CompanyDoc } from "../models/Company";
 
 export class CompanyRepository{
     // Create a Company
-    async Create(company: CompanyDoc){
+    async Create(company: CompanyDto){
       try {
-        const newCompany = await Company.create(company)
+        const newCompany = await Company.create(company);
         return newCompany
       } catch (error) {
         console.log(error)
@@ -51,7 +52,7 @@ export class CompanyRepository{
      // Update one Company
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await Company.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await Company.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

@@ -51,7 +51,7 @@ export class ProductImageRepository{
      // Update one ProductImage
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await ProductImage.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await ProductImage.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

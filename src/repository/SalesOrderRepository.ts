@@ -51,7 +51,7 @@ export class SalesOrderRepository{
      // Update one SalesOrder
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await SalesOrder.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await SalesOrder.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)
