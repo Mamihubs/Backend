@@ -51,7 +51,7 @@ export class ProductTemplateAttributeValueRepository{
      // Update one ProductTemplateAttributeValue
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await ProductTemplateAttributeValue.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await ProductTemplateAttributeValue.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

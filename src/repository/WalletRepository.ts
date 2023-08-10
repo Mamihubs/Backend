@@ -1,9 +1,10 @@
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
+import { WalletDto } from "../dto/WalletDto";
 import Wallet, { WalletDoc } from "../models/Wallet";
 
 export class WalletRepository{
     // Create a Wallet
-    async Create(wallet: WalletDoc){
+    async Create(wallet: WalletDto){
       try {
         const newWallet = await Wallet.create(wallet)
         return newWallet
@@ -51,7 +52,7 @@ export class WalletRepository{
      // Update one Wallet
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await Wallet.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await Wallet.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)
