@@ -9,7 +9,7 @@ import { GeneralUtils } from "../utils/general"
 import bcrypt from "bcryptjs"
 class AuthController {
 
-    private salt:number;
+    private salt:number; //defining the generic salt
     constructor() {
         this.salt = 10;
     }
