@@ -11,8 +11,8 @@ export class UserRepository{
           login: user.login,
           password: user.password,
           type: user.type,
-          profile_id: user.profile_id,
-          created_by: user.created_by || null
+          profileID: user.profileID,
+          createdBy: user.createdBy || null
         }
         
         const newUser = await User.create(userObj)
@@ -61,7 +61,7 @@ export class UserRepository{
      // Update one user
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await User.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await User.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)

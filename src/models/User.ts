@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 import bcrypt from "bcryptjs"
 
 export interface UserDoc extends Document {
-    profile_id: object,
+    profileID: object,
     fullName: string,
     login: string,
     password: string,
@@ -11,14 +11,14 @@ export interface UserDoc extends Document {
     type: string,
     status: string,
     company: object,
-    created_by: object,
-    updated_by: object,
+    createdBy: object,
+    updatedBy: object,
 
     matchPassword(password: string): Promise<boolean>
 }
 
 const User = new Schema<UserDoc>({
-    profile_id: {
+    profileID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Profile'
       },
@@ -54,11 +54,11 @@ const User = new Schema<UserDoc>({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Company'
     },
-    created_by: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    updated_by: {
+    updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

@@ -1,92 +1,92 @@
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
-import Audit, { AuditDoc } from "../models/Audit";
+import ProductVariantCombination, { ProductVariantCombinationDoc } from "../models/ProductVariantCombination";
 
-export class AuditRepository{
-    // Create an Audit
-    async Create(audit: AuditDoc){
+export class ProductVariantCombinationRepository{
+    // Create an ProductVariantCombination
+    async Create(productVariantCombination: ProductVariantCombinationDoc){
       try {
-        const newAudit = await Audit.create(audit)
-        return newAudit
+        const newProductVariantCombination = await ProductVariantCombination.create(productVariantCombination)
+        return newProductVariantCombination
       } catch (error) {
         console.log(error)
       }
     }
 
-     // Find one Audit
+     // Find one ProductVariantCombination
      async FindOne(search: searchDto){
       try {
         const field = search.field
         const value = search.value
         const searchObj = {[field]: value}
-        const data = await Audit.findOne(searchObj)
+        const data = await ProductVariantCombination.findOne(searchObj)
         return data
       } catch (error) {
         console.log(error)
       }
      }
 
-     // Find many Audits
+     // Find many ProductVariantCombination
      async FindMany(search: searchDto){
       try {
         const field = search.field
         const value = search.value
         const searchObj = {[field]: value}
-        const data = await Audit.find(searchObj)
+        const data = await ProductVariantCombination.find(searchObj)
         return data
       } catch (error) {
         console.log(error)
       }
      }
 
-     // Find all Audits
+     // Find all ProductVariantCombination
      async FindAll(){
       try {
-        const data = await Audit.find({})
+        const data = await ProductVariantCombination.find({})
         return data
       } catch (error) {
         console.log(error)
       }
      }
 
-     // Update one Audit
+     // Update one ProductVariantCombination
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await Audit.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await ProductVariantCombination.updateOne({__id: updateOne.__id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)
       }
      }
 
-     // Update many Audits
+     // Update many ProductVariantCombination
      async UpdateMany(updateMany: UpdateManyDto){
       try {
         const field = updateMany.field
         const value = updateMany.value
         const searchObj = {[field]: value}
-        const update = await Audit.updateOne(searchObj,updateMany.update)
+        const update = await ProductVariantCombination.updateOne(searchObj,updateMany.update)
         return update
       } catch (error) {
         console.log(error)
       }
-     }  
+     }
 
-     // Update All Audits
+     // Update All ProductVariantCombination
      async UpdateAll(){
         
      }
 
-     // Delete one audit
+     // Delete one ProductVariantCombination
      async DeleteOne(){
         
      }
 
-      // Delete many Audits
+      // Delete many ProductVariantCombination
       async DeleteMany(){
         
       }
 
-        // Delete all Audits
+        // Delete all ProductVariantCombination
       async DeleteAll(){
             
         }

@@ -10,7 +10,6 @@ class ProfileController {
     updateUserProfile = async (req: Request, res: Response) => {
         try {
             // data validations
-            console.log("testing user update profile route")
             const { email } = req.params;
             const { error } = profileValidation(req.body);
             if (error)
@@ -42,6 +41,7 @@ class ProfileController {
         if (!email) return res.status(400).json({ error: true, message: "email required to get user information" })
 
         try {
+            // call the service to get user using the getProfileByEmail function
             const data = await getProfileByEmail(req.body.email)
 
             if (!data)
@@ -60,7 +60,7 @@ class ProfileController {
         }
 
     }
-
+    // delete a usr profile 
     deleteUserProfile = async (req: Request, res: Response) => {
         const { email } = req.params;
         try {
@@ -83,6 +83,9 @@ class ProfileController {
         }
 
     }
+
+    // get all the users profiles
+    // applicable to admin
     getUsersProfile = async (req: Request, res: Response) => {
         const data = await getProfiles();
         return res.status(200).json(data)

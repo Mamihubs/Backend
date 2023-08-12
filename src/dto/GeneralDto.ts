@@ -1,3 +1,4 @@
+import { Types } from "mongoose"
 
 export interface searchDto{
     field: string,
@@ -5,7 +6,7 @@ export interface searchDto{
 }
 
 export interface UpdateOneDto{
-    __id: string,
+    _id: string,
     update: object
 }
 
@@ -13,4 +14,8 @@ export interface UpdateManyDto{
     field: string,
     value: string,
     update: object
+}
+
+export interface DeleteOneDto{
+    _id: Types.ObjectId
 }

@@ -9,17 +9,15 @@ import { GeneralUtils } from "../utils/general"
 import bcrypt from "bcryptjs"
 class AuthController {
 
+    private salt:number;
     constructor() {
-        const salt: number = 10;
+        this.salt = 10;
     }
 
     userRegistration = async (req: Request, res: Response) => {
         // Data Validation
         const { error } = userRegistrationValidation(req.body)
-
-        console.log(req.body);
         if (error) {
-            // console.log(error)
             return res.status(400).json({
                 error: true,
                 message: error.details[0].message.toUpperCase(),
@@ -36,9 +34,9 @@ class AuthController {
         }
 
         const userObj = {
-            fullName: req.body.first_name + " " + req.body.last_name,
+            fullName: req.body.firstName + " " + req.body.lastName,
             login: req.body.email,
-            password: await bcrypt.hash(req.body.password, 10)
+            password: await bcrypt.hash(req.body.password, this.salt)
         }
 
         // create new User in the db

@@ -1,9 +1,10 @@
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
+import { ProductAttributeDto } from "../dto/ProductDto";
 import ProductAttribute, { ProductAttributeDoc } from "../models/ProductAttribute";
 
 export class ProductAttributeRepository{
     // Create an ProductAttribute
-    async Create(productAttribute: ProductAttributeDoc){
+    async Create(productAttribute: ProductAttributeDto){
       try {
         const newProductAttribute = await ProductAttribute.create(productAttribute)
         return newProductAttribute
