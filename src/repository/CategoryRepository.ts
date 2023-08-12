@@ -52,7 +52,7 @@ export class CategoryRepository{
      // Update one Category
      async UpdateOne(updateOne: UpdateOneDto){
       try {
-        const update = await Category.updateOne({__id: updateOne.__id},updateOne.update)
+        const update = await Category.updateOne({_id: updateOne._id},updateOne.update)
         return update
       } catch (error) {
         console.log(error)
