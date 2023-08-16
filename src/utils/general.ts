@@ -39,9 +39,11 @@ export class GeneralUtils{
               text: text,
             });
             console.log("email sent sucessfully", sentMailResponse);
+            return true;
           } catch (error) {
             console.log("email not sent");
             console.log(error);
+            return false;
           }
     }
 }

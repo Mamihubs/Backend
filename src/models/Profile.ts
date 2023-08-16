@@ -24,7 +24,7 @@ const Profile = new Schema<ProfileDoc>({
     firstName: {type:String},
     middleName: {type:String},
     lastName: {type:String},
-    email: {type:String},
+    email: {type:String, unique:true},
     phoneNo: {type:String},
     street1: {type:String},
     street2: {type:String},
@@ -43,6 +43,18 @@ const Profile = new Schema<ProfileDoc>({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-},{timestamps: true})
+}, { timestamps: true })
 
-export default mongoose.model<ProfileDoc>("Profile", Profile)
+const ProfileModel = mongoose.model<ProfileDoc>("Profile", Profile)
+
+export default ProfileModel;
+export const getProfileByEmail = async (email: string) => await ProfileModel.findOne({ email })
+export const createProfile = (values: Record<string, any>) => new ProfileModel(values).save()
+    .then(user => user.toObject());
+export const updateProfile = async (email: string, values: Record<string, any>) =>
+    await ProfileModel.findOneAndUpdate({ email }, values, { new: true })
+
+export const deleteProfile = async (email: string) =>
+    await ProfileModel.findOneAndDelete({ email })
+
+export const getProfiles = async ()=> await ProfileModel.find()

@@ -1,4 +1,4 @@
-import { userLoginValidation, userRegistrationValidation } from "../validations/authValidations";
+import { userRegistrationValidation, userLoginValidation } from "../validations/authValidations";
 import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
@@ -13,6 +13,8 @@ const verificationCodeRepo = new VerificationCodeRepository()
 const userService = new UserService() 
 const verificationCodeService = new VerificationCodeService(verificationCodeRepo)
  
+
+
 export const createUser = async (req: Request, res: Response) => {
     // Data Validation
     const { error } = userRegistrationValidation(req.body)

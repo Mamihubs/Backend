@@ -33,7 +33,8 @@ const User = new Schema<UserDoc>({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select:false
     },
     active: {
         type: Boolean,
@@ -75,6 +76,10 @@ User.set('toJSON', {
     }
 
 });
-
-
-export default mongoose.model<UserDoc>("User", User)
+const UserModel = mongoose.model<UserDoc>("User", User)
+export default UserModel;
+// define the basic schema operations
+export const getUserById = async (id:string)=> await UserModel.findById(id);
+export const getUserByEmail = async (email: string) => await UserModel.findOne({ login:email })
+export const updateUserInfo = async (id: string, values: Record<string, any>) =>
+    await UserModel.findOneAndUpdate({ _id:id }, values, { new: true })

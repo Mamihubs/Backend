@@ -16,12 +16,15 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routers
+import authRouter from "./routes/authRoutes";
+import profileRouter from "./routes/profileRoutes";
 import userRouter from "./routes/userRoutes"
 import verificationCodeRouter from "./routes/verificationCodeRoutes"
 
-
 // Middlewares
 
+app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
 app.use("/api/user", userRouter);
 app.use("/api/code", verificationCodeRouter);
 
