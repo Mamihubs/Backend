@@ -77,6 +77,10 @@ export const loginUser = async (req: Request, res: Response) => {
 
         // Check if user exists
         const user = await userService.getOneUser('login',req.body.email);
+
+        console.log("========check ===========")
+        console.log(req.body)
+        console.log(user)
         if(!user){
             return res.status(401).json({
                 status: false,
@@ -84,6 +88,9 @@ export const loginUser = async (req: Request, res: Response) => {
             })
         }else{
             user.matchPassword(req.body.password).then(isMatch => {
+
+
+
                 if(isMatch){
                     return res.status(200).json({
                         status: true,
@@ -98,6 +105,8 @@ export const loginUser = async (req: Request, res: Response) => {
                     })
                 }
             }).catch((err) => {
+
+                console.log(err)
                 return res.status(500).json({
                     status: false,
                     message: "Server error occured"
