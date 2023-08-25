@@ -28,7 +28,7 @@ export class UserRepository{
           const field = search.field
           const value = search.value
           const searchObj = {[field]: value}
-          const data = await User.findOne(searchObj)
+          const data = await User.findOne(searchObj).select("+password");
           return data
         } catch (error) {
           console.log(error)
