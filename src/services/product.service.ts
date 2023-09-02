@@ -1,71 +1,55 @@
-import { ProductAttributeDto, ProductAttributeValueDto } from "../dto/ProductDto";
-import { ProductAttributeRepository } from "../repository/ProductAttributeRepository";
-import { ProductAttributeValueRepository } from "../repository/ProductAttributeValueRepository";
+import mongoose from 'mongoose';
+import { CreateNewProductDto, UpdateVariationDto } from '../dto/ProductDto';
+import { ProductRepository } from '../repository/ProductRepository';
+import { UpdateOneDto, searchDto } from '../dto/GeneralDto';
 
+export class ProductService {
+  private productRepository: ProductRepository;
 
-export class ProductService{
-    private productAttributeRepository: ProductAttributeRepository;
-    private productAttributeValueRepository: ProductAttributeValueRepository;
+  constructor() {
+    this.productRepository = new ProductRepository();
+  }
 
-    constructor(){
-        this.productAttributeRepository = new ProductAttributeRepository();
-        this.productAttributeValueRepository = new ProductAttributeValueRepository();
+  async createProduct(newProduct: CreateNewProductDto) {
+    return await this.productRepository.Create(newProduct);
+  }
+
+  async updateProduct(id: mongoose.Types.ObjectId, updateFields: Partial<CreateNewProductDto>) {
+    const updateOneDto: UpdateOneDto = {
+      _id: id.toString(),
+      update: updateFields
+    };
+    return await this.productRepository.UpdateOne(updateOneDto);
+  }
+
+  async getProductById(id: mongoose.Types.ObjectId) {
+    const search: searchDto = {
+      field: '_id',
+      value: id.toString()
+    };
+    return await this.productRepository.FindOne(search);
+  }
+
+  async updateVariation(productId: mongoose.Types.ObjectId, updateVariation: UpdateVariationDto) {
+    const product = await this.getProductById(productId);
+    if (!product) {
+      return null;  // or throw a "Product not found" error
     }
 
-    async createProductAttributes(data: ProductAttributeDto){
-        try {
-            const newProductAttribute = await this.productAttributeRepository.Create(data);
-            return newProductAttribute;
-        } catch (error) {
-            console.log(error)
-        }
+    const variationIndex = product.variations.findIndex(v => v._id.equals(updateVariation._id));
+    if (variationIndex === -1) {
+      return null;  // or throw a "Variation not found" error
     }
 
-    async getAllProductAttributes(){
-        try {
-            return await this.productAttributeRepository.FindAll();
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // Update the variation within the product
+    product.variations[variationIndex] = { ...(product.variations[variationIndex] as any), ...updateVariation };
 
-    async updateProductAttribute(id: string,data: ProductAttributeDto){
-        try {
-            return await this.productAttributeRepository.UpdateOne({_id: id, update: data});
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    const updateOneDto: UpdateOneDto = {
+      _id: productId.toString(),
+      update: { variations: product.variations }
+    };
 
-    async createProductAttributeValue(data: ProductAttributeValueDto){
-        try {
-            return await this.productAttributeValueRepository.Create(data);
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    async getAttributeValuePerAttribute(id: string){
-        try {
-            return await this.productAttributeValueRepository.FindMany({field: 'product_attribute_id',value: id});
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async updateProductAttributeValue(id: string,data: ProductAttributeValueDto){
-        try {
-            return await this.productAttributeValueRepository.UpdateOne({_id: id, update: data});
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async createProduct(){
-        try {
-            
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // Save the updated product
+    return await this.productRepository.UpdateOne(updateOneDto);
+  }
 }

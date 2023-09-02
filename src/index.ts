@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 // Routers
 import authRouter from "./routes/authRoutes";
 import profileRouter from "./routes/profileRoutes";
+import productRouter from "./routes/productRoutes";
 import userRouter from "./routes/userRoutes"
 import verificationCodeRouter from "./routes/verificationCodeRoutes"
 
@@ -25,6 +26,7 @@ import verificationCodeRouter from "./routes/verificationCodeRoutes"
 
 app.use("/api/auth", authRouter);
 app.use("/api/profile", profileRouter);
+app.use("/api/product", productRouter);
 app.use("/api/user", userRouter);
 app.use("/api/code", verificationCodeRouter);
 

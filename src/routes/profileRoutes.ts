@@ -7,6 +7,4 @@ router.get("/:email", ProfileController.getUserProfile);
 router.get("/all", ProfileController.getUsersProfile);
 router.delete("/:email", ProfileController.deleteUserProfile);
 
-
-
 export default router
