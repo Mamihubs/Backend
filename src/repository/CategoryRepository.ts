@@ -1,5 +1,5 @@
 import { CreateNewCategoryDto } from "../dto/CategoryDto";
-import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
+import { UpdateManyDto, UpdateOneDto, DeleteOneDto, searchDto } from "../dto/GeneralDto";
 import Category, { CategoryDoc } from "../models/Category";
 
 export class CategoryRepository{
@@ -16,11 +16,7 @@ export class CategoryRepository{
      // Find one Category
      async FindOne(search: searchDto){
       try {
-        const field = search.field
-        const value = search.value
-        const searchObj = {[field]: value}
-        const data = await Category.findOne(searchObj)
-        return data
+        return await Category.findOne({[search.field]: search.value, isDeleted:false})
       } catch (error) {
         console.log(error)
       }
@@ -29,11 +25,7 @@ export class CategoryRepository{
      // Find many Categorys
      async FindMany(search: searchDto){
       try {
-        const field = search.field
-        const value = search.value
-        const searchObj = {[field]: value}
-        const data = await Category.find(searchObj)
-        return data
+        return await Category.find({[search.field]: search.value, isDeleted:false})
       } catch (error) {
         console.log(error)
       }
@@ -42,7 +34,7 @@ export class CategoryRepository{
      // Find all Categorys
      async FindAll(){
       try {
-        const data = await Category.find({})
+        const data = await Category.find({isDeleted:false})
         return data
       } catch (error) {
         console.log(error)
@@ -50,10 +42,9 @@ export class CategoryRepository{
      }
 
      // Update one Category
-     async UpdateOne(updateOne: UpdateOneDto){
+     async UpdateOne(updateObject: UpdateOneDto){
       try {
-        const update = await Category.updateOne({_id: updateOne._id},updateOne.update)
-        return update
+        return await Category.updateOne({_id: updateObject._id}, updateObject.update)
       } catch (error) {
         console.log(error)
       }
@@ -78,8 +69,14 @@ export class CategoryRepository{
      }
 
      // Delete one Category
-     async DeleteOne(){
-        
+     // it is important to note that we dont delete rather we update the 
+     // is deleted variable to prevent data breakdown
+     async DeleteOne(deleteObj:DeleteOneDto){
+      try {
+        return await Category.updateOne({_id: deleteObj._id}, {isDeleted:true})
+      } catch (error) {
+        console.log(error)
+      } 
      }
 
       // Delete many Categorys

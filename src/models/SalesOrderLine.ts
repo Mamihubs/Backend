@@ -1,9 +1,8 @@
-import mongoose, { Document } from "mongoose"
-const Schema = mongoose.Schema
-
+import mongoose, { Document } from "mongoose";
+const Schema = mongoose.Schema;
 
 export interface SalesOrderLineDoc extends Document{
-    order_id: object
+    order_id: object,
     name: string,
     sequence: string,
     invoice_status: string,
