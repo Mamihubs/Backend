@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import express from "express"
-import cors from "cors"
-import env from "dotenv"
-import bodyParser from "body-parser"
+import express from "express";
+import cors from "cors";
+import env from "dotenv";
+import bodyParser from "body-parser";
 
 env.config();
 
@@ -19,8 +19,10 @@ app.use(bodyParser.json());
 import authRouter from "./routes/authRoutes";
 import profileRouter from "./routes/profileRoutes";
 import productRouter from "./routes/productRoutes";
-import userRouter from "./routes/userRoutes"
-import verificationCodeRouter from "./routes/verificationCodeRoutes"
+import userRouter from "./routes/userRoutes";
+import verificationCodeRouter from "./routes/verificationCodeRoutes";
+import categoryRouter from "./routes/categoryRoutes";
+import salesRoutes from "./routes/salesRoutes";
 
 // Middlewares
 
@@ -29,6 +31,8 @@ app.use("/api/profile", profileRouter);
 app.use("/api/product", productRouter);
 app.use("/api/user", userRouter);
 app.use("/api/code", verificationCodeRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/sales", salesRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     console.log("Just to make sure it's all running.")

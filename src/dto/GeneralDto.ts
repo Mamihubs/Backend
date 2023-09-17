@@ -17,5 +17,9 @@ export interface UpdateManyDto{
 }
 
 export interface DeleteOneDto{
-    _id: Types.ObjectId
+    _id: string
+}
+
+export interface AllSeachDto {
+    [key: string]: any;
 }
