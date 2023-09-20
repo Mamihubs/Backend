@@ -36,7 +36,8 @@ export class CategoryService{
     }
     async getAllCategories(){
         try {
-            const categories = await this.categoryRepository.FindMany({field: 'parentId', value: ''});
+            // const categories = await this.categoryRepository.FindMany({field: 'parentId', value: ''});
+            const categories = await this.categoryRepository.FindAll();
             return categories;
         } catch (error) {
             console.log(error);
