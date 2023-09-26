@@ -13,7 +13,7 @@ const app = express();
 
 // Middlewares
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Routers
 import authRouter from "./routes/authRoutes";
