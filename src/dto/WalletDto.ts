@@ -1,6 +1,6 @@
 
 export interface WalletDto{
-    company: object,
+    user: object,
     name: string,
     amount: number,
     created_by?: object,

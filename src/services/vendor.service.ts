@@ -21,7 +21,8 @@ export class VendorService{
     async createVendor(data: CompanyDto, user: string){
         try {
             const company = await this.companyRepository.Create(data);
-            const wallet = await this.walletRepository.Create({name: data.name, company: company?._id,amount: 0})
+            const usertoVendor = await this.userRepository.FindOne({field: '_id', value: user}) 
+            const wallet = await this.walletRepository.Create({name: data.name, user: usertoVendor?._id,amount: 0})
             const userUpdate = await this.userRepository.UpdateOne({_id: user,update: {company: company?._id}})
 
             return {
@@ -29,6 +30,15 @@ export class VendorService{
                 wallet: wallet,
                 user: userUpdate
             }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async viewWallet(user: string) {
+        try {
+            const usertoFind = await this.userRepository.FindOne({field: '_id', value: user}) 
+            return await this.walletRepository.FindMany({field: user, value: usertoFind?._id})
         } catch (error) {
             console.log(error);
         }
