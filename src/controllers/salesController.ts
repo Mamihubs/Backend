@@ -9,7 +9,7 @@ class SalesController {
     updateSalesOrder = async (req: Request, res: Response) => {
         try {
             // data validations
-            const updated_by = req.userId;
+            const updated_by = req.user;
             const { id } = req.params
 
             if (!req.body)
@@ -77,7 +77,7 @@ class SalesController {
     // getting  all sales for a user
     getUserSales = async (req: Request, res: Response) => {
         try {
-            const sales = await this.SalesService.FindAll({ order_by: req.userId });
+            const sales = await this.SalesService.FindAll({ order_by: req.user });
             return res.status(200).json({ sales });
         } catch (err) {
             console.log(err);

@@ -28,6 +28,8 @@ const Category = new Schema<CategoryDoc>({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-},{timestamps: true})
+},
+{timestamps: true}
+)
 
 export default mongoose.model<CategoryDoc>("Category", Category)
