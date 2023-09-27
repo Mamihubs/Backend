@@ -1,7 +1,8 @@
 export interface CreateNewCategoryDto{
     name: string,
     parentId?: object,
-    createdBy: object
+    createdBy: object,
+    
 }
 
 export interface UpdateCategoryDto{

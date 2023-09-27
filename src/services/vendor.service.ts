@@ -3,15 +3,18 @@ import { CompanyRepository } from '../repository/CompanyRepository';
 import { ProfileRepository } from '../repository/ProfileRepository';
 import { WalletRepository } from '../repository/WalletRepository';
 import { UserRepository } from './../repository/UserRepository';
+import { AllSeachDto } from '../dto/GeneralDto';
+import VendorRepository from '../repository/vendorRepository';
 
 
-export class VendorService{
+export class VendorService extends VendorRepository{
     private userRepository: UserRepository;
     private profileRepository: ProfileRepository;
     private companyRepository: CompanyRepository;
     private walletRepository: WalletRepository;
 
     constructor(){
+        super();
         this.userRepository =new UserRepository();
         this.profileRepository =new ProfileRepository();
         this.companyRepository = new CompanyRepository();
@@ -34,7 +37,13 @@ export class VendorService{
             console.log(error);
         }
     }
-
+    async getAllVendors(option?: AllSeachDto){
+        try {
+            return await this.FindAll(option);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     async viewWallet(user: string) {
         try {
             const usertoFind = await this.userRepository.FindOne({field: '_id', value: user}) 

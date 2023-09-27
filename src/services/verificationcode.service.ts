@@ -31,7 +31,7 @@ export class VerificationCodeService{
 
     async deleteOneCode(id: Types.ObjectId){
         try{
-            return await this.verificationCodeRepository.DeleteOne({_id: id})
+            return await this.verificationCodeRepository.DeleteOne({_id: id.toString()})
         }catch(err){
             console.log(err)
         }

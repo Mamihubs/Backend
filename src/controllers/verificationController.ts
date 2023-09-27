@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import { UserService } from "../services/user.service";
 import { GeneralUtils } from "../utils/general";
 import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
+import { getUserToken } from "../models/Token";
 import { VerificationCodeService } from "../services/verificationcode.service";
 import { VerificationCodeRepository } from "../repository/VerificationCodeRepository";
 import { createVerificationCodeValidation, verifyCodeValidation } from "../validations/verificationCodeValidations";
@@ -40,6 +41,7 @@ export const generateCode = async (req: Request, res: Response, next: NextFuncti
   }
 
   const CodeGenerated = await verificationCodeService.getOneCode("user", req.body.user)
+  // const codeGenerated = getUserToken(req.body.user, token:);
   if(CodeGenerated && (CodeGenerated.maxAge > (Date.now() - CodeGenerated.createdAt.getTime() ))){
     return res.status(401).json({
       error: true,
