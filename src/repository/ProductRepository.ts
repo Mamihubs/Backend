@@ -1,17 +1,17 @@
 import Product from "../models/Product";
-import { UpdateManyDto, UpdateOneDto, searchDto } from '../dto/GeneralDto';
-import { CreateNewProductDto, UpdateVariationDto } from '../dto/ProductDto';
-import mongoose, { FilterQuery } from 'mongoose';
+import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
+import { CreateNewProductDto, UpdateVariationDto } from "../dto/ProductDto";
+import mongoose, {isValidObjectId, FilterQuery } from "mongoose";
+import { ObjectId } from 'mongodb';
 
 export class ProductRepository {
-
   // Create a Product
   async Create(product: CreateNewProductDto) {
     try {
       return await Product.create(product);
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to create product');
+      throw new Error("Failed to create product");
     }
   }
 
@@ -22,7 +22,7 @@ export class ProductRepository {
       return await Product.findOne(query);
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to find product');
+      throw new Error("Failed to find product");
     }
   }
 
@@ -33,7 +33,7 @@ export class ProductRepository {
       return await Product.find(query);
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to find products');
+      throw new Error("Failed to find products");
     }
   }
 
@@ -43,7 +43,7 @@ export class ProductRepository {
       return await Product.find({});
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to find all products');
+      throw new Error("Failed to find all products");
     }
   }
 
@@ -53,7 +53,7 @@ export class ProductRepository {
       return await Product.updateOne({ _id: updateOne._id }, updateOne.update);
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to update product');
+      throw new Error("Failed to update product");
     }
   }
 
@@ -64,7 +64,63 @@ export class ProductRepository {
       return await Product.updateMany(query, updateMany.update);
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to update products');
+      throw new Error("Failed to update products");
+    }
+  }
+
+  // ProductRepository
+  async findByVendor(vendorId: string, pageSize: number, pageNumber: number) {
+    return await Product.find({ created_by: vendorId })
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize); // replace `ProductModel` with your actual model
+  }
+
+  async findAll(
+    pageSize: number,
+    pageNumber: number,
+    filters: Record<string, any>
+  ) {
+    const query: FilterQuery<any> = {};
+    if (filters.brand) {
+      query.brand = filters.brand;
+    }
+
+    if (filters.category_id) {
+      query.category_id = filters.category_id;
+    }
+
+    if (filters.is_flash_sale !== undefined) {
+      query.is_flash_sale = filters.is_flash_sale;
+    }
+
+    if (filters.min_price !== undefined && filters.max_price !== undefined) {
+      query["variations.price"] = {
+        $gte: filters.min_price,
+        $lte: filters.max_price,
+      };
+    } else if (filters.min_price !== undefined) {
+      query["variations.price"] = { $gte: filters.min_price };
+    } else if (filters.max_price !== undefined) {
+      query["variations.price"] = { $lte: filters.max_price };
+    }
+
+    // Handle new arrivals filter
+    if (filters.new_arrival === true) {
+      // Sort by most recent if new_arrival is true
+      const products = await Product.find(query)
+        .sort({ createdAt: -1 })
+        .skip((pageNumber - 1) * pageSize)
+        .limit(pageSize);
+
+      return products;
+    } else {
+      // Add more filters as needed...
+
+      const products = await Product.find(query)
+        .skip((pageNumber - 1) * pageSize)
+        .limit(pageSize);
+
+      return products;
     }
   }
 
@@ -74,7 +130,7 @@ export class ProductRepository {
       return await Product.deleteOne({ _id: productId });
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to delete product');
+      throw new Error("Failed to delete product");
     }
   }
 
@@ -85,39 +141,36 @@ export class ProductRepository {
       return await Product.deleteMany(query);
     } catch (error) {
       console.error(error);
-      throw new Error('Failed to delete products');
+      throw new Error("Failed to delete products");
     }
   }
 
   // Update Variation
-  // Update Variation
-// Update Variation
-async UpdateVariation(productId: mongoose.Types.ObjectId, variationUpdate: UpdateVariationDto) {
-  try {
-    const product = await this.FindOne({ field: '_id', value: productId.toString() });
-    if (!product) throw new Error('Product not found');
+  async updateQuantity(productId: mongoose.Types.ObjectId, variationId: mongoose.Types.ObjectId, quantityChange: number) {
 
-    // Assuming product.variations is a Mongoose subdocument array
-    const variations: any = product.variations;  // TypeScript doesn't know this is a Mongoose array
+    const productObjectId = new ObjectId(productId);
+    const variationObjectId = new ObjectId(variationId);
+    
+    try {
+      const updatedProduct = await Product.findOneAndUpdate(
+        { _id: productObjectId, 'variations._id': variationObjectId },
+        { $inc: { 'variations.$.quantity': quantityChange } },
+        { new: true }
+      );
 
-    const variationSubDoc = variations.id(variationUpdate._id);
-    if (!variationSubDoc) throw new Error('Variation not found');
-
-    // Update the variation
-    for (const [key, value] of Object.entries(variationUpdate)) {
-      // Ensure we don't accidentally update the ID
-      if (key !== '_id') {
-        variationSubDoc[key] = value;
+      if (!updatedProduct) {
+        throw new Error('Product or Variation not found');
       }
+
+      const updatedVariation = updatedProduct.variations.find(variation => variation._id.equals(variationId));
+
+      if (!updatedVariation) {
+        throw new Error('Variation not found');
+      }
+
+      return updatedVariation;
+    } catch (error:any) {
+      throw new Error(`Failed to update quantity: ${error?.message}`);
     }
-
-    // Save the updated product
-    await product.save();
-    return product;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Failed to update variation');
-  }
-}
-
+};
 }

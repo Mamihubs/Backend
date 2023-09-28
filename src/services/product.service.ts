@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { CreateNewProductDto, UpdateVariationDto } from '../dto/ProductDto';
 import { ProductRepository } from '../repository/ProductRepository';
 import { UpdateOneDto, searchDto } from '../dto/GeneralDto';
+import fs from 'fs';
+import path from 'path';
 
 export class ProductService {
   private productRepository: ProductRepository;
@@ -15,6 +17,7 @@ export class ProductService {
   }
 
   async updateProduct(id: mongoose.Types.ObjectId, updateFields: Partial<CreateNewProductDto>) {
+    console.log(updateFields);
     const updateOneDto: UpdateOneDto = {
       _id: id.toString(),
       update: updateFields
@@ -22,6 +25,40 @@ export class ProductService {
     return await this.productRepository.UpdateOne(updateOneDto);
   }
 
+  async removeImage(productId: mongoose.Types.ObjectId, imageFilename: string): Promise<any> {
+    const product = await this.getProductById(productId);
+    if (!product) {
+      return null;  // or throw a "Product not found" error
+    }
+  
+    // Locate the image in the images array
+    const imageIndex = product.images.findIndex(img => img === imageFilename);
+  
+    if (imageIndex === -1) {
+      return null;  // or throw a "Image not found" error
+    }
+  
+    // Delete image file from the server
+    try {
+      fs.unlinkSync(path.join(__dirname, '../../', product.images[imageIndex]));
+    } catch (e) {
+      // Handle error during file removal (e.g., file not found)
+      console.error("Could not remove file: ", e);
+      return null;
+    }
+  
+    // Remove the image from the images array
+    product.images.splice(imageIndex, 1);
+  
+    const updateOneDto: UpdateOneDto = {
+      _id: productId.toString(),
+      update: { images: product.images }
+    };
+  
+    // Save the updated product
+    return await this.productRepository.UpdateOne(updateOneDto);
+  }
+  
   async getProductById(id: mongoose.Types.ObjectId) {
     const search: searchDto = {
       field: '_id',
@@ -29,27 +66,17 @@ export class ProductService {
     };
     return await this.productRepository.FindOne(search);
   }
-
-  async updateVariation(productId: mongoose.Types.ObjectId, updateVariation: UpdateVariationDto) {
-    const product = await this.getProductById(productId);
-    if (!product) {
-      return null;  // or throw a "Product not found" error
-    }
-
-    const variationIndex = product.variations.findIndex(v => v._id.equals(updateVariation._id));
-    if (variationIndex === -1) {
-      return null;  // or throw a "Variation not found" error
-    }
-
-    // Update the variation within the product
-    product.variations[variationIndex] = { ...(product.variations[variationIndex] as any), ...updateVariation };
-
-    const updateOneDto: UpdateOneDto = {
-      _id: productId.toString(),
-      update: { variations: product.variations }
-    };
-
-    // Save the updated product
-    return await this.productRepository.UpdateOne(updateOneDto);
+  async getProductsByVendor(vendorId: string, pageSize: number, pageNumber: number) {
+    return await this.productRepository.findByVendor(vendorId, pageSize, pageNumber);
   }
+  
+  async getAllProducts(pageSize: number, pageNumber: number, filters: Record<string, any>) {
+    return await this.productRepository.findAll(pageSize, pageNumber,filters);
+  }
+
+  async updateQuantity(productId: mongoose.Types.ObjectId, variationId: mongoose.Types.ObjectId, quantity: number) {
+    return await this.productRepository.updateQuantity(productId, variationId, quantity);
+  }
+  
+
 }

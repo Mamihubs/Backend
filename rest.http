@@ -1,0 +1,19 @@
+ ### Create New Product
+POST http://localhost:5000/api/product/create
+Content-Type: application/json
+
+{
+  "product_name": "Sample Product",
+  "product_desc": "This is a sample product",
+  "brand": "BrandName",
+  "created_by": "64f3ba24664375a4c99df34d",
+  "variations": [
+    {
+      "variation": "Small",
+      "price": 100,
+      "state": "active",
+      "quantity":3
+    }
+  ],
+  "images": ["<image_url1>", "<image_url2>"]
+}
