@@ -17,9 +17,10 @@ interface IProduct extends Document {
   status: boolean;
   brand: string;
   created_by: mongoose.Types.ObjectId;
-  categ_id: mongoose.Types.ObjectId;
+  category_id: mongoose.Types.ObjectId;
   variations: IVariation[];
   images: any[];
+  is_flash_sale:boolean;
   // price_surcharge?: number;
   // price_discount?: number;
   // date_start?: Date;
@@ -68,12 +69,16 @@ const ProductSchema = new Schema<IProduct>({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  categ_id: {
+  category_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
   },
   variations: [VariationSchema],
   images: [],
+  is_flash_sale:{
+    type:Boolean,
+    default:false
+  }
   // price_surcharge: { type: Number },
   // price_discount: { type: Number },
   // date_start: { type: Date },
