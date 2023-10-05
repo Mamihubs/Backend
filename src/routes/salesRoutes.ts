@@ -6,6 +6,8 @@ import  SalesController from "../controllers/salesController";
 router.get('/', SalesController.getSales);
 router.get("/user", SalesController.getUserSales)
 router.post('/delivery-status', SalesController.getDeliveryStats);
+router.post('/top-sales_product', SalesController.topProductSales);
+router.post('/top-sales-categories', SalesController.topSellingCategories);
 router.put("/:id", SalesController.updateSalesOrder);
 router.delete("/:id", SalesController.deleteSales);
 
