@@ -23,6 +23,7 @@ import userRouter from "./routes/userRoutes";
 import verificationCodeRouter from "./routes/verificationCodeRoutes";
 import categoryRouter from "./routes/categoryRoutes";
 import salesRoutes from "./routes/salesRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 // Middlewares
 
@@ -33,6 +34,7 @@ app.use("/api/user", userRouter);
 app.use("/api/code", verificationCodeRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/sales", salesRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     console.log("Just to make sure it's all running.")
