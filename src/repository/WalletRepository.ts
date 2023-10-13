@@ -1,6 +1,7 @@
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import { WalletDto } from "../dto/WalletDto";
-import Wallet, { WalletDoc } from "../models/Wallet";
+// import Wallet, { WalletDoc } from "../models/Wallet";
+import Wallet from "../models new/Wallet";
 
 export class WalletRepository{
     // Create a Wallet

@@ -1,15 +1,14 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 // Define interfaces for the schemas
-
-interface IItem extends Document {
+export interface IItem extends Document {
   product: mongoose.Types.ObjectId;
   quantity: number;
   variation: string;
   price: number;
 }
 
-interface ISale extends Document {
+export interface ISale extends Document {
   order_by: mongoose.Types.ObjectId;
   updated_by: mongoose.Types.ObjectId;
   company: mongoose.Types.ObjectId;
@@ -28,7 +27,7 @@ interface ISale extends Document {
 }
 
 // defining the sales order enum status
-enum DeliveryStatus {
+export enum DeliveryStatus {
   PENDING = "Pending",
   IN_TRANSIT = "In Transit",
   DELIVERED = "Delivered",

@@ -16,7 +16,7 @@ class CategoryController extends CategoryService{
     createCategories = async (req: Request, res: Response) => {
         try {
             // data validations
-            const createdBy = req.userId;
+            const createdBy = req.user;
             const { error } = categoryValidation(req.body);
             if (error)
                 return res.status(400).json({
@@ -48,7 +48,7 @@ class CategoryController extends CategoryService{
     updateCategories = async (req: Request, res: Response) => {
         try {
             // data validations
-            const updatedBy = req.userId;
+            const updatedBy = req.user;
             const {id} = req.params;
             
             // checking id and updateBy
@@ -117,12 +117,12 @@ class CategoryController extends CategoryService{
     // getting all categories
     getCategories = async (req: Request, res: Response) => {
         const data = await this.getAllCategories();
-        return res.status(200).json(data)
+        return res.status(200).json(data);
     }
 
     //getting all sub categories under a category
     getSubCategories = async (req:Request, res:Response) =>{
-        const {id} = req.params; // the id is the category id required to get the sub categories
+        const {id} = req.params;
         try {
             const data = await this.getAllSubCategoriesUnderACategory(id)
             return res.status(200).json(data)

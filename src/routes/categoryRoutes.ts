@@ -1,8 +1,14 @@
 import express from "express";
 const router = express.Router();
+import AuthenticateUser from "../middlewares/authCheck"
 import  CategoryController from "../controllers/categoryController";
 
-router.post("/", CategoryController.createCategories);
+
+// create an auth route object
+
+
+
+router.post("/", AuthenticateUser.deserialToken, CategoryController.createCategories);
 router.get('/', CategoryController.getCategories);
 router.get('/subcategories', CategoryController.getSubCategories);
 router.put("/:id", CategoryController.updateCategories);
