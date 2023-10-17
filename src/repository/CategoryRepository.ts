@@ -78,14 +78,4 @@ export class CategoryRepository{
         console.log(error)
       } 
      }
-
-      // Delete many Categorys
-      async DeleteMany(){
-        
-      }
-
-        // Delete all Categorys
-      async DeleteAll(){
-            
-        }
 }

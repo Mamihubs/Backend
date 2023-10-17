@@ -1,5 +1,6 @@
 import { UpdateManyDto, UpdateOneDto, searchDto, AllSeachDto } from "../dto/GeneralDto";
 import SaleModel from "../models/Sales";
+import mongoose, {FilterQuery } from "mongoose";
 
 export default class SalesRepository {
   // Create an Sales
@@ -32,7 +33,8 @@ export default class SalesRepository {
   // Find all Sales
   async FindAll(options?: AllSeachDto) {
     try {
-      const query: any = { isDeleted: false };
+      // const query: any = { isDeleted: false };
+      let query: FilterQuery<any> = {isDeleted: false };
       if (options) {
         for (const key in options) {
           if (options.hasOwnProperty(key)) {
@@ -65,28 +67,9 @@ export default class SalesRepository {
     }
   }
 
-  // Update All SalesOrderLines
-  async UpdateAll() {
-
-  }
-
   // Delete one SalesOrderLine
-  async DeleteOne(_id: string) {
-    try {
-      return await SaleModel.findByIdAndUpdate(_id, { isDeleted: true }, { new: true })
-
-    } catch (error) {
-      console.log(error)
-    }
+  async DeleteOne(_id: mongoose.Types.ObjectId) {
+    return await SaleModel.findByIdAndUpdate(_id, { isDeleted: true }, { new: true })
   }
 
-  // Delete many SalesOrderLines
-  async DeleteMany() {
-
-  }
-
-  // Delete all SalesOrderLines
-  async DeleteAll() {
-
-  }
 }
