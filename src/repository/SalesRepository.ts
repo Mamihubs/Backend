@@ -14,7 +14,8 @@ export default class SalesRepository {
   // Find one Sales
   async FindOne(search: searchDto) {
     try {
-      return await SaleModel.findOne({ [search.field]: search.value })
+      const {field, value} = search;
+      return await SaleModel.findOne({ [field]: value })
     } catch (error) {
       console.log(error)
     }

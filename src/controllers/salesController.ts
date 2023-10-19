@@ -92,7 +92,7 @@ class SalesController {
                     const product = await ProductModel.findById(item.product);
                     if (product) {
                         // Get the category ID of the product
-                        const categoryId = product.categ_id.toString();
+                        const categoryId = product.category_id.toString();
                         const quantity = item.quantity;
     
                         if (categorySalesMap.has(categoryId)) {

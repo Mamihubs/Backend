@@ -15,8 +15,7 @@ export class SettlementRepository{
      // Find one Settlement
      async FindOne(search: searchDto){
       try {
-        const field = search.field
-        const value = search.value
+        const {field, value} = search; 
         const searchObj = {[field]: value}
         const data = await Settlement.findOne(searchObj)
         return data
@@ -28,8 +27,7 @@ export class SettlementRepository{
      // Find many Settlements
      async FindMany(search: searchDto){
       try {
-        const field = search.field
-        const value = search.value
+        const {field, value} = search; 
         const searchObj = {[field]: value}
         const data = await Settlement.find(searchObj)
         return data
@@ -61,8 +59,7 @@ export class SettlementRepository{
      // Update many Settlements
      async UpdateMany(updateMany: UpdateManyDto){
       try {
-        const field = updateMany.field
-        const value = updateMany.value
+        const {field, value} = updateMany; 
         const searchObj = {[field]: value}
         const update = await Settlement.updateOne(searchObj,updateMany.update)
         return update

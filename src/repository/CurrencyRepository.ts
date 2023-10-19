@@ -15,8 +15,7 @@ export class CurrencyRepository{
      // Find one Currency
      async FindOne(search: searchDto){
       try {
-        const field = search.field
-        const value = search.value
+        const {field, value} = search; 
         const searchObj = {[field]: value}
         const data = await Currency.findOne(searchObj)
         return data

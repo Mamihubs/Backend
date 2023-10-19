@@ -7,9 +7,9 @@ import bodyParser from "body-parser";
 env.config();
 
 // Connect DB
-import "./utils/connectDB"
 
 const app = express();
+import "./utils/connectDB"
 
 // Middlewares
 app.use(cors());
@@ -25,6 +25,7 @@ import categoryRouter from "./routes/categoryRoutes";
 import salesRoutes from "./routes/salesRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import locationRouter from "./routes/locationRoutes";
+import vendorRoutes from "./routes/vendorRoutes";
 
 
 // Middlewares
@@ -37,6 +38,7 @@ app.use("/api/code", verificationCodeRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/sales", salesRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/vendor", vendorRoutes);
 app.use("/api/location", locationRouter)
 
 

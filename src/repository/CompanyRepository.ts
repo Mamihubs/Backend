@@ -16,8 +16,8 @@ export class CompanyRepository{
      // Find one Company
      async FindOne(search: searchDto){
       try {
-        const field = search.field
-        const value = search.value
+        const {field, value} = search;
+         
         const searchObj = {[field]: value}
         const data = await Company.findOne(searchObj)
         return data
