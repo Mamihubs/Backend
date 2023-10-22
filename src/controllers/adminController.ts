@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { UpdateOneDto } from "../dto/GeneralDto";
 import { ProductRepository } from "../repository/ProductRepository";
 import { SalesOrderRepository } from "../repository/SalesOrderRepository";
 import { UserRepository } from "../repository/UserRepository";
@@ -46,6 +47,21 @@ class AdminController{
 
         return res.status(200).json({users})
     }
+    addVendor = async (req:Request, res:Response) => {
+
+    }
+
+    updateAccount = async (req:Request, res:Response) => {
+        const {id} = req.params;
+        const updateDto: UpdateOneDto = {
+            _id:id,
+            update:req.body
+        }
+        const user = await this.allUsers.UpdateOne(updateDto)
+        return res.status(200).json({user});
+
+    }
+
     getIntegration = async (req:Request, res:Response) => {
          
 
@@ -59,6 +75,19 @@ class AdminController{
         return res.status(200).json({
             "settings":[]
         })
+    }
+
+    // settings profile
+    settingsProfile = async (req:Request, res:Response) => {
+        // update profile
+        return res.status(200).json({});
+    }
+    settingsBilling = async (req:Request, res:Response) => {
+        // add billing information
+        return res.status(200).json({});
+    }
+    settingsOrders = async (req:Request, res:Response) => {
+        return res.status(200).json({});
     }
 }
 

@@ -1,6 +1,7 @@
 import { CreateUserDto } from './../dto/UserDto';
 import User from "../models/User";
 import { UpdateManyDto, UpdateOneDto, searchDto } from '../dto/GeneralDto';
+import { UserService } from '../services/user.service';
 
 export class UserRepository{
     // Create a User
@@ -87,8 +88,14 @@ export class UserRepository{
      }
 
      // Delete one user
-     async DeleteOne(){
-        
+     async DeleteOne(id: string){
+        try{
+          const user = await User.deleteOne({'_id' : id});
+          return user;
+        }catch(err){
+          console.log(err)
+        }
+
      }
 
       // Delete many user
