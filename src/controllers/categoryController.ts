@@ -101,7 +101,7 @@ class CategoryController extends CategoryService{
             // return the user information 
             return res.status(200).json({
                 error: false,
-                message: "user's profile deleted"
+                message: "category deleted"
             });
         } catch (err) {
             console.log(err);

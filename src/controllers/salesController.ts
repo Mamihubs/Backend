@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import SalesService from "../services/sales.service";
 import { IItem, ISale } from '../models/Sales'
 import ProductModel from "../models/Product";
+import mongoose from "mongoose";
 
 class SalesController {
 
@@ -42,7 +43,6 @@ class SalesController {
     }
 
     topProductSales = async (req: Request, res: Response) => {
-
         // Fetch all sales records
         const allSales = await this.SalesService.FindAll();
         if (allSales && allSales.length > 0) {
@@ -143,7 +143,6 @@ class SalesController {
                 message: "sale deleted"
             });
         } catch (err) {
-            console.log(err);
             return res.status(500).json({
                 error: true,
                 message: err
@@ -165,7 +164,6 @@ class SalesController {
             const sales = await this.SalesService.FindAll({ order_by: req.user });
             return res.status(200).json({ sales });
         } catch (err) {
-            console.log(err);
             return res.status(500).json({
                 error: true,
                 message: err
@@ -176,16 +174,29 @@ class SalesController {
     // get sales based on the status of the sales
     // note the status can be pending, deleivered, etc
     getDeliveryStats = async (req: Request, res: Response) => {
-        // const data = await this.SalesService.FindAll({ delivery_status: "pending" });
-        if (!req.body.delivery_status)
+        const {id} = req.params;
+        if (!id)
             return res.status(500).json({
                 error: true,
-                message: "kindly supply search parameter for the delivery status"
+                message: "kindly supply order id"
             });
 
-        const sales = await this.SalesService.FindAll(req.body.delivery_status);
-        return res.status(200).json({ sales });
+        const order = await this.SalesService.getAllSales(
+            new mongoose.Types.ObjectId(id)
+        );
+        return res.status(200).json({ order });
     }
+    // getDeliveryStats = async (req: Request, res: Response) => {
+    //     const {delivery_status, order_by} = req.body;
+    //     if (!delivery_status || !order_by)
+    //         return res.status(500).json({
+    //             error: true,
+    //             message: "kindly supply search parameter for the delivery status"
+    //         });
+
+    //     const sales = await this.SalesService.FindAll(req.body);
+    //     return res.status(200).json({ sales });
+    // }
 }
 
 export default new SalesController();

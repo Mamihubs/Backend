@@ -1,7 +1,6 @@
-import { DeleteOneDto, AllSeachDto, UpdateOneDto} from '../dto/GeneralDto';
+import { DeleteOneDto, AllSeachDto, UpdateOneDto, searchDto} from '../dto/GeneralDto';
 import SalesRepository from './../repository/SalesRepository';
-
-
+import mongoose from 'mongoose';
 export default class SalesService extends SalesRepository {
 
     constructor(){
@@ -25,7 +24,9 @@ export default class SalesService extends SalesRepository {
     }
     async deleteSales(data: DeleteOneDto){
         try {
-            return await this.DeleteOne(data._id);
+            return await this.DeleteOne(
+                new mongoose.Types.ObjectId(data._id),
+            );
         } catch (error) {
             console.log(error);
         }
@@ -33,6 +34,17 @@ export default class SalesService extends SalesRepository {
     async getAllSales(option?: AllSeachDto){
         try {
             return await this.FindAll(option);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async getSaleOrder(id: mongoose.Types.ObjectId){
+        try {
+            const search: searchDto = {
+                field: '_id',
+                value: id.toString()
+              };
+            return await this.FindOne(search);
         } catch (error) {
             console.log(error);
         }

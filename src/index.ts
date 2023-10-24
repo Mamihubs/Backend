@@ -23,6 +23,7 @@ import userRouter from "./routes/userRoutes";
 import verificationCodeRouter from "./routes/verificationCodeRoutes";
 import categoryRouter from "./routes/categoryRoutes";
 import salesRoutes from "./routes/salesRoutes";
+import caroRoutes from "./routes/carouselRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import locationRouter from "./routes/locationRoutes";
 import vendorRoutes from "./routes/vendorRoutes";
@@ -40,6 +41,7 @@ app.use("/api/sales", salesRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/vendor", vendorRoutes);
 app.use("/api/location", locationRouter)
+app.use("/api/carousel", caroRoutes)
 
 
 app.get("/", (req: Request, res: Response) => {
