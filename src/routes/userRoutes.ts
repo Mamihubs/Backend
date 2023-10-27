@@ -8,5 +8,6 @@ const router = express.Router()
 router.post("/register", UserAuth.createUser )
 router.post("/login", UserAuth.loginUser)
 router.get("/getWallet/:userId",walletController.getUserWallets)
+ 
 
 export default router

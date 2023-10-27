@@ -16,7 +16,7 @@ export interface ProfileDoc extends Document {
     identificationName: string,
     passport: string,
     active: boolean,
-    createdByy: object,
+    createdBy: object,
     updatedBy: object,
 }
 
@@ -35,7 +35,7 @@ const Profile = new Schema<ProfileDoc>({
     identificationName: {type:String},
     passport: {type:String},
     active: {type:Boolean,default: false},
-    createdByy: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },

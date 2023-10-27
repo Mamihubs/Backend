@@ -13,7 +13,7 @@ const verificationCodeRepo = new VerificationCodeRepository()
 const userService = new UserService() 
 const verificationCodeService = new VerificationCodeService(verificationCodeRepo)
 
-class UserAuth extends JwtAuth{
+class VendorAuth extends JwtAuth{
 
     createUser = async (req: Request, res: Response) => {
         // Data Validation
@@ -157,7 +157,7 @@ class UserAuth extends JwtAuth{
     }
 }
 
-export default new UserAuth()
+export default new VendorAuth()
 
 
 
