@@ -6,12 +6,14 @@ import { UserRepository } from "../repository/UserRepository";
 import { AdminService } from "../services/admin.service";
 import { ProductService } from "../services/product.service";
 import SalesService from "../services/sales.service";
+import { VendorService } from "../services/vendor.service";
 
 class AdminController{
     private SalesService: SalesService = new SalesService();
     private allProducts: ProductRepository = new ProductRepository();
     private allOrders: SalesOrderRepository = new SalesOrderRepository();
     private allUsers: UserRepository = new UserRepository();
+    private vendorService: VendorService = new VendorService();
 
     getDashboard = async (req:Request, res:Response)=>{
         const sales = await this.SalesService.FindAll();
@@ -49,6 +51,23 @@ class AdminController{
     }
     addVendor = async (req:Request, res:Response) => {
 
+    }
+
+
+    getProduct = async(req: Request, res: Response)=>{
+        const { id } = req.params;
+    const data = await this.vendorService.findOneProduct(id)
+        return res.status(200).json({data})
+    }
+    getOrder = async(req: Request, res: Response)=>{
+        const { id } = req.params;
+    const data = await this.vendorService.findOneOrder(id)
+        return res.status(200).json({data})
+    }
+    getTransaction = async(req: Request, res: Response)=>{
+        const { id } = req.params;
+    const data = await this.vendorService.findOneTransaction(id)
+        return res.status(200).json({data})
     }
 
     updateAccount = async (req:Request, res:Response) => {

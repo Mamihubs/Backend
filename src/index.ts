@@ -42,6 +42,7 @@ app.use("/api/vendor", vendorRoutes);
 app.use("/api/location", locationRouter)
 
 
+
 app.get("/", (req: Request, res: Response) => {
     console.log("Just to make sure it's all running.")
     return res.status(200).json({

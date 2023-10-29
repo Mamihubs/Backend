@@ -15,6 +15,11 @@ router.get('/settings', adminController.getSettings)
 // update account
 router.patch('/account-update/:id', adminController.updateAccount);
 
+router.get("/order/:id", adminController.getOrder);
+
+router.get("/transaction/:id", adminController.getTransaction);
+router.get("/product/:id", adminController.getProduct);
+
 
 
 
