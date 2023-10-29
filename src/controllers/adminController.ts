@@ -6,7 +6,9 @@ import { UserRepository } from "../repository/UserRepository";
 import { AdminService } from "../services/admin.service";
 import { ProductService } from "../services/product.service";
 import SalesService from "../services/sales.service";
+import { UserService } from "../services/user.service";
 import { VendorService } from "../services/vendor.service";
+import { userRegistrationValidation } from "../validations/authValidations";
 
 class AdminController{
     private SalesService: SalesService = new SalesService();
@@ -14,6 +16,7 @@ class AdminController{
     private allOrders: SalesOrderRepository = new SalesOrderRepository();
     private allUsers: UserRepository = new UserRepository();
     private vendorService: VendorService = new VendorService();
+    private userService:UserService = new UserService() 
 
     getDashboard = async (req:Request, res:Response)=>{
         const sales = await this.SalesService.FindAll();
@@ -50,7 +53,42 @@ class AdminController{
         return res.status(200).json({users})
     }
     addVendor = async (req:Request, res:Response) => {
-
+        const { error } = userRegistrationValidation(req.body)
+        if(error){
+            return res.status(400).json({
+                status: false,
+                message: error.details[0].message.toUpperCase(),
+            })
+        }
+        
+        // Check if user exists
+        const user = await this.userService.getOneUser('login',req.body.email);
+        
+        if(user){
+            return res.status(400).json({
+                status: false,
+                message: 'User already exists',
+            })
+        }
+        
+        // create user
+        const newUser = await this.userService.createUser({firstName: req.body.firstName, lastName: req.body.lastName, login: req.body.email,password: req.body.password})
+        
+        if(!newUser){
+            return res.status(500).json({
+                status: false,
+                message: 'Something went wrong while creating user',
+            })
+        }
+        
+         
+         
+        
+        return res.status(200).json({
+            status: true,
+            message: 'User created successfully',
+            data: newUser
+        })
     }
 
 

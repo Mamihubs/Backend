@@ -12,6 +12,8 @@ router.get('/orders', adminController.getOrders)
 router.get('/integration', adminController.getIntegration)
 router.get('/settings', adminController.getSettings)
 
+router.post('/add-vendor',adminController.addVendor)
+
 // update account
 router.patch('/account-update/:id', adminController.updateAccount);
 
