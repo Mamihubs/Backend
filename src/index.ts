@@ -26,6 +26,7 @@ import salesRoutes from "./routes/salesRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import locationRouter from "./routes/locationRoutes";
 import vendorRoutes from "./routes/vendorRoutes";
+import onboardingRoutes from "./routes/onboardingRoutes";
 
 
 // Middlewares
@@ -40,6 +41,7 @@ app.use("/api/sales", salesRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/vendor", vendorRoutes);
 app.use("/api/location", locationRouter)
+app.use('/api/onboarding', onboardingRoutes)
 
 
 
