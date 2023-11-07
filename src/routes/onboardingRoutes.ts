@@ -8,10 +8,10 @@ router.post("/create-business-information", onboardingController.createBusinessI
 router.post("/create-bank", onboardingController.createBank);
 router.post("/create-identity-individual", onboardingController.createIdentityIndividual);
 router.post("/create-identity-company", onboardingController.createIdentityCompany); 
-router.put("/update-business-information", onboardingController.updateBusinessInformation);
-router.put("/update-bank", onboardingController.updateBank);
-router.put("/update-identity-individual", onboardingController.updateIdentityIndividual);
-router.put("/update-identity-company", onboardingController.updateIdentityCompany); 
+router.put("/update-business-information/:id", onboardingController.updateBusinessInformation);
+router.put("/update-bank/:id", onboardingController.updateBank);
+router.put("/update-identity-individual/:id", onboardingController.updateIdentityIndividual);
+router.put("/update-identity-company/:id", onboardingController.updateIdentityCompany); 
 
 
 

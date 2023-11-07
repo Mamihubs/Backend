@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { UpdateOneDto } from "../dto/GeneralDto";
+import { CreateNewUserDto } from "../dto/UserDto";
+import User, { UserStatus, UserType } from "../models/User";
 import { ProductRepository } from "../repository/ProductRepository";
 import { SalesOrderRepository } from "../repository/SalesOrderRepository";
 import { UserRepository } from "../repository/UserRepository";
@@ -9,6 +11,8 @@ import SalesService from "../services/sales.service";
 import { UserService } from "../services/user.service";
 import { VendorService } from "../services/vendor.service";
 import { userRegistrationValidation } from "../validations/authValidations";
+import bcrypt from "bcryptjs"
+import { ProfileRepository } from '../repository/ProfileRepository';
 
 class AdminController{
     private SalesService: SalesService = new SalesService();
@@ -16,7 +20,8 @@ class AdminController{
     private allOrders: SalesOrderRepository = new SalesOrderRepository();
     private allUsers: UserRepository = new UserRepository();
     private vendorService: VendorService = new VendorService();
-    private userService:UserService = new UserService() 
+    private userService:UserService = new UserService()
+    private profileRepository:ProfileRepository = new ProfileRepository();
 
     getDashboard = async (req:Request, res:Response)=>{
         const sales = await this.SalesService.FindAll();
@@ -43,12 +48,12 @@ class AdminController{
     }
 
     getCustomers = async (req:Request, res:Response) => {
-        const users = await this.allUsers.FindAll();
+        const users = await await User.find({'type':'Customer'});;
 
         return res.status(200).json({users})
     }
     getVendors = async (req:Request, res:Response) => {
-        const users = await this.allUsers.FindAll();
+        const users = await User.find({'type':'Vendor'});
 
         return res.status(200).json({users})
     }
@@ -70,11 +75,37 @@ class AdminController{
                 message: 'User already exists',
             })
         }
+        const newUser: CreateNewUserDto = {
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            login: req.body.email,
+            type:UserType.VENDOR,
+            password:req.body.password,
+            
+        }
+        const newProfileData = {
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            email: newUser.login,
+            active:true
+        }
+
+        const profile = await this.profileRepository.Create(newProfileData);
+        const newUserData = {
+            fullName: newUser.firstName+' '+newUser.lastName,
+            login: newUser.login,
+            password: await bcrypt.hash(newUser.password, 10),
+            profileID: profile?._id,
+            type:newUser.type,
+            status:UserStatus.ACTIVE,
+            active:true
+        }
+        const userCreated = await User.create(newUserData);
         
         // create user
-        const newUser = await this.userService.createUser({firstName: req.body.firstName, lastName: req.body.lastName, login: req.body.email,password: req.body.password})
+         
         
-        if(!newUser){
+        if(!userCreated){
             return res.status(500).json({
                 status: false,
                 message: 'Something went wrong while creating user',
@@ -87,7 +118,7 @@ class AdminController{
         return res.status(200).json({
             status: true,
             message: 'User created successfully',
-            data: newUser
+            data: userCreated
         })
     }
 
