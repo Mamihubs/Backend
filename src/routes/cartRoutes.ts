@@ -5,8 +5,8 @@ import CartController from "../controllers/cartController";
 
 
 
-router.post("/cart-update", CartController.cartUpdater);
-router.post("/get-cart", CartController.cartQuantityUpdater )
+router.post("/update-cart", CartController.cartUpdater);
+router.get("/get-cart", CartController.getCartData )
 
 
 export default router

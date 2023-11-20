@@ -26,6 +26,8 @@ class AuthController {
 
         // Check out user in the Database
         const userExist = await User.findOne({ email: req.body.email });
+        console.log(userExist)
+        console.log("helllo")
         if (userExist) {
             return res.status(400).json({
                 error: true,
