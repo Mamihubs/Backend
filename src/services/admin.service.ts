@@ -1,3 +1,4 @@
+import Profile from "../models/Profile";
 import Product from "../models/Product";
 import Sales from "../models/Sales";
 import SalesOrder from "../models/SalesOrder";
@@ -35,11 +36,12 @@ export class AdminService{
         try{
             // const user =  await this.userRepository.FindOne({field: '_id', value: id})
             const user =   await User.findOne({_id:id});
+            const profile =   await Profile.findOne({_id:user?.profileID});
             const sales = await Sales.find({updated_by:id});
             const orders = await SalesOrder.find({created_by:id});
             const products = await Product.find({created_by:id});
     
-            return {user,sales, orders,products};
+            return {user,profile, sales, orders,products};
         }catch(e){
 console.log(e)
         }
