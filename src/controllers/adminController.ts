@@ -29,31 +29,31 @@ class AdminController {
     
 
     getDashboard = async (req:Request, res:Response)=>{
-        const sales = await this.SalesService.FindAll();
-        const products = await this.allProducts.FindAll();
-        const orders = await this.allOrders.FindAll();
+        const sales = await this.adminService.getAllSales();
+        const products = await this.adminService.getAllProducts(); 
+        const orders = await this.adminService.getAllOrders();
         return res.status(200).json({sales, products, orders});
     }
 
     getAnalytics = async (req:Request, res:Response)=>{
-        const sales = await this.SalesService.FindAll();
-        const products = await this.allProducts.FindAll();
-        const orders = await this.allOrders.FindAll();
+        const sales = await this.adminService.getAllSales();
+        const products = await this.adminService.getAllProducts(); 
+        const orders = await this.adminService.getAllOrders();
         return res.status(200).json({sales, products, orders});
     }
     getProducts = async (req:Request, res:Response)=>{
        
-        const products = await this.allProducts.FindAll(); 
+        const products = await this.adminService.getAllProducts(); 
         return res.status(200).json({ products });
     }
     getOrders = async (req:Request, res:Response)=>{
          
-        const orders = await this.allOrders.FindAll();
+        const orders = await this.adminService.getAllOrders();
         return res.status(200).json({ orders});
     }
 
     getCustomers = async (req:Request, res:Response) => {
-        const users = await await User.find({'type':'Customer'});
+        const users = await User.find({'type':'Customer'});
 
         return res.status(200).json({users})
     }
@@ -138,17 +138,17 @@ class AdminController {
 
     getProduct = async(req: Request, res: Response)=>{
         const { id } = req.params;
-    const data = await this.vendorService.findOneProduct(id)
+    const data = await this.adminService.getProductById(id)
         return res.status(200).json({data})
     }
     getOrder = async(req: Request, res: Response)=>{
         const { id } = req.params;
-    const data = await this.vendorService.findOneOrder(id)
+    const data = await this.adminService.getOrderById(id)
         return res.status(200).json({data})
     }
     getTransaction = async(req: Request, res: Response)=>{
         const { id } = req.params;
-    const data = await this.vendorService.findOneTransaction(id)
+    const data = await this.adminService.getOrderById(id)
         return res.status(200).json({data})
     }
 

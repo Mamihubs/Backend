@@ -47,4 +47,53 @@ console.log(e)
         }
         
     }
+
+    async getAllProducts(){
+        try {
+            const products = await Product.find();  
+            return products;
+        } catch (error) {
+            
+        }
+    }
+    async getProductById(id:string){
+        try {
+            const products = await Product.findOne({_id:id});  
+            return products;
+        } catch (error) {
+            
+        }
+    }
+    async getAllOrders(){
+        try {
+            const orders = await SalesOrder.find();  
+            return orders;
+        } catch (error) {
+            
+        }
+    }
+    async getOrderById(id:string){
+        try {
+            const orders = await SalesOrder.findOne({_id:id});  
+            return orders;
+        } catch (error) {
+            
+        }
+    }
+    async getAllSales(){
+        try {
+            const sales = await Sales.find();  
+            return sales;
+        } catch (error) {
+            
+        }
+    }
+    async getSaleById(id:string){
+        try {
+            const sales = await Sales.findOne({_id:id});  
+            return sales;
+        } catch (error) {
+            
+        }
+    }
 }

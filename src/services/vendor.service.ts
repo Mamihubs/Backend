@@ -7,6 +7,9 @@ import { AllSeachDto, searchDto } from '../dto/GeneralDto';
 import VendorRepository from '../repository/vendorRepository';
 import { ProductRepository } from '../repository/ProductRepository';
 import { SalesOrderRepository } from '../repository/SalesOrderRepository';
+import User from '../models/User';
+import Product from '../models/Product';
+import SalesOrder from '../models/SalesOrder';
 
 
 export class VendorService extends VendorRepository{
@@ -59,51 +62,42 @@ export class VendorService extends VendorRepository{
         }
     }
 
-    async findAllProducts(userid: string){
+    async findAllProducts(id: string){
         try{
-            const getuser = await this.userRepository.FindOne({field:'_id', value:userid});
-            return await this.productRepository.FindMany({field: 'created_by', value: getuser?._id});
+            const getuser = await User.findOne({_id: id});
+            return await Product.find({created_by:getuser?._id});
         }catch (error) {
             console.log(error);
         }
     }
     async findOneProduct(id: string){
-        const search: searchDto = {
-            field: '_id',
-            value: id.toString()
-          };
-        return await this.productRepository.FindOne(search);
+        
+        return await Product.findOne({_id:id});
     }
-    async findAllOrders(userid: string){
+    async findAllOrders(id: string){
         try{
-            const getuser = await this.userRepository.FindOne({field:'_id', value:userid});
-            return await this.orders.FindMany({field: 'created_by', value: getuser?._id});
+            const getuser = await User.findOne({_id:id});
+            return await SalesOrder.findOne({created_by:getuser?._id});
         }catch (error) {
             console.log(error);
         }
     }
     async findOneOrder(id:string){
-        const search: searchDto = {
-            field: '_id',
-            value: id.toString()
-          };
-        return await this.orders.FindOne(search);
+         
+          return await SalesOrder.findOne({_id:id});
     }
-    async findAllTransactions(userid: string){
+    async findAllTransactions(id: string){
         // Need to find delivery status
         try{
-            const getuser = await this.userRepository.FindOne({field:'_id', value:userid});
-            return await this.orders.FindMany({field: 'created_by', value: getuser?._id});
+             
+            return await this.findAllOrders(id);
         }catch (error) {
             console.log(error);
         }
     }
 
     async findOneTransaction(id: string){
-        const search: searchDto = {
-            field: '_id',
-            value: id.toString()
-          };
-        return await this.orders.FindOne(search);
+         
+        return await this.findOneOrder(id);
     }
 }
