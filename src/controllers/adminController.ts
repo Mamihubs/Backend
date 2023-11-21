@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { UpdateOneDto } from "../dto/GeneralDto";
 import { CreateNewUserDto } from "../dto/UserDto";
 import User, { UserStatus, UserType } from "../models/User";
@@ -13,8 +13,11 @@ import { VendorService } from "../services/vendor.service";
 import { userRegistrationValidation } from "../validations/authValidations";
 import bcrypt from "bcryptjs"
 import { ProfileRepository } from '../repository/ProfileRepository';
+import Sales from "../models new/Sales";
+import Product from "../models/Product";
+import SalesOrder from "../models/SalesOrder";
 
-class AdminController{
+class AdminController {
     private SalesService: SalesService = new SalesService();
     private allProducts: ProductRepository = new ProductRepository();
     private allOrders: SalesOrderRepository = new SalesOrderRepository();
@@ -22,6 +25,8 @@ class AdminController{
     private vendorService: VendorService = new VendorService();
     private userService:UserService = new UserService()
     private profileRepository:ProfileRepository = new ProfileRepository();
+    private adminService:AdminService = new AdminService();
+    
 
     getDashboard = async (req:Request, res:Response)=>{
         const sales = await this.SalesService.FindAll();
@@ -48,7 +53,7 @@ class AdminController{
     }
 
     getCustomers = async (req:Request, res:Response) => {
-        const users = await await User.find({'type':'Customer'});;
+        const users = await await User.find({'type':'Customer'});
 
         return res.status(200).json({users})
     }
@@ -56,6 +61,14 @@ class AdminController{
         const users = await User.find({'type':'Vendor'});
 
         return res.status(200).json({users})
+    }
+    getVendorId = async (req:Request, res:Response )=>{
+        const {id} = req.params;
+        
+        const data = await this.adminService.getVendorById(id);
+
+        return res.status(200).json(data)
+
     }
     addVendor = async (req:Request, res:Response) => {
         const { error } = userRegistrationValidation(req.body)
