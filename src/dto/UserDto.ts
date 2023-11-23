@@ -16,3 +16,15 @@ export interface CreateNewUserDto{
     type?: string;
     createdBy?: object;
 }
+
+export interface CreateNewVendorDto{
+    firstName: string;
+    lastName: string;
+    login: string;
+    password: string;
+    type?: string;
+    createdBy?: object;
+    storeName?: string;
+    storeDescription?: string;
+    phoneNumber?: string
+}

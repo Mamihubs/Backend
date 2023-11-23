@@ -56,5 +56,5 @@ app.get("/", (req: Request, res: Response) => {
 
 // Start Server on port 8081
 const server = app.listen(process.env.PORT, function(){
-    console.log("App started on port: ", process.env.PORT)
+    console.log("App started on port:", process.env.PORT)
 })
