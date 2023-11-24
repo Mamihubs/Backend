@@ -125,18 +125,9 @@ class UserAuth extends JwtAuth {
       .then(() => {
         const newCode = new VerificationCode(code);
         newCode.save();
-        return res.status(200).json({
-          success: true,
-          message: "Verification Code sent to email",
-        });
       })
       .catch((e) => {
-        console.log(e);
-
-        return res.status(401).json({
-          error: true,
-          message: "Error sending Verification code :(",
-        });
+     
       });
 
     return res.status(200).json({
