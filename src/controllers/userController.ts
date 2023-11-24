@@ -10,6 +10,7 @@ import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
 import { VerificationCodeRepository } from "../repository/VerificationCodeRepository";
 import { VerificationCodeService } from "../services/verificationcode.service";
 import JwtAuth from "../middlewares/JwtAuth";
+import VerificationCode from "../models/VerificationCode";
 
 const general = new GeneralUtils();
 const verificationCodeRepo = new VerificationCodeRepository();
@@ -104,7 +105,7 @@ class UserAuth extends JwtAuth {
       password: req.body.password,
       storeName: req.body.storeName,
       storeDescription: req.body.storeDescription,
-      phoneNumber: req.body.phoneNumber
+      phoneNumber: req.body.phoneNumber,
     });
 
     if (!newUser) {
@@ -114,27 +115,37 @@ class UserAuth extends JwtAuth {
       });
     }
 
-    // Generate otp
-    const otp = general.generateOtp();
-
-    // send otp to email
-    const message =
-      "<h2>Hi " +
-      req.body.first_name +
-      " kindly confirm your account by using this otp " +
-      otp;
-    await general.sendEmail(req.body.email, "Confirm Account", message);
+    const code = {
+      user: newUser._id,
+      code: general.generateOtp(),
+    };
 
     await sendConfirmationEmail(newUser);
-    await verificationCodeService.CreateCode({ code: otp, user: newUser._id });
-    await verificationEmail(otp, newUser);
+    await verificationEmail(code.code, newUser)
+      .then(() => {
+        const newCode = new VerificationCode(code);
+        newCode.save();
+        return res.status(200).json({
+          success: true,
+          message: "Verification Code sent to email",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+
+        return res.status(401).json({
+          error: true,
+          message: "Error sending Verification code :(",
+        });
+      });
 
     return res.status(200).json({
       status: true,
-      message: "User created successfully",
+      message: "Vendor Account created successfully",
       data: newUser,
     });
   };
+
   loginUser = async (req: Request, res: Response) => {
     // Data Validation
     const { error } = userLoginValidation(req.body);
