@@ -3,7 +3,7 @@ const Joi = require("@hapi/joi");
 // Create Account Validation
 export const createVerificationCodeValidation = (data: object) => {
     const schema = Joi.object({
-        user: Joi.string().required()
+        email: Joi.string().required()
     });
     return schema.validate(data);
 };
@@ -12,7 +12,7 @@ export const createVerificationCodeValidation = (data: object) => {
 export const verifyCodeValidation = (data: object) => {
     const schema = Joi.object({
         code: Joi.string().required(),
-        user: Joi.string().required()
+        email: Joi.string().required()
     });
     return schema.validate(data);
 };
