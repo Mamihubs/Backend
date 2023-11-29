@@ -36,6 +36,7 @@ interface IProduct extends Document {
   product_quantity: number;
   tags: string[];
   shipping: IShipping[];
+  product_price: number;
   // date_start?: Date;
   // date_end?: Date;
   // available_threshold?: string;
@@ -110,6 +111,7 @@ const ProductSchema = new Schema<IProduct>(
     product_quantity: { type: Number },
     tags: [],
     shipping: [ShippingSchema],
+    product_price: {type: Number},
     // date_start: { type: Date },
     // date_end: { type: Date },
     // available_threshold: { type: String },

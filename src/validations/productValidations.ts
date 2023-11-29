@@ -29,6 +29,7 @@ export const ProductValidation = (data: object) => {
     variations: Joi.array().items(variationSchema),
     images: Joi.array().items(Joi.string()),
     price_discount: Joi.number().required(),
+    product_price: Joi.number().required(),
     other_info: Joi.string().required(),
     product_sku: Joi.string().required(),
     product_quantity: Joi.number().required(),
@@ -71,6 +72,7 @@ export const UpdateProductValidation = (data: object) => {
     product_quantity: Joi.number().required(),
     tags: Joi.array().items(Joi.string()),
     shipping: Joi.items(shippingSchema).required(),
+    product_price: Joi.number().required(),
     // You can add more fields here based on your commented-out fields if they are required
   });
 

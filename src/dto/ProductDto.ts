@@ -44,6 +44,7 @@ export interface CreateNewProductDto {
   price_discount: number;
   tags: string[];
   shipping: IShipping[];
+  product_price: number;
 }
 
 export interface UpdateProductDto {
@@ -61,6 +62,7 @@ export interface UpdateProductDto {
   price_discount: number;
   tags: string[];
   shipping: IShipping[];
+  product_price: number;
 }
 
 export interface UpdateVariationDto {
