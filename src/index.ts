@@ -30,7 +30,7 @@ import onboardingRoutes from "./routes/onboardingRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
 
 import cartRoutes from "./routes/cartRoutes";
-
+import paystackRoutes from "./routes/paystackRoutes"
 
 
 // Middlewares
@@ -48,7 +48,11 @@ app.use("/api/location", locationRouter)
 app.use('/api/onboarding', onboardingRoutes)
 app.use('/api/notification', notificationRoutes)
 
-app.use("/api/cart", cartRoutes)
+app.use("/api/cart", cartRoutes);
+app.use("/api/payments/paystack", paystackRoutes)
+
+
+
 
 
 

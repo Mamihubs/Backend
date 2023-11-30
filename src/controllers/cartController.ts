@@ -41,6 +41,7 @@ export class CartController{
   cartUpdater = async(req: Request, res: Response) => {
 
     // let userId = req.user;
+    console.log("here at the moment")
     let userId = "655adcb6a18189d438dcb111"
     console.log("attempting to update user cart data...");
 
