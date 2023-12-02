@@ -24,7 +24,6 @@ class AuthenticateUser extends UserService{
         if (!decoded)
             return res.status(401).json({ message: "Invalid token or user doesn't exist"});
 
-
         // Check if user exist
         const user = await this.getOneUser("_id", decoded._id);
         if (!user)

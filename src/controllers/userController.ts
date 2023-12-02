@@ -2,6 +2,7 @@ import { userRegistrationValidation, userLoginValidation } from "../validations/
 import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 import { GeneralUtils } from "../utils/general";
+import { LikedProductModel } from "../models/Product";
 import { sendConfirmationEmail, verificationEmail } from "../utils/mailer";
 import { VerificationCodeRepository } from "../repository/VerificationCodeRepository";
 import { VerificationCodeService } from "../services/verificationcode.service";
@@ -17,10 +18,12 @@ class UserAuth extends JwtAuth{
 
     createUser = async (req: Request, res: Response) => {
         // Data Validation
+        console.log(req.body)
         const { error } = userRegistrationValidation(req.body)
         if(error){
             return res.status(400).json({
                 status: false,
+                test:"errr",
                 message: error.details[0].message.toUpperCase(),
             })
         }
@@ -153,6 +156,65 @@ class UserAuth extends JwtAuth{
                     message: "Server error occured"
                 })
             })
+        }
+    }
+
+    createLikedProduct = async (req:Request, res:Response) => {
+
+        const {userId, productId} = req.body;
+        if (!userId || !productId) 
+            return  res.status(400).json({status:false, message:"provide both user id and product id"})
+
+        const created = await LikedProductModel.create({userId, productId})
+
+        if (created)
+            return res.status(200).json({
+                status: true,
+                message: 'product liked'
+            })
+    }
+
+    getLikedProduct = async(req:Request, res:Response) => {
+        const { userId } = req.params;
+        try {
+            const liked = await LikedProductModel.find({userId})
+            return res.status(200).json({
+                status: true,
+                data:liked
+            })
+            
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({
+                error: true,
+                message: err
+            }); 
+            
+        }
+    }
+    unLikedProduct = async(req:Request, res:Response) => {
+        const { productId } = req.params;
+        try {
+            const userId = req.user._id;
+            // Find and remove the liked product
+            const result = await LikedProductModel.findOneAndRemove({
+              userId: userId,
+              productId: productId,
+            });
+        
+            if (result) {
+              res.status(200).json({ message: 'Product unliked successfully' });
+            } else {
+              res.status(404).json({ message: 'Liked product not found' });
+            }
+            
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({
+                error: true,
+                message: err
+            }); 
+            
         }
     }
 }

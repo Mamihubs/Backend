@@ -50,7 +50,6 @@ class AuthController {
                 error: false,
                 message: `user created successfully `
             });
-
     }
 
     sendResetPasswordToken = async (req: Request, res: Response) => {

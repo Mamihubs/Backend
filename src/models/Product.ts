@@ -1,5 +1,28 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
+// define liked product
+interface ILikedProduct extends Document{
+  userId: object,
+  productId: object,
+}
+
+// Create ProductSchema
+const LikedProductSchema = new Schema<ILikedProduct>({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  },
+})
+// Export the model with its TypeScript type
+export const LikedProductModel: Model<ILikedProduct> = mongoose.model<ILikedProduct>(
+  'LikedProduct', LikedProductSchema
+  );
+
+
 // Define interfaces for your schema
 interface IVariation extends Document {
   variation: string;

@@ -32,7 +32,7 @@ export class UserService{
             const user = await this.userRepository.Create(newUserData);
             return user;
         } catch (error) {
-            console.log(error);
+            console.log("test: "+ error);
         }
     }
 
