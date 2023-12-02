@@ -205,7 +205,7 @@ class UserAuth extends JwtAuth{
             if (result) {
               res.status(200).json({ message: 'Product unliked successfully' });
             } else {
-              res.status(404).json({ message: 'Liked product not found' });
+              res.status(404).json({ message: 'No such liked product found' });
             }
             
         } catch (err) {
