@@ -7,7 +7,6 @@ export interface BusinessDto{
     zip:string;
     referral_code?:string;
     business_registered:boolean;
-    registered_date:string;
     document?:string;
     cac_reg_number?: string;
 }

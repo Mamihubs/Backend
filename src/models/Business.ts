@@ -9,7 +9,6 @@ export interface IBusiness extends Document {
   zip: string;
   referral_code?: string;
   business_registered: boolean;
-  registered_date: string;
   document?: string;
   cac_reg_number?: string;
 }
@@ -26,7 +25,6 @@ const BusinessSchema = new Schema<IBusiness>({
   zip: { type: String },
   referral_code: { type: String },
   business_registered: { type: Boolean },
-  registered_date: { type: String },
   document: { type: String },
   cac_reg_number: { type: String },
 });
