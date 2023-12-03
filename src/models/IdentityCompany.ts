@@ -7,7 +7,6 @@ export interface IIdentityCompany extends Document {
     company_size:number;
     address:string;
     manager_number:string;
-    document_type:string;
     identity_card:string;
     passport:string;
 }
@@ -21,7 +20,6 @@ const identityIndividualSchema = new Schema<IIdentityCompany>({
     company_name:{type:String, required:true},
     company_size:{type:Number, required:true},
     address:{type:String, required:true},
-    document_type:{type:String, required:true},
     identity_card:{type:String, required:true},
     passport:{type:String, required:true}
 },{timestamps:true});

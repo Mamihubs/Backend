@@ -29,12 +29,7 @@ export class OnboardingController {
 
       const businessInformation =
         await this.onboardingRepo.CreateBusinessInformation({
-          ...req.body,
-          document: Array.isArray(req.files)
-            ? req.files.map(
-                (file: Express.Multer.File) => `document-image/${file.filename}`
-              )
-            : "",
+          ...req.body
         });
 
       return res.status(201).json({ businessInformation });
@@ -57,26 +52,16 @@ export class OnboardingController {
   // identity individual
   createIdentityIndividual = async (req: Request, res: Response) => {
     try {
-      const identity: IdentityIndividualDto = {
-        user: req.body.user,
-        institute_name: req.body.institute_name,
-        graduation_date: req.body.graduation_date,
-        identity_card: req.body.identity_card,
-        passport: req.body.passport,
-      };
+      // const identity: IdentityIndividualDto = {
+      //   user: req.body.user,
+      //   institute_name: req.body.institute_name,
+      //   graduation_date: req.body.graduation_date,
+      //   identity_card: req.body.identity_card,
+      //   passport: req.body.passport,
+      // };
       const identityIndividual =
         await this.onboardingRepo.CreateIdentityIndividual({
-          ...req.body,
-          identity_card: Array.isArray(req.files)
-            ? req.files.map(
-                (file: Express.Multer.File) => `document-image/${file.filename}`
-              )
-            : "",
-          passport: Array.isArray(req.files)
-            ? req.files.map(
-                (file: Express.Multer.File) => `passport-image/${file.filename}`
-              )
-            : "",
+          ...req.body
         });
 
       return res.status(201).json({ identityIndividual });
@@ -100,29 +85,19 @@ export class OnboardingController {
   // identity company
   createIdentityCompany = async (req: Request, res: Response) => {
     try {
-      const identity: IdentityCompanyDto = {
-        user: req.body.user,
-        address: req.body.address,
-        company_name: req.body.company_name,
-        company_size: req.body.company_size,
-        document_type: req.body.document_type,
-        manager_number: req.body.manager_number,
-        identity_card: req.body.identity_card,
-        passport: req.body.passport,
-      };
+      // const identity: IdentityCompanyDto = {
+      //   user: req.body.user,
+      //   address: req.body.address,
+      //   company_name: req.body.company_name,
+      //   company_size: req.body.company_size,
+      //   document_type: req.body.document_type,
+      //   manager_number: req.body.manager_number,
+      //   identity_card: req.body.identity_card,
+      //   passport: req.body.passport,
+      // };
       const identityIndividual =
         await this.onboardingRepo.CreateIdentityCompany({
-          ...req.body,
-          identity_card: Array.isArray(req.files)
-            ? req.files.map(
-                (file: Express.Multer.File) => `document-image/${file.filename}`
-              )
-            : "",
-          passport: Array.isArray(req.files)
-            ? req.files.map(
-                (file: Express.Multer.File) => `passport-image/${file.filename}`
-              )
-            : "",
+          ...req.body
         });
 
       return res.status(201).json({ identityIndividual });

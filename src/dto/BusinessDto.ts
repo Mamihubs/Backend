@@ -9,6 +9,7 @@ export interface BusinessDto{
     business_registered:boolean;
     registered_date:string;
     document:string;
+    cac_reg_number?: string;
 }
 
 
