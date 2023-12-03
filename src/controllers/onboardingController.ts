@@ -133,7 +133,10 @@ export class OnboardingController {
       const bankDetails = await this.onboardingRepo.CreateBank(bank);
 
       return res.status(201).json({ bankDetails });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      
+    }
   };
   updateBank = async (req: Request, res: Response) => {
     try {
