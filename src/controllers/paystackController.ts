@@ -9,7 +9,7 @@ export class PaystackController{
 
       console.log("save paystack payment route...")
       let {paystackInfo} = req.body;
-      console.log(paystackInfo);
+      console.log(req.body);
       return res.status(200).json({
         error: false,
         message: "still working on save paystack payment api"
