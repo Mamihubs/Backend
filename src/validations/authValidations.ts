@@ -51,6 +51,7 @@ export const profileValidation = (values: object) => {
         createdByy:Joi.string(),
         updatedBy:Joi.string(),
         active:Joi.boolean(),
+        accountStatus: Joi.string()
     });
     return schema.validate(values);
 }

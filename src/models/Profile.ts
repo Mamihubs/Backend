@@ -16,6 +16,7 @@ export interface ProfileDoc extends Document {
   identificationName: string;
   passport: string;
   active: boolean;
+  accountStatus: string;
   createdBy: object;
   updatedBy: object;
   storeName: string;
@@ -39,6 +40,7 @@ const Profile = new Schema<ProfileDoc>(
     identificationName: { type: String },
     passport: { type: String },
     active: { type: Boolean, default: false },
+    accountStatus: { type: String, default: "unapproved" },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
