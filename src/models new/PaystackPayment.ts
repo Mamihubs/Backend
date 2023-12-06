@@ -1,11 +1,12 @@
 import mongoose, { Document, Model, ObjectId, Schema } from "mongoose";
 
+
+export interface PaymentInfo extends Document{
+
+}
 export interface PaystackPayment extends Document {
   userId: ObjectId;
   payment: object[];
-  cart: object[];
-  paymentDate: Date;
-  paymentAmount: number;
   createdAt: Date;
   updateAt: Date;
 }
@@ -13,7 +14,6 @@ export interface PaystackPayment extends Document {
 const paystackSchema = new Schema<PaystackPayment>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   payment: [],
-  cart: [],
 
 }, {timestamps: true});
 
