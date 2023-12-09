@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/', adminController.getDashboard)
 router.get('/analytics', adminController.getAnalytics)
 router.get('/products', adminController.getProducts)
+router.get('/vendor-details/:id', adminController.getAllVendorDetails)
 router.get('/vendors', adminController.getVendors)
 router.get('/customers', adminController.getCustomers)
 router.get('/orders', adminController.getOrders)
