@@ -55,7 +55,7 @@ export class PaystackController{
             message: "paystack payment confirmed and information successfully stored"
           })
         }
-      }
+      } 
 
       console.log(req.body);
       return res.status(200).json({
