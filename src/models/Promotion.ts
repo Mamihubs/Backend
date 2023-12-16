@@ -13,6 +13,6 @@ const PromotionSchema = new Schema<IPromotion>({
 }, {timestamps:true});
 
 
-const PromotionModel: Model<IPromotion> = mongoose.model('Promotion', PromotionSchema);
+const PromotionModel: Model<IPromotion> = mongoose.model<IPromotion>('Promotion', PromotionSchema);
 
 export default PromotionModel;

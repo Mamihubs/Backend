@@ -16,7 +16,30 @@ export class PromotionRepository{
 
     async findAllPromotions( ){
         try{
-            const promotions = await Promotion.find();
+            const promotions = await Promotion.aggregate([{
+                $lookup:{
+                    from: "promotionplans",
+                    localField:"plan_type",
+                    foreignField:"_id",
+                    as: "plan"
+                }
+            },
+            {
+                $lookup:{
+                    from: "users",
+                    localField:"user",
+                    foreignField:"_id",
+                    as: "user"
+                }
+            },
+            {
+                $lookup:{
+                    from: "products",
+                    localField:"product",
+                    foreignField:"_id",
+                    as: "product"
+                }
+            }]);
             return promotions;
         }catch(error){
             console.log(error);

@@ -1,4 +1,5 @@
 import mongoose, {Document, Model, ObjectId, Schema} from 'mongoose';
+import { IPromotion } from './Promotion';
 
 
 export enum PlanType {
@@ -7,7 +8,6 @@ export enum PlanType {
     DIAMOND = "Diamond",
 }
 export interface IPromotionPlan extends Document {
-    id: mongoose.Types.ObjectId;
     plan_type: string;
     duration:number;
     amount: number;
@@ -15,7 +15,6 @@ export interface IPromotionPlan extends Document {
 
 
 const PromotionPlanSchema = new Schema<IPromotionPlan>({
-    id:{type: mongoose.Schema.Types.ObjectId},
     plan_type:{type:String},
     duration:{type:Number},
     amount:{type:Number}
@@ -24,6 +23,6 @@ const PromotionPlanSchema = new Schema<IPromotionPlan>({
 },{timestamps:true});
 
 
-const PromotionPlanModel: Model<IPromotionPlan> = mongoose.model("PromotionPlan", PromotionPlanSchema);
+const PromotionPlanModel: Model<IPromotionPlan> = mongoose.model<IPromotionPlan>("PromotionPlan", PromotionPlanSchema);
 
 export default PromotionPlanModel;

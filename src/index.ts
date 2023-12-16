@@ -28,6 +28,8 @@ import locationRouter from "./routes/locationRoutes";
 import vendorRoutes from "./routes/vendorRoutes";
 import onboardingRoutes from "./routes/onboardingRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
+import promotionRoutes from "./routes/promotionRoutes";
+import promotionPlanRoutes from "./routes/promotionPlanRoutes";
 
 
 // Middlewares
@@ -44,6 +46,8 @@ app.use("/api/vendor", vendorRoutes);
 app.use("/api/location", locationRouter)
 app.use('/api/onboarding', onboardingRoutes)
 app.use('/api/notification', notificationRoutes)
+app.use('/api/promotion', promotionRoutes)
+app.use('/api/promotion-plan', promotionPlanRoutes)
 
 
 

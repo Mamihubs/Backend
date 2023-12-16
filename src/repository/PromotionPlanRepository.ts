@@ -1,5 +1,6 @@
 
-import { PromotionPlanDto } from "../dto/PromotionPlanDto";
+import { PromotionPlanDto } from "../dto/PromotionPlanDto"; 
+import PromotionPlanModel from "../models/PromotionPlan";
 import PromotionPlan from "../models/PromotionPlan";
 
 export class PromotionPlanRepository{

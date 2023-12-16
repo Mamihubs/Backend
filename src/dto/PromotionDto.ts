@@ -1,5 +1,5 @@
 export interface PromotionDto{
-    user:object;
-    plan_type:object;
-    product:object;
+    user:string;
+    plan_type:string;
+    product:string;
 }
