@@ -3,3 +3,9 @@ export interface PromotionPlanDto{
     duration:number;
     amount:number;
 }
+
+
+export interface UpdatePromotionPlanDto{
+    id:string;
+    update:object
+}

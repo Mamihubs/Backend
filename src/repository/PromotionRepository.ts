@@ -1,10 +1,27 @@
 import mongoose from "mongoose";
-import { PromotionDto } from "../dto/PromotionDto";
+import { PromotionDto, UpdatePromotionDto } from "../dto/PromotionDto";
 import Promotion from "../models/Promotion";
+import Wallet from "../models/Wallet";
+import { WalletRepository } from "./WalletRepository";
+import { searchDto } from "../dto/GeneralDto";
 
 export class PromotionRepository{
+    private walletRepo: WalletRepository = new WalletRepository();
 
     async createPromotion(promotionDto:PromotionDto){
+        try{
+          
+                const promotion = await Promotion.create(promotionDto);
+                return promotion;
+         
+
+         
+           
+        }catch(error){
+            console.log(error);
+        }
+    }
+    async updatePromotion(promotionDto:UpdatePromotionDto){
         try{
             const promotion = await Promotion.create(promotionDto);
             return promotion;
