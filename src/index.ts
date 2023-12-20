@@ -30,6 +30,7 @@ import onboardingRoutes from "./routes/onboardingRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
 import promotionRoutes from "./routes/promotionRoutes";
 import promotionPlanRoutes from "./routes/promotionPlanRoutes";
+import walletRoutes from "./routes/walletRoutes";
 
 
 // Middlewares
@@ -48,6 +49,7 @@ app.use('/api/onboarding', onboardingRoutes)
 app.use('/api/notification', notificationRoutes)
 app.use('/api/promotion', promotionRoutes)
 app.use('/api/promotion-plan', promotionPlanRoutes)
+app.use('/api/wallet', walletRoutes)
 
 
 
