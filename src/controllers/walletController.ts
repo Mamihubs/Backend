@@ -113,7 +113,7 @@ class WalletController {
                     return res.status(200).json({
                         status:true,
                         message:"Wallet funded successfully.",
-                        data: updateUserWallet
+                        data: checkWalletAlreadyExists
                     }) 
                 }
         }catch(e){
