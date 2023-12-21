@@ -49,7 +49,7 @@ class PromotionController {
 
       var date = new Date();
       date.setDate(date.getDate() + fetchPlan["duration"]);
-      const expired_by = date.toString();
+      const expired_by = date.toUTCString();
 
       if (planAmount > amount) {
         return res.status(500).json({
