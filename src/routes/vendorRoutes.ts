@@ -18,5 +18,4 @@ router.get("/product/:id", vendorController.getProduct);
 
 
 
-
 export default router;

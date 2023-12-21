@@ -10,6 +10,18 @@ export const userRegistrationValidation = (data: object) => {
     });
     return schema.validate(data);
 };
+export const vendorRegistrationValidation = (data: object) => {
+    const schema = Joi.object({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().required(),
+        phoneNumber: Joi.string().required(),
+        storeName: Joi.string().required(),
+        storeDescription: Joi.string().required(),
+        password: Joi.string().min(8).required()
+    });
+    return schema.validate(data);
+};
 
 // User Login Validation
 export const userLoginValidation = (data: object) => {
@@ -39,6 +51,7 @@ export const profileValidation = (values: object) => {
         createdByy:Joi.string(),
         updatedBy:Joi.string(),
         active:Joi.boolean(),
+        accountStatus: Joi.string()
     });
     return schema.validate(values);
 }

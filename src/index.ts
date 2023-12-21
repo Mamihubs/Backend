@@ -12,7 +12,7 @@ const app = express();
 import "./utils/connectDB"
 
 // Middlewares
-app.use(cors());
+app.use(cors({origin:"*"}));
 app.use(express.json());
 
 // Routers
@@ -28,6 +28,9 @@ import locationRouter from "./routes/locationRoutes";
 import vendorRoutes from "./routes/vendorRoutes";
 import onboardingRoutes from "./routes/onboardingRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
+import promotionRoutes from "./routes/promotionRoutes";
+import promotionPlanRoutes from "./routes/promotionPlanRoutes";
+import walletRoutes from "./routes/walletRoutes";
 
 import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes"
@@ -47,6 +50,9 @@ app.use("/api/vendor", vendorRoutes);
 app.use("/api/location", locationRouter)
 app.use('/api/onboarding', onboardingRoutes)
 app.use('/api/notification', notificationRoutes)
+app.use('/api/promotion', promotionRoutes)
+app.use('/api/promotion-plan', promotionPlanRoutes)
+app.use('/api/wallet', walletRoutes)
 
 app.use("/api/cart", cartRoutes);
 app.use("/api/payments/paystack", paystackRoutes)
@@ -65,5 +71,5 @@ app.get("/", (req: Request, res: Response) => {
 
 // Start Server on port 8081
 const server = app.listen(process.env.PORT, function(){
-    console.log("App started on port: ", process.env.PORT)
+    console.log("App started on port:", process.env.PORT)
 })

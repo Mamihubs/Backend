@@ -11,12 +11,12 @@ class ProfileController {
         try {
             // data validations
             const { email } = req.params;
-            const { error } = profileValidation(req.body);
-            if (error)
-                return res.status(400).json({
-                    error: true,
-                    message: error.details[0].message,
-                })
+            // const { error } = profileValidation(req.body);
+            // if (error)
+            //     return res.status(400).json({
+            //         error: true,
+            //         message: error.details[0].message,
+            //     })
             // check if the user exists
             // if the user profile's exists update the profile
             const checkExistance = await getProfileByEmail(email);
@@ -42,7 +42,7 @@ class ProfileController {
 
         try {
             // call the service to get user using the getProfileByEmail function
-            const data = await getProfileByEmail(req.body.email)
+            const data = await getProfileByEmail(email)
 
             if (!data)
                 return res.status(400).json({

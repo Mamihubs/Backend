@@ -11,7 +11,6 @@ export interface IdentityCompanyDto{
     company_size:number;
     address:string;
     manager_number:string;
-    document_type:string;
     identity_card:string;
     passport:string;
 }
