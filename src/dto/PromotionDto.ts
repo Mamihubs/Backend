@@ -5,7 +5,6 @@ export interface PromotionDto {
   expired_by: string;
   clicks?: number;
   impressions?: number;
-  cost:number;
 }
 export interface UpdatePromotionDto {
   id: string;

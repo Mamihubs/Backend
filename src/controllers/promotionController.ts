@@ -18,7 +18,7 @@ class PromotionController {
 
   createPromotion = async (req: Request, res: Response) => {
     try {
-      const { user, plan_type, product, cost } = req.body;
+      const { user, plan_type, product } = req.body;
       const query: searchDto = {
         field: "user",
         value: user,
@@ -82,7 +82,6 @@ class PromotionController {
         plan_type,
         product,
         user,
-        cost,
         expired_by: expired_by.toString(),
       });
 

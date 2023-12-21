@@ -7,7 +7,6 @@ export interface IPromotion extends Document {
   expired_by: string;
   clicks: number;
   impressions: number;
-  cost: number;
 }
 
 const PromotionSchema = new Schema<IPromotion>(
@@ -17,7 +16,6 @@ const PromotionSchema = new Schema<IPromotion>(
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     clicks: { type: Number, default: 0 },
     impressions: { type: Number, default: 0 },
-    cost: { type: Number },
     expired_by: { type: String },
   },
   { timestamps: true }
