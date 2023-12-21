@@ -3,8 +3,8 @@ export interface PromotionDto {
   plan_type: string;
   product: string;
   expired_by: string;
-  clicks: number;
-  impressions: number;
+  clicks?: number;
+  impressions?: number;
   cost:number;
 }
 export interface UpdatePromotionDto {
