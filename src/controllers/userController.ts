@@ -56,20 +56,18 @@ class UserAuth extends JwtAuth {
       });
     }
 
-    // Generate otp
-    const otp = general.generateOtp();
-
-    // send otp to email
-    const message =
-      "<h2>Hi " +
-      req.body.first_name +
-      " kindly confirm your account by using this otp " +
-      otp;
-    await general.sendEmail(req.body.email, "Confirm Account", message);
+    const code = {
+      user: newUser._id,
+      code: general.generateOtp(),
+    };
 
     await sendConfirmationEmail(newUser);
-    await verificationCodeService.CreateCode({ code: otp, user: newUser._id });
-    await verificationEmail(otp, newUser);
+    await verificationEmail(code.code, newUser)
+      .then(() => {
+        const newCode = new VerificationCode(code);
+        newCode.save();
+      })
+      .catch((e) => {});
 
     return res.status(200).json({
       status: true,
@@ -77,6 +75,7 @@ class UserAuth extends JwtAuth {
       data: newUser,
     });
   };
+  
   createVendor = async (req: Request, res: Response) => {
     // Data Validation
     const { error } = vendorRegistrationValidation(req.body);
@@ -126,9 +125,7 @@ class UserAuth extends JwtAuth {
         const newCode = new VerificationCode(code);
         newCode.save();
       })
-      .catch((e) => {
-     
-      });
+      .catch((e) => {});
 
     return res.status(200).json({
       status: true,
