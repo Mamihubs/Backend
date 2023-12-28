@@ -11,6 +11,7 @@ env.config();
 const app = express();
 import "./utils/connectDB"
 
+
 // Middlewares
 app.use(cors({origin:"*"}));
 app.use(express.json());
@@ -56,6 +57,9 @@ app.use('/api/wallet', walletRoutes)
 
 app.use("/api/cart", cartRoutes);
 app.use("/api/payments/paystack", paystackRoutes)
+
+
+
 
 
 

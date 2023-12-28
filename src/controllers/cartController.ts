@@ -27,6 +27,8 @@ export class CartController{
       })
     }
 
+    
+
     if(!userCartData){
       console.log("user has no cart data")
       return res.status(200).json({
