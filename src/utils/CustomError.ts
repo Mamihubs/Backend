@@ -1,5 +1,3 @@
-
-
 export default class CustomError extends Error{
     status: string;
     isOperational: boolean;
