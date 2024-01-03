@@ -20,8 +20,7 @@ export const sendConfirmationEmail = function (user: UserDoc) {
         to: user.login,
         subject: "Mamihub - Successful Registration",
         html: `
-          <style type="text/css">body, table, td, a { font-family: Arial, Helvetica, sans-serif !important; }</style>
-          <div style="background-color: #ffffff; font-family: Helvetica, Arial, sans-serif; margin: 0px; padding: 0px;">
+          <div style="background-color: #ffffff; margin: 0px; padding: 0px;">
           <div style="max-width: 500px; margin: auto;">
               <div style="display: flex; background: #F9F9F9; padding: 1rem; align-items: center; margin: 0; justify-content: center;">
                   <div style="margin-right: 1rem; height: 40px; width: 40px; overflow: hidden;">
@@ -31,7 +30,7 @@ export const sendConfirmationEmail = function (user: UserDoc) {
                       <h3 style="font-weight: 700; font-size: 1.3rem; margin: .5rem;">Mamihub</h3>
                   </div>
               </div>
-              <div style="background-color: #ffffff; padding: 1rem; font-family: 'Livvic';">
+              <div style="background-color: #ffffff; padding: 1rem;">
                   <h4 style="margin: .5rem 0 1rem 0;">Hi ${user.fullName}</h4>
                   <div class="messageContainer">
                       <p style="font-size: .85rem; line-height: 1.5; text-align: justify;">
@@ -82,8 +81,7 @@ export const verificationEmail = function (code: string, user: UserDoc) {
         to: user.login,
         subject: "Confirm Account",
         html: `
-        <style type="text/css">body, table, td, a { font-family: Arial, Helvetica, sans-serif !important; }</style>
-            <div style="background-color: #ffffff; font-family: Helvetica, Arial, sans-serif; margin: 0px; padding: 0px;">
+            <div style="background-color: #ffffff; margin: 0px; padding: 0px;">
         <div style="max-width: 500px; margin: auto;">
             <div style="display: flex; background: #F9F9F9; padding: 1rem; margin: 0; justify-content: center;">
                 <div style="margin-right: 1rem; height: 40px; width: 40px; overflow: hidden;">
@@ -94,7 +92,7 @@ export const verificationEmail = function (code: string, user: UserDoc) {
                     <h1 style="font-weight: 700; font-size: 1.4rem; margin: .5rem; color: #305C45;">MamiHub</h1>
                 </div>
             </div>
-            <div style="background-color: #ffffff; padding: 1rem; font-family: 'Livvic';">
+            <div style="background-color: #ffffff; padding: 1rem;">
                 <h4 style="margin: .5rem 0 1rem 0;">Hi ${user.fullName},</h4>
                 <div class="messageContainer">
                     <p style="font-size: .85rem; line-height: 1.5; text-align: justify;">
