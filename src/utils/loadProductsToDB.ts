@@ -11,11 +11,8 @@ import { products } from "./mockData";
 
 function loadProductsToDB(): void {
   console.log("trying to load products to db...");
-  // console.log(products[0]);
-  console.log(process.env.MONGO_DB_CONNECTION_STRING)
   let string = process.env.MONGO_DB_CONNECTION_STRING;
-  // console.log(string?.split("/").slice(3))
-  // console.log(string?.split("/").slice(3)[0].length);
+  
   const DB_NAME = string?.split("/").slice(3)[0]
   let length_of_db_name = DB_NAME?.length
   if (length_of_db_name !== undefined) {
@@ -26,7 +23,7 @@ function loadProductsToDB(): void {
   );
     
 
-    console.log(DB_URL);
+    // console.log(DB_URL);
     const client = new mongoClient(DB_URL);
 
 

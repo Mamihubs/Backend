@@ -179,6 +179,8 @@ class ProductController {
       return res.status(500).json({ message: "An error occurred", error });
     }
   };
+
+  
   async updateQuantity(req: Request, res: Response) {
     const { product_id, variation_id, quantity } = req.body;
 
