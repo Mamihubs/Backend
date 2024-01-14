@@ -29,7 +29,9 @@ class AuthenticateUser extends UserService{
         const user = await this.getOneUser("_id", decoded._id);
         if (!user)
             return res.status(401).json({ message: "User with that token no longer exists" });
-        req.user = user._id;
+        
+
+        req.user = user._id.toString();
         next()
     }
 
@@ -37,7 +39,7 @@ class AuthenticateUser extends UserService{
         try {
             const user = req.user;
             if (!user)
-                return next(new CustomError("AUthentication required", 403));
+                return next(new CustomError("Authentication required", 403));
             next();
         } catch (err) {
             next(err);
@@ -52,4 +54,6 @@ class AuthenticateUser extends UserService{
     }
 }
 
-export default new AuthenticateUser()
+export default new AuthenticateUser();
+
+
