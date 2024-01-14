@@ -23,7 +23,7 @@ function loadProductsToDB(): void {
   );
     
 
-    // console.log(DB_URL);
+    // console.log(DB_URL); 
     const client = new mongoClient(DB_URL);
 
 

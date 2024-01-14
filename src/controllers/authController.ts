@@ -26,8 +26,6 @@ class AuthController {
 
         // Check out user in the Database
         const userExist = await User.findOne({ email: req.body.email });
-        console.log(userExist)
-        console.log("helllo")
         if (userExist) {
             return res.status(400).json({
                 error: true,
@@ -42,7 +40,7 @@ class AuthController {
         }
 
         // create new User in the db
-        const user = await User.create(userObj)
+        const user = await User.create(userObj);
 
         // Post user creation actions go below
         const created_profile = await createProfile({ email: req.body.email })
@@ -50,7 +48,7 @@ class AuthController {
         if (created_profile)
             return res.status(200).json({
                 error: false,
-                message: `user created successfully `
+                message: `user created successfully`
             });
 
     }
