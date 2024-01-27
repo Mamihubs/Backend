@@ -9,6 +9,7 @@ class AuthenticateUser extends UserService{
 
     public deserialToken = async (req: Request, res: Response, next: NextFunction) => {
         let token = null;
+        let decoded = null;
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             token = req.headers.authorization.split(' ')[1];
         }else if (req.cookies) {
@@ -18,11 +19,27 @@ class AuthenticateUser extends UserService{
         if (!token) {
             return res.status(401).json({ message: "Auth Token required"});
         }
+        try{
+                     decoded = this.jwtAuth.verifyJWT(token) as {
+                      _id: string;
+                      role: string;
+                    };
+                    
 
-        const decoded =  this.jwtAuth.verifyJWT(token) as { _id: string, role:string};
+            
+        }catch(error){
+            console.log(error)
+            return res
+              .status(401)
+              .json({ message: "Invalid token or user doesn't exist" });
 
-        if (!decoded)
-            return res.status(401).json({ message: "Invalid token or user doesn't exist"});
+
+        }
+        // const decoded =  this.jwtAuth.verifyJWT(token) as { _id: string, role:string};
+        
+
+        // if (!decoded)
+        //     return res.status(401).json({ message: "Invalid token or user doesn't exist"});
 
 
         // Check if user exist
