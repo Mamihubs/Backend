@@ -7,7 +7,7 @@ import AuthenticateUser from "../middlewares/authCheck"
 
 
 router.post("/update-cart", AuthenticateUser.deserialToken, CartController.cartUpdater);
-router.get("/get-cart", CartController.getCartData)
+router.get("/get-cart", AuthenticateUser.deserialToken, CartController.getCartData)
 
 
 export default router
