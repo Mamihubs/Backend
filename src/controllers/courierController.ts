@@ -1,33 +1,29 @@
+import axios from "axios"
+import {Request, Response} from 'express'
 
 
 
 
 
+export class CourierController {
+  userInfo = {
+    UserName: "demo",
+    MerchantID: "11200001"
+  };
 
-export class CourierController{
+  getCourierToken = async (req: Request, res: Response) => {
+    const tokenRequest = await axios.post(
+      "http://api.courierplus-ng.com/api/authentication/GetToken", this.userInfo
+    );
+    if(tokenRequest){
+      console.log(tokenRequest);
 
-
-  name = "username";
-  password = 1111111;
-
-
-  
-
-
-
-
-  getCourierToken = async(req, res) => {
+    }
     
-  }
+    res.send("I see you my bro")
+  };
 
-  getDestinations = async (req, res) => {
-
-  }
-
-
-
-
-
+  getDestinations = async (req: Request, res: Response) => {};
 }
 
 
