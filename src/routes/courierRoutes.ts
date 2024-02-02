@@ -12,7 +12,7 @@ import CourierController from "../controllers/courierController";
 
 
 
-router.post("/getDestinations", CourierController.getDestinations)
-router.get("/getCourierToken", CourierController.getCourierToken);
+router.post("/get-destinations", CourierController.getDestinations)
+router.get("/get-courier-token", CourierController.getCourierToken);
 
 export default router
