@@ -14,9 +14,9 @@ export class CartController{
 
 
   getCartData = async (req: Request, res: Response) => {
-    // console.log("getting user cart data...")
-    // let userId = req.user;
-    let userId = "655adcb6a18189d438dcb111";
+    console.log("getting user cart data...")
+    let userId = req.user;
+    // let userId = "655adcb6a18189d438dcb111";
     // console.log(req.headers)
 
 
@@ -35,7 +35,7 @@ export class CartController{
     
 
     if(!userCartData){
-      // console.log("user has no cart data")
+      console.log("user has no cart data")
       return res.status(200).json({
         error: true,
         message: "user has no cart data"
@@ -91,7 +91,7 @@ export class CartController{
           
         } catch (error) {
           console.log(error)
-          console.log("error updating first time cart data");
+          // console.log("error updating first time cart data");
           return res.status(400).json({
             error: true,
             message: "error saving user cart data(first time)"
@@ -110,7 +110,6 @@ export class CartController{
 
           let updatedCartData = await userCartData.save();
           // console.log(updatedCartData)
-
            if (updatedCartData) {
              return res.status(200).json({
                error: false,
@@ -136,7 +135,7 @@ export class CartController{
 
       
     } catch (error) {
-      console.log("error updating cart data");
+      // console.log("error updating cart data");
       return res.status(400).json({
         error: true,
         message: "error updating cart"
