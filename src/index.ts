@@ -35,6 +35,7 @@ import walletRoutes from "./routes/walletRoutes";
 
 import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes"
+import deliveryAddressRouter from "./routes/deliveryAddressRoute";
 
 
 // Middlewares
@@ -54,6 +55,7 @@ app.use('/api/notification', notificationRoutes)
 app.use('/api/promotion', promotionRoutes)
 app.use('/api/promotion-plan', promotionPlanRoutes)
 app.use('/api/wallet', walletRoutes)
+app.use('/api/delivery-address', deliveryAddressRouter)
 
 app.use("/api/cart", cartRoutes);
 app.use("/api/payments/paystack", paystackRoutes)

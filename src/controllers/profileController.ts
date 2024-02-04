@@ -25,7 +25,7 @@ class ProfileController {
                     error: true,
                     message: "user account not created"
                 })
-            const updatedProfile = await updateProfile(email, { ...req.body, active: true });
+            const updatedProfile = await updateProfile(email, { ...req.body, active: true }, );
             if (!updatedProfile) return res.status(400).json({ status: false, message: 'Profile update failed' })
             return res.status(200).json({
                 error: false,

@@ -5,6 +5,15 @@ require("dotenv").config();
 
 export const sendConfirmationEmail = function (user: UserDoc) {
   return new Promise(async (res, rej) => {
+    // const transporter = nodemailer.createTransport({
+    //     host:process.env.SMTP_HOST,
+    //     port:parseInt(process.env.SMTP_PORT || "1025"),
+    //     service: process.env.SMTP_SERVICE,
+    //     auth:{
+    //         user:"",
+    //         pass:""
+    //     }
+    // });
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       secure: true,
@@ -66,15 +75,23 @@ export const sendConfirmationEmail = function (user: UserDoc) {
 
 export const verificationEmail = function (code: string, user: UserDoc) {
   return new Promise(async (res, rej) => {
+    // const transporter = nodemailer.createTransport({
+    //   host:process.env.SMTP_HOST,
+    //     port:parseInt(process.env.SMTP_PORT || "1025"),
+    //     service: process.env.SMTP_SERVICE,
+    //     auth:{
+    //         user:"",
+    //         pass:""
+    //     }
+    // });
     const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      secure: true,
-      auth: {
-        user: "mamihubs@gmail.com",
-        pass: "iepp lsxj cxzb suda",
-      },
-    });
-
+        service: "Gmail",
+        secure: true,
+        auth: {
+          user: "mamihubs@gmail.com",
+          pass: "iepp lsxj cxzb suda",
+        },
+      });
     await transporter
       .sendMail({
         from: "mamihubs@gmail.com",

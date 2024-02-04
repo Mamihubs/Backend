@@ -22,6 +22,7 @@ export interface ProfileDoc extends Document {
   storeName: string;
   storeDescription: string;
   phoneNumber: string;
+  
 }
 
 const Profile = new Schema<ProfileDoc>(
@@ -41,6 +42,7 @@ const Profile = new Schema<ProfileDoc>(
     passport: { type: String },
     active: { type: Boolean, default: false },
     accountStatus: { type: String, default: "unapproved" },
+    
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -52,6 +54,7 @@ const Profile = new Schema<ProfileDoc>(
     storeName: { type: String },
     storeDescription: { type: String },
     phoneNumber: { type: String },
+    
   },
   { timestamps: true }
 );
@@ -66,7 +69,7 @@ export const createProfile = (values: Record<string, any>) =>
 export const updateProfile = async (
   email: string,
   values: Record<string, any>
-) => await ProfileModel.findOneAndUpdate({ email }, values, { new: true });
+) => await ProfileModel.findOneAndUpdate({ email }, values, );
 
 export const deleteProfile = async (email: string) =>
   await ProfileModel.findOneAndDelete({ email });
