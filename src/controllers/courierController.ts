@@ -79,9 +79,10 @@ export class CourierController {
 
 
         return tokenRequest.data.data.Token
-        console.log(feedback);
+        
         
     }
+    return "Error fetching new token"
 
   }
 
@@ -208,6 +209,24 @@ export class CourierController {
     }
   };
 
+  getDestinationsTwo = async (req: Request, res: Response) => {
+      let client;
+
+      if (process.env.MONGO_DB_CONNECTION_STRING) {
+        client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
+        await client.connect();
+      }
+
+      const token = await this.getCourierTokenFunction();
+      console.log(token)
+      res.send("two")
+
+
+  }
+
+
+
+
   getDeliveryTown = async (req: Request, res: Response) => {
     // console.log(req.body);
     let { originStation, originStationCode } = req.body;
@@ -217,6 +236,9 @@ export class CourierController {
 
 
     let newToken = await this.getNewToken()
+    console.log(newToken)
+
+
 
     res.send("chai");
   };
