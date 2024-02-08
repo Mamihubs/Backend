@@ -39,7 +39,7 @@ export class CourierController {
           { headers }
         );
         if(response.status >= 200 && response.status < 300){
-          return checkForAvailableToken 
+          return checkForAvailableToken.courierToken 
         }
         // console.log(response);
       } catch (error) {
@@ -47,6 +47,8 @@ export class CourierController {
         return "token unavailable"
       }
     }
+
+    return this.getNewToken();
   };
 
 
@@ -218,9 +220,43 @@ export class CourierController {
       }
 
       const token = await this.getCourierTokenFunction();
-      console.log(token)
-      res.send("two")
 
+      console.log(token, "ji");
+
+
+      if (token) {
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        };
+
+        let response = axios
+          .get("http://api.courierplus-ng.com/api/v1/GetOriginDestination", {
+            headers,
+          })
+          .then((response) => {
+            console.log("Response:", response.data.data);
+            res.send({
+              status: true,
+              message: "Available location gotten successfully",
+              data: response.data.data,
+            });
+          })
+          .catch((error) => {
+            console.error(
+              "Error:",
+              error.response ? error.response.data : error.message
+            );
+            res.send({
+              status: false,
+              message: "Error fetching available data",
+              data: null,
+            });
+          });
+      }
+
+
+     
 
   }
 
