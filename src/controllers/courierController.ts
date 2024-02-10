@@ -12,9 +12,9 @@ export class CourierController {
     UserName: "demo",
     MerchantID: "11200001",
   };
-  
 
   getCourierTokenFunction = async () => {
+    console.log("debi");
     let client;
     if (process.env.MONGO_DB_CONNECTION_STRING) {
       client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
@@ -25,9 +25,10 @@ export class CourierController {
       ?.db("mamihub")
       .collection("courier_token")
       .findOne({ courierName: "courierName" });
-    // console.log(checkForAvailableToken);
+    console.log(checkForAvailableToken, "there is token in the db");
 
     if (checkForAvailableToken) {
+      console.log(checkForAvailableToken.courierToken);
       const headers = {
         Authorization: `Bearer ${checkForAvailableToken.courierToken}`,
         "Content-Type": "application/json",
@@ -38,33 +39,39 @@ export class CourierController {
           "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
           { headers }
         );
-        if(response.status >= 200 && response.status < 300){
-          return checkForAvailableToken.courierToken 
+        console.log(response.data);
+
+        if (response.status >= 200 && response.status < 300) {
+          return checkForAvailableToken.courierToken;
         }
-        // console.log(response);
       } catch (error) {
-        // console.log(error);
-        return "token unavailable"
+        console.log("Place of error");
+        const deleteAvailableInactiveToken = await client
+          ?.db("mamihub")
+          .collection("courier_token")
+          .deleteMany({});
+
+        return this.getNewToken();
       }
+    } else {
+      console.log("no token");
+      // return "token value";
     }
 
     return this.getNewToken();
   };
 
-
   getNewToken = async () => {
-     let client;
+    let client;
 
-     if (process.env.MONGO_DB_CONNECTION_STRING) {
-       client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
-       await client.connect();
-     }
+    if (process.env.MONGO_DB_CONNECTION_STRING) {
+      client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
+      await client.connect();
+    }
     const tokenRequest = await axios.post(
       "http://api.courierplus-ng.com/api/authentication/GetToken",
       this.userInfo
     );
-
-
 
     if (tokenRequest.data) {
       console.log(tokenRequest.data);
@@ -77,16 +84,12 @@ export class CourierController {
       let feedback = await client
         ?.db("mamihub")
         .collection("courier_token")
-        .updateOne({courierName : "courierName"}, {$set: {courierToken: tokenRequest.data.data.Token}});
-
-
-        return tokenRequest.data.data.Token
-        
-        
+        .insertOne(courierTokenInfo);
+      console.log(feedback, "your papa");
+      return tokenRequest.data.data.Token;
     }
-    return "Error fetching new token"
-
-  }
+    return "Error fetching new token";
+  };
 
   getCourierToken = async (req: Request, res: Response) => {
     let client;
@@ -212,56 +215,57 @@ export class CourierController {
   };
 
   getDestinationsTwo = async (req: Request, res: Response) => {
-      let client;
+    let client;
 
-      if (process.env.MONGO_DB_CONNECTION_STRING) {
-        client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
-        await client.connect();
-      }
+    if (process.env.MONGO_DB_CONNECTION_STRING) {
+      client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
+      await client.connect();
+    }
 
-      const token = await this.getCourierTokenFunction();
+    // await this.getCourierTokenFunction();
 
-      console.log(token, "ji");
+    const token = await this.getCourierTokenFunction();
 
+    console.log(token, "ji");
 
-      if (token) {
-        const headers = {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        };
+    if (token) {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
 
-        let response = axios
-          .get("http://api.courierplus-ng.com/api/v1/GetOriginDestination", {
-            headers,
-          })
-          .then((response) => {
-            console.log("Response:", response.data.data);
-            res.send({
-              status: true,
-              message: "Available location gotten successfully",
-              data: response.data.data,
-            });
-          })
-          .catch((error) => {
-            console.error(
-              "Error:",
-              error.response ? error.response.data : error.message
-            );
-            res.send({
-              status: false,
-              message: "Error fetching available data",
-              data: null,
-            });
+      let response = axios
+        .get("http://api.courierplus-ng.com/api/v1/GetOriginDestination", {
+          headers,
+        })
+        .then((response) => {
+          console.log("Response:", response.data.data);
+          res.send({
+            status: true,
+            message: "Available location gotten successfully",
+            data: response.data.data,
           });
-      }
+        })
+        .catch((error) => {
+          console.error(
+            "Error:",
+            error.response ? error.response.data : error.message
+          );
+          res.send({
+            status: false,
+            message: "Error fetching available data",
+            data: null,
+          });
+        });
+    }
+  };
 
-
-     
-
-  }
-
-
-
+  gt3 = async (req: Request, res: Response) => {
+    // this.getCourierTokenFunction();
+    // this.getNewToken()
+    console.log("hello");
+    res.send("three");
+  };
 
   getDeliveryTown = async (req: Request, res: Response) => {
     // console.log(req.body);
@@ -270,11 +274,8 @@ export class CourierController {
     // let token = await this.getCourierTokenFunction()
     // console.log(token)
 
-
-    let newToken = await this.getNewToken()
-    console.log(newToken)
-
-
+    let newToken = await this.getNewToken();
+    console.log(newToken);
 
     res.send("chai");
   };
