@@ -13,7 +13,7 @@ connect
     .then((db: object) => {
         
         console.log("Connected to DB");
-        loadProductsToDB();
+        // loadProductsToDB();
 
     })
     .catch((err: object) => console.log(err))
