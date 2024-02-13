@@ -226,7 +226,7 @@ export class CourierController {
 
     const token = await this.getCourierTokenFunction();
 
-    console.log(token, "ji");
+    // console.log(token, "ji");
 
     if (token) {
       const headers = {
