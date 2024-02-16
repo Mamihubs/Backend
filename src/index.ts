@@ -32,13 +32,11 @@ import notificationRoutes from "./routes/notificationRoutes";
 import promotionRoutes from "./routes/promotionRoutes";
 import promotionPlanRoutes from "./routes/promotionPlanRoutes";
 import walletRoutes from "./routes/walletRoutes";
+import deliveryAddressRouter from "./routes/deliveryAddressRoute";
 
 import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes"
-import deliveryAddressRouter from "./routes/deliveryAddressRoute";
-import courierRoutes from "./routes/courierRoutes";
-import likedRoute from "./routes/likedItemRoute";
-
+import courierRoutes from "./routes/courierRoutes"
 
 
 
@@ -60,7 +58,6 @@ app.use('/api/promotion', promotionRoutes)
 app.use('/api/promotion-plan', promotionPlanRoutes)
 app.use('/api/wallet', walletRoutes)
 app.use('/api/delivery-address', deliveryAddressRouter)
-app.use('/api/liked-item', likedRoute)
 
 app.use("/api/cart", cartRoutes);
 app.use("/api/payments/paystack", paystackRoutes)
