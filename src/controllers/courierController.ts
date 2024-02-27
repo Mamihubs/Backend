@@ -7,6 +7,18 @@ dotenv.config();
 // const mongoClient = mongodb.MongoClient;
 import { MongoClient } from "mongodb";
 
+/*
+Endpoints to do
+-getPossibleDestination
+-place
+
+
+
+
+
+
+*/
+
 export class CourierController {
   userInfo = {
     UserName: "demo",
@@ -14,7 +26,7 @@ export class CourierController {
   };
 
   getCourierTokenFunction = async () => {
-    console.log("debi");
+    // console.log("debi");
     let client;
     if (process.env.MONGO_DB_CONNECTION_STRING) {
       client = new MongoClient(process.env.MONGO_DB_CONNECTION_STRING);
@@ -25,10 +37,10 @@ export class CourierController {
       ?.db("mamihub")
       .collection("courier_token")
       .findOne({ courierName: "courierName" });
-    console.log(checkForAvailableToken, "there is token in the db");
+    // console.log(checkForAvailableToken, "there is token in the db");
 
     if (checkForAvailableToken) {
-      console.log(checkForAvailableToken.courierToken);
+      // console.log(checkForAvailableToken.courierToken);
       const headers = {
         Authorization: `Bearer ${checkForAvailableToken.courierToken}`,
         "Content-Type": "application/json",
@@ -39,13 +51,13 @@ export class CourierController {
           "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
           { headers }
         );
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.status >= 200 && response.status < 300) {
           return checkForAvailableToken.courierToken;
         }
       } catch (error) {
-        console.log("Place of error");
+        // console.log("Place of error");
         const deleteAvailableInactiveToken = await client
           ?.db("mamihub")
           .collection("courier_token")
@@ -74,7 +86,7 @@ export class CourierController {
     );
 
     if (tokenRequest.data) {
-      console.log(tokenRequest.data);
+      // console.log(tokenRequest.data);
 
       let courierTokenInfo = {
         courierName: "courierName",
@@ -85,7 +97,7 @@ export class CourierController {
         ?.db("mamihub")
         .collection("courier_token")
         .insertOne(courierTokenInfo);
-      console.log(feedback, "your papa");
+      // console.log(feedback, "your papa");
       return tokenRequest.data.data.Token;
     }
     return "Error fetching new token";
@@ -227,7 +239,7 @@ export class CourierController {
     const token = await this.getCourierTokenFunction();
 
     console.log(token, "ji");
-  
+
     if (token) {
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -264,7 +276,7 @@ export class CourierController {
     // this.getCourierTokenFunction();
     // this.getNewToken()
     console.log("hello");
-    res.send("three");
+    res.send("courier endpoints active");
   };
 
   getDeliveryTown = async (req: Request, res: Response) => {
@@ -278,6 +290,30 @@ export class CourierController {
     console.log(newToken);
 
     res.send("chai");
+  };
+
+  getOnforwardingTown = async (req: Request, res: Response) => {
+    let { destinationTown } = req.body;
+    const token = await this.getCourierTokenFunction();
+    let headers = {};
+
+    if (token) {
+      headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      };
+    }
+
+    const url = `http://api.courierplus-ng.com/api/v1/GetDeliveryTown/${destinationTown.station_code}`;
+
+    try {
+      const response = await axios.get(url, { headers: headers });
+      console.log(response.data);
+      res.send("onforwarding");
+    } catch (error) {
+      console.log(error);
+      res.send("onfor");
+    }
   };
 }
 
