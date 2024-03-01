@@ -6,7 +6,7 @@ import CourierController from "../controllers/courierController";
 
 /*
 "get-destinations" endpoint is used to fetch origin and destination
-which can be used to populate dropdowns in frontend
+which can be used to populate dropdowns in frontend allow
 
 
 
