@@ -23,5 +23,6 @@ router.get("/get-destinations", CourierController.getDestinationsTwo);
 router.get("/get-courier-token", CourierController.getCourierToken);
 router.post("/get-delivery-town", CourierController.getDeliveryTown);
 router.post("/get-onforwarding-town", CourierController.getOnforwardingTown);
+router.post("/testNewToken", CourierController.testGetNewToken)
 
 export default router;

@@ -2,6 +2,7 @@ import axios from "axios";
 import mongodb from "mongodb";
 import { Request, Response } from "express";
 import dotenv from "dotenv";
+import { CourierService } from "../services/courier.service";
 dotenv.config();
 
 // const mongoClient = mongodb.MongoClient;
@@ -18,6 +19,8 @@ Endpoints to do
 
 
 */
+
+const courierService = new CourierService();
 
 export class CourierController {
   userInfo = {
@@ -315,6 +318,13 @@ export class CourierController {
       res.send("onfor");
     }
   };
+
+
+  testGetNewToken = async (req: Request, res: Response) => {
+    courierService.getNewToken()
+    return res.send("test get new token active");
+
+  }
 }
 
 export default new CourierController();
