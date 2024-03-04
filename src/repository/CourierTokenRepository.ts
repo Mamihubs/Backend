@@ -45,9 +45,11 @@ export class CourierTokenRepository {
     }
   }
 
+
+
   async removeToken(id: string) {
     try {
-      return await CourierToken.deleteOne({ id });
+      return await CourierToken.deleteOne({ _id: id });
     } catch (error: any) {
       return error;
     }
