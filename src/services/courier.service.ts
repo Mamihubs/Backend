@@ -10,7 +10,34 @@ export class CourierService {
 
   async getDestinations() {
     try {
-    } catch (error) {}
+      let token = await this.getCourierToken();
+      // console.log(token, "alpha");
+      if(token){
+         const headers = {
+           Authorization: `Bearer ${token}`,
+           "Content-type": "application/json",
+         };
+
+         try {
+           let response = await axios.get(
+             "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
+             { headers }
+           );
+           if(response.data.status){
+            return response.data.data
+           }
+           return "Error fecthing destinations"
+           console.log(response.data);
+         } catch (error) {
+           console.log(error);
+           return "Error fetching destinations"
+         }
+
+      }
+    } catch (error) {
+      console.log(error);
+      return "Error fetching destinations"
+    }
   }
 
   async getCourierToken() {
@@ -18,21 +45,22 @@ export class CourierService {
       const tokenData = await this.courierTokenRepository.findCompany(
         "courierPlus"
       );
-      console.log(tokenData.token);
-      if (tokenData.token) {
+      // console.log(tokenData[0], "t");
+      // console.log(tokenData[0].token, "charlie");
+      if (tokenData[0].token) {
         const headers = {
           Authorization: `Bearer ${tokenData.token}`,
           "Content-type": "application/json",
         };
         let tokenValidityStatus = await this.checkForTokenValidity(
-          tokenData.token
-        );
+          tokenData[0].token
+        ); 
         if (tokenValidityStatus === "Valid token") {
-          return tokenData.token;
+          return tokenData[0].token;
         }
         return this.getNewToken();
       } else {
-        this.getNewToken();
+        return this.getNewToken();
       }
     } catch (error) {
       console.log(error);
@@ -60,7 +88,7 @@ export class CourierService {
   }
 
   async getNewToken() {
-    console.log("gnt")
+    // console.log("gnt");
     const courierPlusMerchantInfo = {
       UserName: "demo",
       MerchantID: "11200001",
@@ -71,20 +99,18 @@ export class CourierService {
         courierPlusMerchantInfo
       );
       // console.log(tokenRequest.data.data);
-      // await this.courierTokenRepository.removeToken("65e59b00ddf8361e66b21f3a");
+      // await this.courierTokenRepository.removeToken("65e5b812575a26a177a19782");
       if (tokenRequest.data.data) {
         let response = tokenRequest.data.data;
         let companyDataResponse = await this.courierTokenRepository.findCompany(
           "courierPlus"
         );
-        console.log(companyDataResponse)
+        // console.log(companyDataResponse, "bravo");
         if (companyDataResponse.length == 0) {
           console.log("No documents found with the given company name");
           // console.log(tokenRequest.data.Expires)
 
-          let modifiedDate = await this.removeMicroSeconds(
-            response.Expires
-          );
+          let modifiedDate = await this.removeMicroSeconds(response.Expires);
           let createTokenResponse =
             await this.courierTokenRepository.createToken({
               courierName: "courierPlus",
@@ -92,16 +118,18 @@ export class CourierService {
               expiry: new Date(response.Expires),
             });
           console.log(createTokenResponse);
-            // let time = await this.removeMicroSeconds(
-            //   "2024-04-04T03:28:03.4239754Z"
-            // );
-            //  console.log(
-            //    new Date(
-            //      await this.removeMicroSeconds("2024-04-04T03:28:03.4239754Z")
-            //    )
-            //  );
+          return response.token;
         } else {
+          let updateToken = await this.courierTokenRepository.updateToken(
+            companyDataResponse[0]._id,
+            response.token
+          );
+          return response.token
         }
+      }else{
+        console.log("Error getting new token. Kindly check Merchant info")
+        return undefined
+
       }
     } catch (error) {
       console.log(error, "Error getting new token");

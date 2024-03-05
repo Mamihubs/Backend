@@ -163,6 +163,7 @@ export class CourierController {
   };
 
   getDestinations = async (req: Request, res: Response) => {
+    
     console.log("here");
     let client;
 
@@ -321,7 +322,7 @@ export class CourierController {
 
 
   testGetNewToken = async (req: Request, res: Response) => {
-    courierService.getNewToken()
+    courierService.getDestinations()
     return res.send("test get new token active");
 
   }
