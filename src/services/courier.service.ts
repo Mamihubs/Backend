@@ -27,13 +27,13 @@ export class CourierService {
             return response.data.data
            }
            return "Error fecthing destinations"
-           console.log(response.data);
          } catch (error) {
            console.log(error);
            return "Error fetching destinations"
          }
 
       }
+      return "Error fetching destinations"
     } catch (error) {
       console.log(error);
       return "Error fetching destinations"
@@ -45,13 +45,8 @@ export class CourierService {
       const tokenData = await this.courierTokenRepository.findCompany(
         "courierPlus"
       );
-      // console.log(tokenData[0], "t");
       // console.log(tokenData[0].token, "charlie");
       if (tokenData[0].token) {
-        const headers = {
-          Authorization: `Bearer ${tokenData.token}`,
-          "Content-type": "application/json",
-        };
         let tokenValidityStatus = await this.checkForTokenValidity(
           tokenData[0].token
         ); 
@@ -83,7 +78,8 @@ export class CourierService {
       }
       return "Invalid token";
     } catch (error) {
-      console.log(error);
+      console.log("Network error or CourierPlus API not functional");
+      
     }
   }
 
