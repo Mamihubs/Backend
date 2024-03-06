@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ProductsVariations {
+  id        String @map("_id") @db.ObjectId
+  price     Int
+  quantity  Int
+  state     String
+  variation String
+}
+
+model banks {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model businesses {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model carts {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model categories {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model companies {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model deliveryaddresses {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model identitycompanies {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model identityindividuals {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model likeditems {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  product Json?  @unique(map: "product_1")
+}
+
+model locations {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model notifications {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  createdAt DateTime @db.Date
+  message   String
+  status    String
+  updatedAt DateTime @db.Date
+  user      String?  @db.ObjectId
+}
+
+model paystacks {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model products {
+  id            String               @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int                  @map("__v")
+  brand         String
+  category_id   String               @db.ObjectId
+  createdAt     DateTime             @db.Timestamp
+  created_by    String               @db.ObjectId
+  images        String[]
+  is_flash_sale Boolean
+  product_desc  String
+  product_name  String
+  status        Boolean
+  updatedAt     DateTime             @updatedAt
+  variations    ProductsVariations[]
+}
+
+model profiles {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  accountStatus String?
+  active        Boolean
+  createdAt     DateTime @db.Date
+  dateOfBirth   String?
+  email         String   @unique(map: "email_1")
+  firstName     String
+  lastName      String
+  phoneNo       String?
+  stateOfOrigin String?
+  street1       String?
+  street2       String?
+  updatedAt     DateTime @db.Date
+}
+
+model promotionplans {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  amount    Int
+  createdAt DateTime @db.Date
+  duration  Int
+  plan_type String
+  updatedAt DateTime @db.Date
+}
+
+model promotions {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  v          Int      @map("__v")
+  createdAt  DateTime @db.Date
+  expired_by String
+  plan_type  String   @db.ObjectId
+  product    String   @db.ObjectId
+  updatedAt  DateTime @db.Date
+  user       String   @db.ObjectId
+}
+
+model regions {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model sales {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model salesorders {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model tokens {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt Json?
+
+  @@index([createdAt], map: "createdAt_1")
+}
+
+model users {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  active    Boolean
+  createdAt DateTime @db.Date
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  createdBy Json?
+  fullName  String
+  login     String
+  password  String
+  profileID String?  @db.ObjectId
+  status    String
+  type      String
+  updatedAt DateTime @db.Date
+}
+
+model verificationcodes {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  code      String
+  createdAt DateTime @db.Date
+  isValid   Boolean
+  maxAge    Int
+  updatedAt DateTime @db.Date
+  user      String   @db.ObjectId
+}
+
+model wallets {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  amount    Int
+  createdAt DateTime @db.Date
+  name      String
+  state     String
+  updatedAt DateTime @db.Date
+  user      String   @db.ObjectId
+}
