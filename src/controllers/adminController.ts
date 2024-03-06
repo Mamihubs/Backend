@@ -42,6 +42,7 @@ class AdminController {
   };
   getProducts = async (req: Request, res: Response) => {
     const products = await this.adminService.getAllProducts();
+
     return res.status(200).json({ products });
   };
   getOrders = async (req: Request, res: Response) => {
@@ -58,6 +59,7 @@ class AdminController {
 
     return res.status(200).json({ users });
   };
+
   getVendors = async (req: Request, res: Response) => {
     const users = await User.find({ type: "Vendor" });
 
