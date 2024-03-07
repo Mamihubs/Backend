@@ -12,31 +12,30 @@ export class CourierService {
     try {
       let token = await this.getCourierToken();
       // console.log(token, "alpha");
-      if(token){
-         const headers = {
-           Authorization: `Bearer ${token}`,
-           "Content-type": "application/json",
-         };
+      if (token) {
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        };
 
-         try {
-           let response = await axios.get(
-             "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
-             { headers }
-           );
-           if(response.data.status){
-            return response.data.data
-           }
-           return "Error fecthing destinations"
-         } catch (error) {
-           console.log(error);
-           return "Error fetching destinations"
-         }
-
+        try {
+          let response = await axios.get(
+            "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
+            { headers }
+          );
+          if (response.data.status) {
+            return response.data.data;
+          }
+          return "Error fecthing destinations";
+        } catch (error) {
+          console.log(error);
+          return "Error fetching destinations";
+        }
       }
-      return "Error fetching destinations"
+      return "Error fetching destinations";
     } catch (error) {
       console.log(error);
-      return "Error fetching destinations"
+      return "Error fetching destinations";
     }
   }
 
@@ -49,7 +48,7 @@ export class CourierService {
       if (tokenData[0].token) {
         let tokenValidityStatus = await this.checkForTokenValidity(
           tokenData[0].token
-        ); 
+        );
         if (tokenValidityStatus === "Valid token") {
           return tokenData[0].token;
         }
@@ -79,7 +78,6 @@ export class CourierService {
       return "Invalid token";
     } catch (error) {
       console.log("Network error or CourierPlus API not functional");
-      
     }
   }
 
@@ -120,12 +118,11 @@ export class CourierService {
             companyDataResponse[0]._id,
             response.token
           );
-          return response.token
+          return response.token;
         }
-      }else{
-        console.log("Error getting new token. Kindly check Merchant info")
-        return undefined
-
+      } else {
+        console.log("Error getting new token. Kindly check Merchant info");
+        return undefined;
       }
     } catch (error) {
       console.log(error, "Error getting new token");

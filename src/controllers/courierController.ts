@@ -14,55 +14,12 @@ Endpoints to do
 -place
 
 
-
-
-
-
 */
 
 const courierService = new CourierService();
 
 export class CourierController {
  
-
-  
-  // getDeliveryTown = async (req: Request, res: Response) => {
-  //   // console.log(req.body);
-  //   let { originStation, originStationCode } = req.body;
-  //   // console.log(originStation);
-  //   // let token = await this.getCourierTokenFunction()
-  //   // console.log(token)
-
-  //   let newToken = await this.getNewToken();
-  //   console.log(newToken);
-
-  //   res.send("chai");
-  // };
-
-  // getOnforwardingTown = async (req: Request, res: Response) => {
-  //   let { destinationTown } = req.body;
-  //   const token = await this.getCourierTokenFunction();
-  //   let headers = {};
-
-  //   if (token) {
-  //     headers = {
-  //       Authorization: `Bearer ${token}`,
-  //       "Content-type": "application/json",
-  //     };
-  //   }
-
-  //   const url = `http://api.courierplus-ng.com/api/v1/GetDeliveryTown/${destinationTown.station_code}`;
-
-  //   try {
-  //     const response = await axios.get(url, { headers: headers });
-  //     console.log(response.data);
-  //     res.send("onforwarding");
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.send("onfor");
-  //   }
-  // };
-
 
   getCourierDestinations = async (req: Request, res: Response) => {
     let response = await courierService.getDestinations();
