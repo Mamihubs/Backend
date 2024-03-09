@@ -129,6 +129,13 @@ export class CourierService {
     }
   }
 
+  async getShippingFee(){
+   let request = {"Origin":"LOS",
+    "Destination":"ABV",
+    "Weight":"1.5", 
+    "ServiceType": "DOMESTIC EXPRESS"} 
+  }
+
   async removeMicroSeconds(timestamp: string) {
     const [datePart, timePart] = timestamp.split("T");
     const timePartWithoutSeconds = timePart.split(".")[0];

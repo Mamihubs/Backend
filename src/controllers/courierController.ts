@@ -36,6 +36,11 @@ export class CourierController {
       data: response
     });
 
+
+    getCourierShippingFee = async (req: Request, res: Response) => {
+      let response = await courierService.getShippingFee()
+    }
+
   }
 }
 
