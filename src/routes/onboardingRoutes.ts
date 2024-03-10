@@ -1,10 +1,11 @@
 import express from 'express';
 import onboardingController from '../controllers/onboardingController';
+import upload from '../utils/multerConfig';
 
 const router = express.Router();
 
 
-router.post("/create-business-information", onboardingController.createBusinessInformation);
+router.post("/create-business-information",upload.single("image"), onboardingController.createBusinessInformation);
 router.post("/create-bank", onboardingController.createBank);
 router.post("/create-identity-individual", onboardingController.createIdentityIndividual);
 router.post("/create-identity-company", onboardingController.createIdentityCompany); 

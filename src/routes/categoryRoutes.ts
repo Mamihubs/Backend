@@ -9,6 +9,7 @@ import  CategoryController from "../controllers/categoryController";
 
 
 router.post("/", AuthenticateUser.deserialToken, CategoryController.createCategories);
+// router.post("/", AuthenticateUser.deserialToken, CategoryController.createCategories);
 router.get('/', CategoryController.getCategories);
 router.get('/subcategories', CategoryController.getSubCategories);
 router.put("/:id", CategoryController.updateCategories);
