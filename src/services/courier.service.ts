@@ -130,6 +130,40 @@ export class CourierService {
   }
 
   async getShippingFee(){
+
+    
+   let request = {
+     Origin: "LOS",
+     Destination: "ABV",
+     Weight: "1.5",
+     ServiceType: "DOMESTIC EXPRESS",
+   }; 
+
+
+     const token = await this.getCourierToken();
+     console.log(token);
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      };
+
+      try {
+        let response = await axios.get(
+          "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
+          { headers }
+        );
+        if (response.status >= 200 && response.status < 300) {
+          return "Valid token";
+        }
+        return "Invalid token";
+      } catch (error) {
+        console.log("Network error or CourierPlus API not functional");
+      }
+
+
+
+
    let request = {"Origin":"LOS",
     "Destination":"ABV",
     "Weight":"1.5", 

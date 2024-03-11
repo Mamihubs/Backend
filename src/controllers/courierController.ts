@@ -19,29 +19,28 @@ Endpoints to do
 const courierService = new CourierService();
 
 export class CourierController {
- 
-
   getCourierDestinations = async (req: Request, res: Response) => {
     let response = await courierService.getDestinations();
-    if(response === "Error fetching destinations"){
+    if (response === "Error fetching destinations") {
       return res.status(500).json({
         status: false,
-        message: "An error occured while trying to fetch destinations"
-      })
+        message: "An error occured while trying to fetch destinations",
+      });
     }
     // console.log(response)
     return res.status(200).json({
       status: true,
       message: "Possible destinations fetched successfully",
-      data: response
+      data: response,
     });
+  };
 
-
-    getCourierShippingFee = async (req: Request, res: Response) => {
-      let response = await courierService.getShippingFee()
-    }
-
-  }
+  getCourierShippingFee = async (req: Request, res: Response) => {
+    let response = await courierService.getShippingFee();
+    res.status(200).json({
+      message: "Working on it"
+    })
+  };
 }
 
 export default new CourierController();
