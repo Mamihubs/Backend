@@ -223,7 +223,17 @@ class UserAuth extends JwtAuth {
         });
     }
   };
+
+  addDeliveryAddress = async (req: Request, res: Response) => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
 }
+
+
 
 export default new UserAuth();
 
