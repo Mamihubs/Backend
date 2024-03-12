@@ -132,7 +132,7 @@ export class CourierService {
   async getShippingFee(){
 
     
-   let request = {
+   let requestBody = {
      Origin: "LOS",
      Destination: "ABV",
      Weight: "1.5",
@@ -149,14 +149,12 @@ export class CourierService {
       };
 
       try {
-        let response = await axios.get(
-          "http://api.courierplus-ng.com/api/v1/GetOriginDestination",
+        console.log("pre")
+        let response = await axios.post(
+          "http://api.courierplus-ng.com/api/v1/GetTariff",requestBody,
           { headers }
         );
-        if (response.status >= 200 && response.status < 300) {
-          return "Valid token";
-        }
-        return "Invalid token";
+        console.log(response.data.data);
       } catch (error) {
         console.log("Network error or CourierPlus API not functional");
       }
