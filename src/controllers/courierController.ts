@@ -36,11 +36,35 @@ export class CourierController {
   };
 
   getCourierShippingFee = async (req: Request, res: Response) => {
+    let stationDetails = req.body;
+
     let response = await courierService.getShippingFee();
+    console.log(req.body)
     res.status(200).json({
-      message: "Working on it"
+      message: "Working on courier shipping fee"
     })
   };
+
+  getCourierOnforwardingTown = async (req: Request, res : Response) => {
+    let stationDetails = req.body;
+    let onForwardingTowns = await courierService.getOnforwardingTown(stationDetails);
+    if(onForwardingTowns){
+       res.status(200).json({
+      message: "Successfully fetched onforwarding town",
+      data: onForwardingTowns
+    })
+
+    }else{
+      res.status(404).json({
+        message: "Error fetching onforwarding towns",
+        data: null
+      })
+
+    }
+   
+
+  }
+
 }
 
 export default new CourierController();

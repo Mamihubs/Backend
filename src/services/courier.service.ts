@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CourierTokenRepository } from "../repository/CourierTokenRepository";
+import { StationInfo } from "../dto/CourierDto";
 
 export class CourierService {
   private courierTokenRepository: CourierTokenRepository;
@@ -129,43 +130,64 @@ export class CourierService {
     }
   }
 
-  async getShippingFee(){
+  async getOnforwardingTown(stationDetails: StationInfo) {
+    const token = await this.getCourierToken();
+    let headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    };
+    let DestinationCode = stationDetails.station_code;
+    try {
+      let response = await axios.get(
+        `http://api.courierplus-ng.com/api/v1/GetDeliveryTown/${DestinationCode}`,
+        { headers }
+      );
+      console.log(response.data);
+      let array = response.data.data
 
-    
-   let requestBody = {
-     Origin: "LOS",
-     Destination: "ABV",
-     Weight: "1.5",
-     ServiceType: "DOMESTIC EXPRESS",
-   }; 
+      let domesticExpressFilteredData = array.filter((object: any) => object.ServiceType === "DOMESTIC EXPRESS");
+      console.log(domesticExpressFilteredData);
+      return(domesticExpressFilteredData)
+    } catch (error) {
+      console.log(error);
+      return null
+    }
+  }
 
+  async getShippingFee() {
+    let requestBody = {
+      Origin: "LOS",
+      Destination: "ABV",
+      Weight: "1.5",
+      ServiceType: "DOMESTIC EXPRESS",
+    };
 
-     const token = await this.getCourierToken();
-     console.log(token);
+    const token = await this.getCourierToken();
+    console.log(token);
 
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json",
-      };
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    };
 
-      try {
-        console.log("pre")
-        let response = await axios.post(
-          "http://api.courierplus-ng.com/api/v1/GetTariff",requestBody,
-          { headers }
-        );
-        console.log(response.data.data);
-      } catch (error) {
-        console.log("Network error or CourierPlus API not functional");
-      }
+    try {
+      console.log("pre");
+      let response = await axios.post(
+        "http://api.courierplus-ng.com/api/v1/GetTariff",
+        requestBody,
+        { headers }
+      );
+      console.log(response.data.data);
+    } catch (error) {
+      console.log("Network error or CourierPlus API not functional");
+    }
 
-
-
-
-   let request = {"Origin":"LOS",
-    "Destination":"ABV",
-    "Weight":"1.5", 
-    "ServiceType": "DOMESTIC EXPRESS"} 
+    let request = {
+      Origin: "LOS",
+      Destination: "ABV",
+      Weight: "1.5",
+      ServiceType: "DOMESTIC EXPRESS",
+    };
   }
 
   async removeMicroSeconds(timestamp: string) {
