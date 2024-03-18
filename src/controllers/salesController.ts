@@ -75,7 +75,7 @@ class SalesController {
       //     console.log(`${index + 1}. Product ID: ${productId}, Total Quantity Sold: ${quantity}`);
       // });
 
-      return res.status(200).json({ sortedTopProducts });
+      return res.status(200).json({ data: sortedTopProducts });
     }
   };
 
@@ -125,7 +125,7 @@ class SalesController {
         });
 
       // Return the top-selling categories
-      return res.status(200).json({ sortedTopCategories });
+      return res.status(200).json({ data: sortedTopCategories });
     }
   };
 
@@ -161,14 +161,14 @@ class SalesController {
   // getting  all sales admin
   getSales = async (req: Request, res: Response) => {
     const sales = await this.SalesService.FindAll();
-    return res.status(200).json({ sales });
+    return res.status(200).json({ data: sales });
   };
 
   // getting  all sales for a user
   getUserSales = async (req: Request, res: Response) => {
     try {
       const sales = await this.SalesService.FindAll({ order_by: req.user });
-      return res.status(200).json({ sales });
+      return res.status(200).json({ data: sales });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
@@ -189,7 +189,7 @@ class SalesController {
       });
 
     const sales = await this.SalesService.FindAll(req.body.delivery_status);
-    return res.status(200).json({ sales });
+    return res.status(200).json({ data: sales });
   };
 
   getMonthlySales = async (req: Request, res: Response) => {
@@ -222,7 +222,8 @@ class SalesController {
         },
       ];
 
-      return series;
+      return res.status(200).json({ data: series });
+
     } catch (error) {
       console.error("Error retrieving monthly sales data:", error);
       throw error;

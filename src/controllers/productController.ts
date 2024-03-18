@@ -192,7 +192,7 @@ class ProductController {
       );
       res.json({
         message: "Quantity updated successfully",
-        variation: updatedVariation,
+        data: updatedVariation,
       });
     } catch (error) {
       console.error(error);

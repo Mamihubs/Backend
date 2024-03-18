@@ -77,7 +77,7 @@ import { UpdateWriteOpResult } from "mongoose";
         return res.status(200).json({
             status:true,
             message: "Delivery address updated",
-            updateDeliveryAddress
+            data: updateDeliveryAddress
         })
     } catch (error:any) {
         return res.status(400).json({

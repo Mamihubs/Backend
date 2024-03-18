@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import express from "express";
 import cors from "cors";
 import env from "dotenv";
-import bodyParser from "body-parser";
+// swagger documentation
+import swaggerUi from "swagger-ui-express";
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerDocOptions from "./swagger";
+
 
 env.config();
 
@@ -37,7 +41,12 @@ import deliveryAddressRouter from "./routes/deliveryAddressRoute";
 import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes"
 import courierRoutes from "./routes/courierRoutes"
+import likedRoutes from "./routes/likedItemRoute";
 
+
+const swaggerSpec = swaggerJSDoc(swaggerDocOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 // Middlewares
@@ -62,7 +71,7 @@ app.use('/api/delivery-address', deliveryAddressRouter)
 app.use("/api/cart", cartRoutes);
 app.use("/api/payments/paystack", paystackRoutes)
 app.use("/api/courier", courierRoutes)
-
+app.use("/api/like", likedRoutes)
 
 
 

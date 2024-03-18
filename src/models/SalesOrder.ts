@@ -9,7 +9,7 @@ export interface SalesOrderDoc extends Document{
     client_order_ref: string,
     reference: string,
     state: string,
-    date_order: Date,
+    date_ordered: Date,
     validity_date: Date,
     user_id: object,
     profile_id: object,
@@ -29,7 +29,7 @@ const SalesOrder = new Schema<SalesOrderDoc>({
     client_order_ref: {type: String},
     reference: {type: String},
     state: {type: String},
-    date_order: {type: Date},
+    date_ordered: {type: Date},
     validity_date: {type: Date},
     user_id: {
         type: mongoose.Schema.Types.ObjectId,

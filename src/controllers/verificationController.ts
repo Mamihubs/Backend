@@ -176,7 +176,7 @@ export const verifyUser = async (req: Request, res: Response) => {
             success: true,
             message:
               "Your account has been verified successfully!",
-            userInfo,
+            data: userInfo,
           });
         })
         .catch((err) => {

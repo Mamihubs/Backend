@@ -4,15 +4,323 @@ import vendorController from "../controllers/vendorController";
 const router = express.Router();
 
 // Group endpoints
+
+/**
+ * @swagger
+ * /api/vendor/orders/{id}:
+ *   get:
+ *     tags: ['Vendor']
+ *     description: Get all vendor orders
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: id of the vendor
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                      $ref: '#/components/schemas/SalesOrderResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/orders/:id", vendorController.getOrders);
 
+
+/**
+ * @swagger
+ * /api/vendor/transactions/{id}:
+ *   get:
+ *     tags: ['Vendor']
+ *     description: Get all vendor transactions
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: id of the vendor
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/SalesOrderResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/transactions/:id", vendorController.getTransactions);
+
+
+/**
+ * @swagger
+ * /api/vendor/products/{id}:
+ *   get:
+ *     tags: ['Vendor']
+ *     description: Get all vendor products
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: id of the vendor
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/products/:id", vendorController.getProducts);
 // :::::::::::::::::::::::::::::::::::::::::
 // single endpoints
+
+/**
+ * @swagger
+ * /api/vendor/order/{id}:
+ *   get:
+ *     tags: ['Vendor']
+ *     description: Get a vendor order details
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: id of the order
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                    $ref: '#/components/schemas/SalesOrderResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/order/:id", vendorController.getOrder);
 
+
+/**
+ * @swagger
+ * /api/vendor/transaction/{id}:
+ *   get:
+ *     tags: ['Vendor']
+ *     description: Get a vendor transaction details
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: id of the transaction
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                    $ref: '#/components/schemas/SalesOrderResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/transaction/:id", vendorController.getTransaction);
+
+
+/**
+ * @swagger
+ * /api/vendor/product/{id}:
+ *   get:
+ *     tags: ['Vendor']
+ *     description: Get a vendor product details
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: id of the vendor
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                    $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/product/:id", vendorController.getProduct);
 
 export default router;

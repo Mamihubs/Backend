@@ -9,18 +9,18 @@ class NotificationController{
          
 
         // create Notification
-        const notification = await NotificationModel.find({'user':id});
+        const data = await NotificationModel.find({'user':id});
 
-        return res.status(201).json({notification});
+        return res.status(201).json({data});
     }
     getOneNotification = async(req:Request, res:Response)=>{
         const {id} = req.params;
          
 
         // create Notification
-        const notification = await NotificationModel.find({_id:id});
+        const data = await NotificationModel.find({_id:id});
 
-        return res.status(201).json({notification});
+        return res.status(201).json({data});
     }
     createNotification = async(req:Request, res:Response)=>{
         const {user_id, message, status} = req.body;
@@ -31,9 +31,9 @@ class NotificationController{
         }
 
         // create Notification
-        const notification = await NotificationModel.create(notificationDto);
+        const data = await NotificationModel.create(notificationDto);
 
-        return res.status(201).json({notification});
+        return res.status(201).json({data});
     }
 
 
@@ -44,9 +44,9 @@ class NotificationController{
             update:req.body
         }
 
-        const notification = await NotificationModel.updateOne({_id:notificationUpdateDto._id}, notificationUpdateDto.update)
+        const data = await NotificationModel.updateOne({_id:notificationUpdateDto._id}, notificationUpdateDto.update)
 
-        return res.status(201).json({notification});
+        return res.status(201).json({data});
     }
 }
 

@@ -43,15 +43,452 @@ fileFilter
 });
 
 
+/**
+ * @swagger
+ * /api/location/region:
+ *   post:
+ *     tags: [Location]
+ *     description: Add a new region
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              name: 
+ *                type: string
+ *              
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/RegionResponse'
+ *       400:
+ *         description: Bad request, missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.post("/region", locationController.createRegions);
+
+/**
+ * @swagger
+ * /api/location/region:
+ *   get:
+ *     tags: [Location]
+ *     description: Get all regions
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/RegionResponse'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/region", locationController.fetchAllRegions);
+
+/**
+ * @swagger
+ * /api/location/region/{id}/:
+ *   get:
+ *     tags: [Location]
+ *     description: Get a specific region
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: ID of the region to be retrieved
+ *        
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                     $ref: '#/components/schemas/RegionResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/region/:id", locationController.fetchOneRegion);
+
+
+/**
+ * @swagger
+ * /api/location/region/{id}:
+ *   put:
+ *     tags: [Location]
+ *     description: Update region
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: ID of the region to be updated
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              name: 
+ *                type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 type: object
+ *                 properties:
+ *                      status:
+ *                          type: boolean
+ *                      message:
+ *                          type: string
+ *                      data:
+ *                          $ref: '#/components/schemas/RegionResponse'
+ *       400:
+ *         description: Bad request, missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.put("/region/:id", locationController.updateOneRegion);
 
+/**
+ * @swagger
+ * /api/location:
+ *   post:
+ *     tags: [Location]
+ *     description: Add a new location to the region
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              region: 
+ *                type: string
+ *              location: 
+ *                type: string
+ *              address: 
+ *                type: string
+ *              phoneNo: 
+ *                type: string
+ *              
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/LocationResponse'
+ *       400:
+ *         description: Bad request, missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.post("/", locationController.createLocations);
+
+/**
+ * @swagger
+ * /api/location:
+ *   get:
+ *     tags: [Location]
+ *     description: Get all locations
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/LocationResponse'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/", locationController.fetchAllLocations);
+
+/**
+ * @swagger
+ * /api/location/{id}/:
+ *   get:
+ *     tags: [Location]
+ *     description: Get a specific location
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: ID of the location to be retrieved
+ *        
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 data:
+ *                     $ref: '#/components/schemas/LocationResponse'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/:id", locationController.fetchOneLocation);
+
+/**
+ * @swagger
+ * /api/location/{id}:
+ *   put:
+ *     tags: [Location]
+ *     description: Update location
+ *     parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *              type: string
+ *       description: ID of the location to be updated
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              region: 
+ *                type: string
+ *              location: 
+ *                type: string
+ *              address: 
+ *                type: string
+ *              phoneNo: 
+ *                type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 type: object
+ *                 properties:
+ *                      status:
+ *                          type: boolean
+ *                      message:
+ *                          type: string
+ *                      data:
+ *                          $ref: '#/components/schemas/LocationResponse'
+ *       400:
+ *         description: Bad request, missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.put("/:id", locationController.updateOneLocation);
+
+/**
+ * @swagger
+ * /api/location/import:
+ *   post:
+ *     tags: [Location]
+ *     description: Upload multiple locations in a single file
+ * 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              csvFile:
+ *                 type: string
+ *                 format: binary     
+ *     
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/LocationResponse'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 router.post("/import", upload.single('csvFile'), locationController.bulkUploadLocation);
 
 
