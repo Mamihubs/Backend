@@ -19,6 +19,48 @@ which can be used to populate dropdowns in frontend
 */
 
 // router.get("/test", CourierController.gt3);
+
+
+/**
+ * @swagger
+ * /api/courier/get-destinations:
+ *   get:
+ *     tags: ['Courier']
+ *     description: Get courier
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ */
 router.get("/get-destinations", CourierController.getCourierDestinations);
 // router.get("/get-courier-token", CourierController.getCourierToken);
 // router.post("/get-delivery-town", CourierController.getDeliveryTown);
