@@ -46,11 +46,11 @@ import likedRoutes from "./routes/likedItemRoute";
 
 const swaggerSpec = swaggerJSDoc(swaggerDocOptions);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+if(process.env.NODE_ENV !== 'production'){
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
 
 // Middlewares
-
 app.use("/api/auth", authRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/product", productRouter);

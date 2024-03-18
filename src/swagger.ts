@@ -16,38 +16,6 @@ const swaggerDocOptions:swaggerJSDoc.Options = {
                 description: 'Development server',
             },
         ],
-        tags: [ 
-            {
-                name: "User",
-                "description": "All user endpoints"
-            },
-            {
-                name: "Admin",
-                "description": "All admin endpoints"
-            },
-            {
-                name: "Auth",
-                "description": "All auth endpoints"
-            },
-            {
-                name: "Cart",
-                "description": "All cart endpoints"
-            },
-            {
-                name: "Category",
-                "description": "All category endpoints"
-            },
-            {
-                name: "DeliveryAddress",
-                "description": "All delivery address endpoints"
-            },
-            {
-                name: "LikedProducts",
-                "description": "All liked  products endpoints"
-            }
-
-            
-        ],
         components: {
             schemas: {
                 CreateUserRequestBody: {
