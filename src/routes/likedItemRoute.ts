@@ -6,7 +6,7 @@ const likedRoute = Router()
 
 /**
  * @swagger
- * /api/like:
+ * /api/likes:
  *   post:
  *     tags: [LikedProducts]
  *     description: Add a liked  product
@@ -57,7 +57,7 @@ likedRoute.post("/", likedItemController.createLikeItem)
 
 /**
  * @swagger
- * /api/like/{id}:
+ * /api/likes/{id}:
  *   get:
  *     tags: [LikedProducts]
  *     description: Get liked product
@@ -100,7 +100,7 @@ likedRoute.get("/:id", likedItemController.fetchLikeItem)
 
 /**
  * @swagger
- * /api/like/{id}:
+ * /api/likes/{id}:
  *   delete:
  *     tags: [LikedProducts]
  *     description: Remove a liked product

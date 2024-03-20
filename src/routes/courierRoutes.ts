@@ -23,10 +23,10 @@ which can be used to populate dropdowns in frontend
 
 /**
  * @swagger
- * /api/courier/get-destinations:
+ * /api/couriers/get-destinations:
  *   get:
  *     tags: ['Courier']
- *     description: Get courier
+ *     description: Get courier destinations
  * 
  *     responses:
  *       200:

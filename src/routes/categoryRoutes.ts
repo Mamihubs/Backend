@@ -8,7 +8,7 @@ import  CategoryController from "../controllers/categoryController";
  * @swagger
  * /api/categories:
  *   post:
- *     tags: [Category]
+ *     tags: [Categories]
  *     description: Create a new category
  *     requestBody:
  *       required: true
@@ -52,7 +52,7 @@ router.post("/", AuthenticateUser.deserialToken, CategoryController.createCatego
  * @swagger
  * /api/categories/:
  *   get:
- *     tags: [Category]
+ *     tags: [Categories]
  *     description: Get categories data
  *     responses:
  *       200:
@@ -68,7 +68,7 @@ router.get('/', CategoryController.getCategories);
  * @swagger
  * /api/categories/{categoryId}/subcategories/:
  *   get:
- *     tags: [Category]
+ *     tags: [Categories]
  *     description: Get subcategories data
  *     parameters:
  *     - in: path
@@ -76,7 +76,7 @@ router.get('/', CategoryController.getCategories);
  *       required: true
  *       schema:
  *              type: string
- *       description: ID of the Category to retrieve its subcategories
+ *       description: ID of the Categories to retrieve its subcategories
  *        
  *     responses:
  *       200:
@@ -92,7 +92,7 @@ router.get('/categories/:categoryId/subcategories', CategoryController.getSubCat
  * @swagger
  * /api/categories/{id}:
  *   put:
- *     tags: [Category]
+ *     tags: [Categories]
  *     description: Get categories data
  *     parameters:
  *     - in: path
@@ -143,7 +143,7 @@ router.put("/:id", CategoryController.updateCategories);
  * @swagger
  * /api/categories/{id}:
  *   delete:
- *     tags: [Category]
+ *     tags: [Categories]
  *     description: Get categories data
  *     parameters:
  *     - in: path

@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/vendor/orders/{id}:
+ * /api/vendors/orders/{id}:
  *   get:
  *     tags: ['Vendor']
  *     description: Get all vendor orders
@@ -61,7 +61,7 @@ router.get("/orders/:id", vendorController.getOrders);
 
 /**
  * @swagger
- * /api/vendor/transactions/{id}:
+ * /api/vendors/transactions/{id}:
  *   get:
  *     tags: ['Vendor']
  *     description: Get all vendor transactions
@@ -115,7 +115,7 @@ router.get("/transactions/:id", vendorController.getTransactions);
 
 /**
  * @swagger
- * /api/vendor/products/{id}:
+ * /api/vendors/products/{id}:
  *   get:
  *     tags: ['Vendor']
  *     description: Get all vendor products
@@ -170,7 +170,7 @@ router.get("/products/:id", vendorController.getProducts);
 
 /**
  * @swagger
- * /api/vendor/order/{id}:
+ * /api/vendors/order/{id}:
  *   get:
  *     tags: ['Vendor']
  *     description: Get a vendor order details
@@ -222,7 +222,7 @@ router.get("/order/:id", vendorController.getOrder);
 
 /**
  * @swagger
- * /api/vendor/transaction/{id}:
+ * /api/vendors/transaction/{id}:
  *   get:
  *     tags: ['Vendor']
  *     description: Get a vendor transaction details
@@ -274,7 +274,7 @@ router.get("/transaction/:id", vendorController.getTransaction);
 
 /**
  * @swagger
- * /api/vendor/product/{id}:
+ * /api/vendors/product/{id}:
  *   get:
  *     tags: ['Vendor']
  *     description: Get a vendor product details

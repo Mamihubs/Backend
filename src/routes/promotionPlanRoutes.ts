@@ -8,7 +8,7 @@ const route = express.Router();
 
 /**
  * @swagger
- * /api/promotion-plan/add:
+ * /api/promotion-plans/add:
  *   post:
  *     tags: ['Promotion Plan']
  *     description: Create a promotion plan
@@ -70,7 +70,7 @@ route.post('/add', promotionPlanController.createPromoPlan);
 
 /**
  * @swagger
- * /api/promotion-plan/all-plans:
+ * /api/promotion-plans/all-plans:
  *   get:
  *     tags: ['Promotion Plan']
  *     description: Get all promotion plans
@@ -117,7 +117,7 @@ route.get("/all-plans", promotionPlanController.findAllPromoPlan);
 
 /**
  * @swagger
- * /api/promotion-plan/get-plan/{id}:
+ * /api/promotion-plans/get-plan/{id}:
  *   get:
  *     tags: ['Promotion Plan']
  *     description: Get a promotion plan

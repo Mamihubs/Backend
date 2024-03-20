@@ -52,26 +52,26 @@ if(process.env.NODE_ENV !== 'production'){
 
 // Middlewares
 app.use("/api/auth", authRouter);
-app.use("/api/profile", profileRouter);
-app.use("/api/product", productRouter);
-app.use("/api/user", userRouter);
+app.use("/api/profiles", profileRouter);
+app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
 app.use("/api/code", verificationCodeRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/sales", salesRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/vendor", vendorRoutes);
-app.use("/api/location", locationRouter)
+app.use("/api/vendors", vendorRoutes);
+app.use("/api/locations", locationRouter)
 app.use('/api/onboarding', onboardingRoutes)
-app.use('/api/notification', notificationRoutes)
-app.use('/api/promotion', promotionRoutes)
-app.use('/api/promotion-plan', promotionPlanRoutes)
-app.use('/api/wallet', walletRoutes)
+app.use('/api/notifications', notificationRoutes)
+app.use('/api/promotions', promotionRoutes)
+app.use('/api/promotion-plans', promotionPlanRoutes)
+app.use('/api/wallets', walletRoutes)
 app.use('/api/delivery-address', deliveryAddressRouter)
 
-app.use("/api/cart", cartRoutes);
-app.use("/api/payments/paystack", paystackRoutes)
-app.use("/api/courier", courierRoutes)
-app.use("/api/like", likedRoutes)
+app.use("/api/carts", cartRoutes);
+app.use("/api/paystack", paystackRoutes)
+app.use("/api/couriers", courierRoutes)
+app.use("/api/likes", likedRoutes)
 
 
 

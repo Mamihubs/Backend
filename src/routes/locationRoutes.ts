@@ -45,7 +45,7 @@ fileFilter
 
 /**
  * @swagger
- * /api/location/region:
+ * /api/locations/region:
  *   post:
  *     tags: [Location]
  *     description: Add a new region
@@ -100,7 +100,7 @@ router.post("/region", locationController.createRegions);
 
 /**
  * @swagger
- * /api/location/region:
+ * /api/locations/region:
  *   get:
  *     tags: [Location]
  *     description: Get all regions
@@ -134,7 +134,7 @@ router.get("/region", locationController.fetchAllRegions);
 
 /**
  * @swagger
- * /api/location/region/{id}/:
+ * /api/locations/region/{id}/:
  *   get:
  *     tags: [Location]
  *     description: Get a specific region
@@ -186,7 +186,7 @@ router.get("/region/:id", locationController.fetchOneRegion);
 
 /**
  * @swagger
- * /api/location/region/{id}:
+ * /api/locations/region/{id}:
  *   put:
  *     tags: [Location]
  *     description: Update region
@@ -247,7 +247,7 @@ router.put("/region/:id", locationController.updateOneRegion);
 
 /**
  * @swagger
- * /api/location:
+ * /api/locations:
  *   post:
  *     tags: [Location]
  *     description: Add a new location to the region
@@ -308,7 +308,7 @@ router.post("/", locationController.createLocations);
 
 /**
  * @swagger
- * /api/location:
+ * /api/locations:
  *   get:
  *     tags: [Location]
  *     description: Get all locations
@@ -342,7 +342,7 @@ router.get("/", locationController.fetchAllLocations);
 
 /**
  * @swagger
- * /api/location/{id}/:
+ * /api/locations/{id}/:
  *   get:
  *     tags: [Location]
  *     description: Get a specific location
@@ -382,7 +382,7 @@ router.get("/:id", locationController.fetchOneLocation);
 
 /**
  * @swagger
- * /api/location/{id}:
+ * /api/locations/{id}:
  *   put:
  *     tags: [Location]
  *     description: Update location
@@ -449,7 +449,7 @@ router.put("/:id", locationController.updateOneLocation);
 
 /**
  * @swagger
- * /api/location/import:
+ * /api/locations/import:
  *   post:
  *     tags: [Location]
  *     description: Upload multiple locations in a single file

@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/notification/${id}:
+ * /api/notifications/${id}:
  *   get:
  *     tags: [Notification]
  *     description: Get a user's notfications
@@ -48,7 +48,7 @@ router.get('/:id', notificationController.getNotification) //Get all notificatio
 
 /**
  * @swagger
- * /api/notification/view/{id}:
+ * /api/notifications/view/{id}:
  *   get:
  *     tags: [Notification]
  *     description: View notification details
@@ -89,7 +89,7 @@ router.get('/view/:id', notificationController.getOneNotification) //Get Notific
 
 /**
  * @swagger
- * /api/notification/:
+ * /api/notifications/:
  *   post:
  *     tags: [Notification]
  *     description: Create new notification
@@ -144,7 +144,7 @@ router.post('/', notificationController.createNotification)
 
 /**
  * @swagger
- * /api/notification/{id}:
+ * /api/notifications/{id}:
  *   patch:
  *     tags: [Notification]
  *     description: Update notification

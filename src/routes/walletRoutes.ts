@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/wallet/{userId}:
+ * /api/wallets/{userId}:
  *   get:
  *     tags: ['Wallet']
  *     description: Get user wallet
@@ -60,7 +60,7 @@ router.get("/:userId", walletController.getUserWallets);
 
 /**
  * @swagger
- * /api/wallet/get-wallet/{id}:
+ * /api/wallets/get-wallet/{id}:
  *   get:
  *     tags: ['Wallet']
  *     description: Get a wallet details
@@ -111,7 +111,7 @@ router.get("/get-wallet/:id", walletController.getWalletById);
 
 /**
  * @swagger
- * /api/wallet/fund:
+ * /api/wallets/fund:
  *   post:
  *     tags: [Wallet]
  *     description: Fund a wallet
@@ -194,7 +194,7 @@ router.post("/fund", walletController.fundUserWallet);
 
 /**
  * @swagger
- * /api/wallet/deduct-fund:
+ * /api/wallets/deduct-fund:
  *   post:
  *     tags: [Wallet]
  *     description: Deduct a wallet

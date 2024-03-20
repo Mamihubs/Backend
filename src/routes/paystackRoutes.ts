@@ -5,7 +5,7 @@ import PaystackController from "../controllers/paystackController";
 
 /**
  * @swagger
- * /api/paystack/save-paystack-info:
+ * /api/paystack/:
  *   post:
  *     tags: [Paystack]
  *     description: create new business account
@@ -41,6 +41,6 @@ import PaystackController from "../controllers/paystackController";
  *                 message:
  *                    type: string
  */
-router.post("/save-paystack-info", PaystackController.savePaystackInfo);
+router.post("/", PaystackController.savePaystackInfo);
 
 export default router

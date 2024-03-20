@@ -6,7 +6,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /api/user/register:
+ * /api/users/register:
  *   post:
  *     tags: [User]
  *     description: register a new user
@@ -50,7 +50,7 @@ router.post("/register", UserAuth.createUser)
 
 /**
  * @swagger
- * /api/user/vendor-register:
+ * /api/users/vendor-register:
  *   post:
  *     tags: [User]
  *     description: Create a new vendor
@@ -94,7 +94,7 @@ router.post("/vendor-register", UserAuth.createVendor)
 
 /**
  * @swagger
- * /api/user/login:
+ * /api/users/login:
  *   post:
  *     tags: [User]
  *     description: Log in user
@@ -150,7 +150,7 @@ router.post("/login", UserAuth.loginUser)
 /**
  * @swagger
  * 
- * /api/user/getWallet/{userId}:
+ * /api/users/getWallet/{userId}:
  *   get:
  *     tags: [User]
  *     description: Get user wallets

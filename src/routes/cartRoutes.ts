@@ -6,9 +6,9 @@ import AuthenticateUser from "../middlewares/authCheck"
 
 /**
  * @swagger
- * /api/auth/update-cart:
- *   post:
- *     tags: [Cart]
+ * /api/carts/:
+ *   patch:
+ *     tags: [Carts]
  *     description: Update cart
  *     requestBody:
  *       required: true
@@ -58,13 +58,13 @@ import AuthenticateUser from "../middlewares/authCheck"
  *                 message:
  *                   type: string
  */
-router.post("/update-cart", AuthenticateUser.deserialToken, CartController.cartUpdater);
+router.patch("/", AuthenticateUser.deserialToken, CartController.cartUpdater);
 
 /**
  * @swagger
- * /api/admin/get-cart:
+ * /api/carts/:
  *   get:
- *     tags: [Cart]
+ *     tags: [Carts]
  *     description: Get user cart
  *     responses:
  *       200:
@@ -92,7 +92,7 @@ router.post("/update-cart", AuthenticateUser.deserialToken, CartController.cartU
  *                         type: integer
  *                         description: Quantity of the item in the cart
  */
-router.get("/get-cart", AuthenticateUser.deserialToken, CartController.getCartData)
+router.get("/", AuthenticateUser.deserialToken, CartController.getCartData)
 
 
 export default router

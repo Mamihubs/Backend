@@ -8,7 +8,7 @@ const route = express.Router();
 
 /**
  * @swagger
- * /api/promotion/add:
+ * /api/promotions/:
  *   post:
  *     tags: ['Promotion']
  *     description: Create a promotion plan
@@ -62,7 +62,7 @@ route.post("/add", promotionController.createPromotion);
 
 /**
  * @swagger
- * /api/promotion/all-promotions:
+ * /api/promotions/:
  *   get:
  *     tags: ['Promotion']
  *     description: Get all promotions
@@ -104,12 +104,12 @@ route.post("/add", promotionController.createPromotion);
  *                 message:
  *                   type: string
  */
-route.get("/all-promotions", promotionController.findAllPromotions);
+route.get("/", promotionController.findAllPromotions);
 
 
 /**
  * @swagger
- * /api/delete-promo/{id}:
+ * /api/promotions/{id}:
  *   delete:
  *     tags: ['Promotion']
  *     description: delete a promotion 
@@ -157,7 +157,7 @@ route.get("/all-promotions", promotionController.findAllPromotions);
  *                 status:
  *                   type: boolean
  */
-route.delete("/delete-promo/:id", promotionController.deletePromotion);
+route.delete("/:id", promotionController.deletePromotion);
 
 
 export default route;

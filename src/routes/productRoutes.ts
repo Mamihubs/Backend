@@ -4,7 +4,7 @@ import ProductController from "../controllers/productController"
 
 /**
  * @swagger
- * /api/product:
+ * /api/products:
  *   get:
  *     tags: [Products]
  *     description: Get all products
@@ -62,7 +62,7 @@ router.get('/', ProductController.getAllProducts);
 
 /**
  * @swagger
- * /api/product/${id}:
+ * /api/products/${id}:
  *   get:
  *     tags: [Products]
  *     description: Get a single product
@@ -115,7 +115,7 @@ router.get('/:id', ProductController.getProductById);
 
 /**
  * @swagger
- * /api/product/vendor/{vendorId}:
+ * /api/products/vendor/{vendorId}:
  *   get:
  *     tags: [Products]
  *     description: Get all vendor products
@@ -180,7 +180,7 @@ router.get('/vendor/:vendorId', ProductController.getProductsByVendor);
 
 /**
  * @swagger
- * /api/product/update/{id}:
+ * /api/products/update/{id}:
  *   patch:
  *     tags: [Products]
  *     description: Update a single product
@@ -238,7 +238,7 @@ router.patch('/update/:id', ProductController.updateProduct);
 
 /**
  * @swagger
- * /api/product/create:
+ * /api/products/create:
  *   post:
  *     tags: [Products]
  *     description: Create a new product
@@ -289,7 +289,7 @@ router.post('/create', ProductController.createProduct);
 
 /**
  * @swagger
- * /api/product/update_quantity/{id}:
+ * /api/products/update_quantity/{id}:
  *   patch:
  *     tags: [Products]
  *     description: Update a single product's quantity
@@ -355,7 +355,7 @@ router.patch('/update_quantity', ProductController.updateQuantity);
 
 /**
  * @swagger
- * /api/product/delete-image/{id}:
+ * /api/products/delete-image/{id}:
  *   delete:
  *     tags: [Products]
  *     description: Delete a product's image

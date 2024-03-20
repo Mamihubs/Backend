@@ -4,7 +4,7 @@ import ProfileController from "../controllers/profileController"
 
 /**
  * @swagger
- * /api/profile/{email}:
+ * /api/profiles/{email}:
  *   put:
  *     tags: [Profile]
  *     description: Update a user's profile
@@ -61,7 +61,7 @@ router.put("/:email", ProfileController.updateUserProfile);
 
 /**
  * @swagger
- * /api/profile/{email}:
+ * /api/profiles/{email}:
  *   get:
  *     tags: [Profile]
  *     description: Get a profile
@@ -112,7 +112,7 @@ router.get("/:email", ProfileController.getUserProfile);
 
 /**
  * @swagger
- * /api/profile/all:
+ * /api/profiles/all:
  *   get:
  *     tags: [Profile]
  *     description: Get all profiles
@@ -158,7 +158,7 @@ router.get("/all", ProfileController.getUsersProfile);
 
 /**
  * @swagger
- * /api/profile/{email}:
+ * /api/profiles/{email}:
  *   delete:
  *     tags: [Profile]
  *     description: Delete a profile
