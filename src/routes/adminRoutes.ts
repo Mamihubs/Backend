@@ -1,6 +1,8 @@
 import express from "express";
 import adminController from "../controllers/adminController";
 import { cacheInterceptor } from "../interceptors";
+import authCheck from "../middlewares/authCheck";
+import { UserType } from "../models/User";
 const router = express.Router();
 
 /**

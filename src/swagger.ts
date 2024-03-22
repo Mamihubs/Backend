@@ -16,7 +16,19 @@ const swaggerDocOptions:swaggerJSDoc.Options = {
                 description: 'Development server',
             },
         ],
+        security: [
+            {
+              bearerAuth: [],
+            },
+          ],
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                  type: 'http',
+                  scheme: 'bearer',
+                  bearerFormat: 'JWT',
+                },
+              },
             schemas: {
                 CreateUserRequestBody: {
                     type: 'object',

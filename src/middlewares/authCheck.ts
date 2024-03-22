@@ -44,11 +44,10 @@ class AuthenticateUser extends UserService{
 
         // Check if user exist
         const user = await this.getOneUser("_id", decoded._id);
-        if (!user)
+        if (!user){
             return res.status(401).json({ message: "User with that token no longer exists" });
-        
-
-        req.user = user._id.toString();
+        }
+        req.user =  {type: user.type, _id: user._id.toString()};
         next()
     }
 
@@ -65,9 +64,11 @@ class AuthenticateUser extends UserService{
 
     public restictedTo = (...alloweddRoles: string[]) => (req: Request, res: Response, next: NextFunction) => {
         const user = req.user;
-        if (!alloweddRoles.includes(user.role))
-            return next(new CustomError("User not permitted", 403));
-        next();
+        console.log("auth user ", user)
+        if (!alloweddRoles.includes(user?.type)){
+            return res.status(403).json({ message: "You are not authorized to access this resource." });
+        }
+        return next();
     }
 }
 

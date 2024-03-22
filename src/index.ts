@@ -48,6 +48,8 @@ import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes"
 import courierRoutes from "./routes/courierRoutes"
 import likedRoutes from "./routes/likedItemRoute";
+import authCheck from "./middlewares/authCheck";
+import { UserType } from "./models/User";
 
 
 const swaggerSpec = swaggerJSDoc(swaggerDocOptions);
@@ -64,7 +66,7 @@ app.use("/api/users", userRouter);
 app.use("/api/code", verificationCodeRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/sales", salesRoutes);
-app.use("/api/admin", adminRoutes);
+app.use("/api/admin", authCheck.deserialToken, authCheck.restictedTo(UserType.STAFF), adminRoutes);
 app.use("/api/vendors", vendorRoutes);
 app.use("/api/locations", locationRouter)
 app.use('/api/onboarding', onboardingRoutes)

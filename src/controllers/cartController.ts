@@ -16,7 +16,7 @@ export class CartController{
 
   getCartData = async (req: Request, res: Response) => {
     console.log("getting user cart data...")
-    let userId = req.user;
+    let userId = req.user?._id;
     // let userId = "655adcb6a18189d438dcb111";
     // console.log(req.headers)
     const userCartData = await cartModel.findOne({userId})
@@ -47,10 +47,8 @@ export class CartController{
   cartUpdater = async(req: Request, res: Response) => {
 
     
-    let userId = req.user;
+    let userId = req?.user?._id;
     // console.log(req.user)
-    
-
 
     // console.log("attempting to update user cart data...");
 

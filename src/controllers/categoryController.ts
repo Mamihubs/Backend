@@ -17,7 +17,7 @@ class CategoryController extends CategoryService{
     createCategories = async (req: Request, res: Response) => {
         try {
             // data validations
-            const createdBy = req.user;
+            const createdBy = req.user?._id;
             const { error } = categoryValidation(req.body);
             if (error)
                 return res.status(400).json({
