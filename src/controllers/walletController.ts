@@ -27,6 +27,154 @@ class WalletController {
         }
     
     }
+<<<<<<< Updated upstream
+=======
+
+    getWalletById = async(req:Request, res:Response) =>{
+        try{
+            const {id} = req.params;
+            const searchDto: searchDto = {
+                field:"user",
+                value: id
+        }
+            const  checkWalletAlreadyExists = await this.walletRepo.FindOne(searchDto);
+
+            if(!checkWalletAlreadyExists){
+                return res.status(400).json({
+                    status:false,
+                    message:"Wallet not found"
+                })
+            }
+
+            return res.status(200).json({
+                status:true,
+                data:checkWalletAlreadyExists
+            })
+        }catch(e){
+
+        }
+    }
+    
+    fundUserWallet = async(req:Request, res:Response) => {
+        try{
+            const {user, name, amount} = req.body;
+            const walletDto: WalletDto = {
+                user,
+                name,
+                amount
+            }
+            const searchDto: searchDto = {
+                    field:"user",
+                    value: user
+            }
+                const  checkWalletAlreadyExists = await this.walletRepo.FindOne(searchDto);
+
+                if(!checkWalletAlreadyExists){
+                    // Wallet do not exist yet so create one
+                    const createWallet = await this.walletRepo.Create(walletDto);
+
+                    if(!createWallet){
+                        return res.status(400).json({
+                            status: false,
+                            message: "Wallet could not be created, try again later"
+                        })
+                    }
+
+                    return res.status(201).json({
+                        status:true,
+                        message:"Wallet created successfully.",
+                        data: createWallet
+                    })
+                }else{
+
+                    // update the wallet with the amount
+
+                    const updateDto: UpdateOneDto = {
+                        _id: checkWalletAlreadyExists['_id'],
+                        update:{
+                            amount: checkWalletAlreadyExists['amount']+amount
+                        }
+                    }
+
+                    const updateUserWallet = await this.walletRepo.UpdateOne(updateDto);
+
+                    if(!updateUserWallet){
+                        return res.status(400).json({
+                            status:false,
+                            message:"Wallet could not be funded."
+                        })
+                    }
+
+                   
+                    return res.status(200).json({
+                        status:true,
+                        message:"Wallet funded successfully.",
+                        data: checkWalletAlreadyExists
+                    }) 
+                }
+        }catch(e){
+            return res.status(400).json({
+                status:false,
+                message:"Wallet could not be funded."
+            })
+        }
+    }
+
+    deductFund = async (req:Request, res:Response) =>{
+        try{
+            const {user, amount} = req.body;
+            const searchDto: searchDto = {
+                field:"user",
+                value: user
+        }
+            const checkIfEnoughFunds = await this.walletRepo.FindOne(searchDto);
+
+            if(!checkIfEnoughFunds){
+                return res.status(400).json({
+                    status:false,
+                    message:"Wallet could not be found."
+                })
+            }else{
+                if(checkIfEnoughFunds['amount'] > amount){
+                    const updateDto: UpdateOneDto = {
+                        _id: checkIfEnoughFunds['_id'],
+                        update:{
+                            amount: checkIfEnoughFunds['amount']-amount
+                        }
+                    }
+
+                    const updateUserWallet = await this.walletRepo.UpdateOne(updateDto);
+                
+                    if(!updateUserWallet){
+                        return res.status(400).json({
+                            status:false,
+                            message:"Wallet could not be debited."
+                        })
+                    }
+
+                   
+                    return res.status(200).json({
+                        status:true,
+                        message:"Wallet debited successfully.",
+                        data: checkIfEnoughFunds
+                    }) 
+                }else{
+                    return res.status(400).json({
+                        status:false,
+                        message:"Insufficient fund in your wallet."
+                    })
+                }
+            }
+        }catch(e){
+            return res.status(400).json({
+                status:false,
+                message:"Wallet could not be debited."
+            })
+        }
+
+
+    }
+>>>>>>> Stashed changes
 }
 
 export default new WalletController();

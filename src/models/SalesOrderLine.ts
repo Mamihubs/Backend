@@ -39,7 +39,7 @@ const SalesOrderLine = new Schema<SalesOrderLineDoc>({
     discount: {type: Number},
     product_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'ProductProduct'
+        ref: 'Product'
     },
     product_qty: {type: Number},
     qty_delivered_method: {type: String},

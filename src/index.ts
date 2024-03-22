@@ -26,6 +26,22 @@ import salesRoutes from "./routes/salesRoutes";
 import caroRoutes from "./routes/carouselRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import locationRouter from "./routes/locationRoutes";
+<<<<<<< Updated upstream
+=======
+import vendorRoutes from "./routes/vendorRoutes";
+import onboardingRoutes from "./routes/onboardingRoutes";
+import notificationRoutes from "./routes/notificationRoutes";
+import promotionRoutes from "./routes/promotionRoutes";
+import promotionPlanRoutes from "./routes/promotionPlanRoutes";
+import walletRoutes from "./routes/walletRoutes";
+import deliveryAddressRouter from "./routes/deliveryAddressRoute";
+
+import cartRoutes from "./routes/cartRoutes";
+import paystackRoutes from "./routes/paystackRoutes"
+import courierRoutes from "./routes/courierRoutes"
+import withdrawRoute from "./routes/withdrawalRoutes";
+
+>>>>>>> Stashed changes
 
 
 // Middlewares
@@ -39,7 +55,28 @@ app.use("/api/categories", categoryRouter);
 app.use("/api/sales", salesRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/location", locationRouter)
+<<<<<<< Updated upstream
 app.use("/api/carousel", caroRoutes)
+=======
+app.use('/api/onboarding', onboardingRoutes)
+app.use('/api/notification', notificationRoutes)
+app.use('/api/promotion', promotionRoutes)
+app.use('/api/promotion-plan', promotionPlanRoutes)
+app.use('/api/wallet', walletRoutes)
+app.use('/api/delivery-address', deliveryAddressRouter)
+app.use('/api/withdrawal', withdrawRoute)
+
+app.use("/api/cart", cartRoutes);
+app.use("/api/payments/paystack", paystackRoutes)
+app.use("/api/courier", courierRoutes)
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
 
 
 app.get("/", (req: Request, res: Response) => {
