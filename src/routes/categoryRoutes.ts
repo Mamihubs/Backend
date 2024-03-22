@@ -12,6 +12,7 @@ router.post(
 );
 // router.post("/", AuthenticateUser.deserialToken, CategoryController.createCategories);
 router.get("/", CategoryController.getCategories);
+router.get("/find/:id", CategoryController.getCategory);
 router.get("/subcategories", CategoryController.getSubCategories);
 router.put("/:id", CategoryController.updateCategories);
 router.delete("/:id", CategoryController.deleteCategry);

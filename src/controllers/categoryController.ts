@@ -48,12 +48,6 @@ class CategoryController extends CategoryService {
       const updatedBy = req.user;
       const { id } = req.params;
 
-      // checking id and updateBy
-      if (!(id && updatedBy))
-        return res
-          .status(400)
-          .json({ error: true, message: "Please supply category id" });
-
       // error checks for the input fields
       const { error } = categoryValidation(req.body);
       if (error)
@@ -75,7 +69,7 @@ class CategoryController extends CategoryService {
 
       return res.status(200).json({
         error: false,
-        message: "category updated",
+        message: "Category successfully updated.",
         data: updatedCategory,
       });
     } catch (err) {
@@ -127,6 +121,21 @@ class CategoryController extends CategoryService {
     const { id } = req.params;
     try {
       const data = await this.getAllSubCategoriesUnderACategory(id);
+      return res.status(200).json(data);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: true,
+        message: err,
+      });
+    }
+  };
+
+  //getting a single category by id
+  getCategory = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const data = await Category.findById(id);
       return res.status(200).json(data);
     } catch (err) {
       console.log(err);
