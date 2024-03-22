@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 // import { Cart } from "../models new/Cart";
 import cartModel from "../models new/Cart";
 import AuthenticateUser from "../middlewares/authCheck";
+import { storeDataInCacheMemory } from "../interceptors";
 
 
 
@@ -18,25 +19,23 @@ export class CartController{
     let userId = req.user;
     // let userId = "655adcb6a18189d438dcb111";
     // console.log(req.headers)
-
-
-
-
     const userCartData = await cartModel.findOne({userId})
     if(userCartData){
-      // console.log("user cart data gotten successfuly.")
-     return res.status(200).json({
+      const data = {
         error: false,
         message: "user cart data gotten successfully",
         data: userCartData.cart
-      })
+      }
+      // save a cached copy
+      storeDataInCacheMemory(req, data, 10)
+     return res.status(200).json(data)
     }
 
     
 
     if(!userCartData){
       console.log("user has no cart data")
-      return res.status(200).json({
+      return res.status(404).json({
         error: true,
         message: "user has no cart data"
       })

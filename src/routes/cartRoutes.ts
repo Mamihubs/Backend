@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import CartController from "../controllers/cartController";
 import AuthenticateUser from "../middlewares/authCheck"
+import { cacheInterceptor } from "../interceptors";
 
 
 /**
@@ -91,8 +92,19 @@ router.patch("/", AuthenticateUser.deserialToken, CartController.cartUpdater);
  *                       quantity:
  *                         type: integer
  *                         description: Quantity of the item in the cart
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
  */
-router.get("/", AuthenticateUser.deserialToken, CartController.getCartData)
+router.get("/", AuthenticateUser.deserialToken, cacheInterceptor, CartController.getCartData)
 
 
 export default router

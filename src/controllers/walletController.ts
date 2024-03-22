@@ -3,6 +3,7 @@ import { VendorService } from "../services/vendor.service";
 import { WalletRepository } from "../repository/WalletRepository";
 import { WalletDto } from "../dto/WalletDto";
 import { UpdateOneDto, searchDto } from "../dto/GeneralDto";
+import { storeDataInCacheMemory } from "../interceptors";
 
 const vendorService = new VendorService();
 class WalletController {
@@ -19,16 +20,14 @@ class WalletController {
             const data = await vendorService.viewWallet(userId)
     
             if (!data)
-                return res.status(400).json({
+                return res.status(404).json({
                     error: true,
                     message: "user does not have wallet"
                 })
-    
+            // store cache in memory
+            storeDataInCacheMemory(req, {data, error: false}, 10)
             // return the user information 
-            return res.status(200).json({
-                error: false,
-                data
-            })
+            return res.status(200).json({ error: false, data })
         } catch (err) {
             console.log(err)
         }
@@ -41,7 +40,7 @@ class WalletController {
             const searchDto: searchDto = {
                 field:"user",
                 value: id
-        }
+            }
             const  checkWalletAlreadyExists = await this.walletRepo.FindOne(searchDto);
 
             if(!checkWalletAlreadyExists){
@@ -50,11 +49,10 @@ class WalletController {
                     message:"Wallet not found"
                 })
             }
-
-            return res.status(200).json({
-                status:true,
-                data:checkWalletAlreadyExists
-            })
+            const data = { status: true, data: checkWalletAlreadyExists}
+            // store in cache
+            storeDataInCacheMemory(req, data, 10)
+            return res.status(200).json(data)
         }catch(e){
 
         }

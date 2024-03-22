@@ -1,5 +1,6 @@
 import express from 'express';
 import promotionPlanController from '../controllers/promotionPlanController';
+import { cacheInterceptor } from '../interceptors';
 
 
 const route = express.Router();
@@ -8,7 +9,7 @@ const route = express.Router();
 
 /**
  * @swagger
- * /api/promotion-plans/add:
+ * /api/promotion-plans/:
  *   post:
  *     tags: ['Promotion Plan']
  *     description: Create a promotion plan
@@ -65,12 +66,12 @@ const route = express.Router();
  *                 status:
  *                   type: boolean
  */
-route.post('/add', promotionPlanController.createPromoPlan);
+route.post('/', promotionPlanController.createPromoPlan);
 
 
 /**
  * @swagger
- * /api/promotion-plans/all-plans:
+ * /api/promotion-plans/:
  *   get:
  *     tags: ['Promotion Plan']
  *     description: Get all promotion plans
@@ -112,12 +113,12 @@ route.post('/add', promotionPlanController.createPromoPlan);
  *                 message:
  *                   type: string
  */
-route.get("/all-plans", promotionPlanController.findAllPromoPlan);
+route.get("/", cacheInterceptor, promotionPlanController.findAllPromoPlan);
 
 
 /**
  * @swagger
- * /api/promotion-plans/get-plan/{id}:
+ * /api/promotion-plans/{id}:
  *   get:
  *     tags: ['Promotion Plan']
  *     description: Get a promotion plan
@@ -164,11 +165,11 @@ route.get("/all-plans", promotionPlanController.findAllPromoPlan);
  *                 message:
  *                   type: string
  */
-route.get("/get-plan/:id", promotionPlanController.findPromoPlanById);
+route.get("/:id", cacheInterceptor, promotionPlanController.findPromoPlanById);
 
 /**
  * @swagger
- * /api/update-plan/{id}:
+ * /api/promotion-plans/{id}:
  *   put:
  *     tags: ['Promotion Plan']
  *     description: Update a promotion plan
@@ -232,12 +233,12 @@ route.get("/get-plan/:id", promotionPlanController.findPromoPlanById);
  *                 status:
  *                   type: boolean
  */
-route.put("/update-plan/:id", promotionPlanController.updatePromoPlan);
+route.put("/:id", promotionPlanController.updatePromoPlan);
 
 
 /**
  * @swagger
- * /api/delete-plan/{id}:
+ * /api/promotion-plans/{id}:
  *   delete:
  *     tags: ['Promotion Plan']
  *     description: delete a promotion plan
@@ -285,7 +286,7 @@ route.put("/update-plan/:id", promotionPlanController.updatePromoPlan);
  *                 status:
  *                   type: boolean
  */
-route.delete("/delete-plan/:id", promotionPlanController.deletePromoPlan);
+route.delete("/promotion-plans/:id", promotionPlanController.deletePromoPlan);
 
 
 export default route;

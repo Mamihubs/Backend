@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import vendorController from "../controllers/vendorController";
+import { cacheInterceptor } from "../interceptors";
 
 const router = express.Router();
 
@@ -56,7 +57,7 @@ const router = express.Router();
  *                 message:
  *                   type: string
  */
-router.get("/orders/:id", vendorController.getOrders);
+router.get("/orders/:id", cacheInterceptor, vendorController.getOrders);
 
 
 /**
@@ -110,7 +111,7 @@ router.get("/orders/:id", vendorController.getOrders);
  *                 message:
  *                   type: string
  */
-router.get("/transactions/:id", vendorController.getTransactions);
+router.get("/transactions/:id", cacheInterceptor, vendorController.getTransactions);
 
 
 /**
@@ -164,7 +165,7 @@ router.get("/transactions/:id", vendorController.getTransactions);
  *                 message:
  *                   type: string
  */
-router.get("/products/:id", vendorController.getProducts);
+router.get("/products/:id", cacheInterceptor, vendorController.getProducts);
 // :::::::::::::::::::::::::::::::::::::::::
 // single endpoints
 
@@ -188,12 +189,7 @@ router.get("/products/:id", vendorController.getProducts);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 data:
- *                    $ref: '#/components/schemas/SalesOrderResponse'
+ *                 $ref: '#/components/schemas/SalesOrderResponse'
  *       404:
  *         description: Not found
  *         content:
@@ -217,7 +213,7 @@ router.get("/products/:id", vendorController.getProducts);
  *                 message:
  *                   type: string
  */
-router.get("/order/:id", vendorController.getOrder);
+router.get("/order/:id", cacheInterceptor, vendorController.getOrder);
 
 
 /**
@@ -240,12 +236,7 @@ router.get("/order/:id", vendorController.getOrder);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 data:
- *                    $ref: '#/components/schemas/SalesOrderResponse'
+ *                 $ref: '#/components/schemas/SalesOrderResponse'
  *       404:
  *         description: Not found
  *         content:
@@ -269,7 +260,7 @@ router.get("/order/:id", vendorController.getOrder);
  *                 message:
  *                   type: string
  */
-router.get("/transaction/:id", vendorController.getTransaction);
+router.get("/transaction/:id", cacheInterceptor, vendorController.getTransaction);
 
 
 /**
@@ -292,12 +283,7 @@ router.get("/transaction/:id", vendorController.getTransaction);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 data:
- *                    $ref: '#/components/schemas/ProductResponse'
+ *                 $ref: '#/components/schemas/ProductResponse'
  *       404:
  *         description: Not found
  *         content:
@@ -321,6 +307,6 @@ router.get("/transaction/:id", vendorController.getTransaction);
  *                 message:
  *                   type: string
  */
-router.get("/product/:id", vendorController.getProduct);
+router.get("/product/:id", cacheInterceptor, vendorController.getProduct);
 
 export default router;

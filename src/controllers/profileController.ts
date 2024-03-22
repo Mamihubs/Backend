@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { getProfileByEmail, updateProfile, getProfiles, deleteProfile } from "../models/Profile";
 //importing field validations
 import { profileValidation } from "../validations/authValidations";
+import { storeDataInCacheMemory } from "../interceptors";
 
 
 class ProfileController {
@@ -43,20 +44,17 @@ class ProfileController {
         try {
             // call the service to get user using the getProfileByEmail function
             const data = await getProfileByEmail(email)
-
             if (!data)
                 return res.status(400).json({
                     error: true,
                     message: "user profile information not created"
                 })
-
+            // store cache in memory
+            storeDataInCacheMemory(req, {message: "success", data}, 10)
             // return the user information 
-            return res.status(200).json({
-                error: false,
-                data
-            })
+            return res.status(200).json({ message: "success", data })
         } catch (err) {
-            console.log(err)
+            return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
         }
 
     }
@@ -88,6 +86,8 @@ class ProfileController {
     // applicable to admin
     getUsersProfile = async (req: Request, res: Response) => {
         const data = await getProfiles();
+        // store cache in memory
+        storeDataInCacheMemory(req, data, 10)
         return res.status(200).json(data)
     }
 }

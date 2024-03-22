@@ -1,5 +1,6 @@
 import express from 'express';
 import promotionController from '../controllers/promotionController';
+import { cacheInterceptor } from '../interceptors';
  
 
 
@@ -104,7 +105,7 @@ route.post("/add", promotionController.createPromotion);
  *                 message:
  *                   type: string
  */
-route.get("/", promotionController.findAllPromotions);
+route.get("/", cacheInterceptor, promotionController.findAllPromotions);
 
 
 /**

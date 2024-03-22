@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import ProductController from "../controllers/productController"
+import { cacheInterceptor } from "../interceptors";
 
 /**
  * @swagger
@@ -58,7 +59,7 @@ import ProductController from "../controllers/productController"
  *                 message:
  *                   type: string
  */
-router.get('/', ProductController.getAllProducts);
+router.get('/', cacheInterceptor, ProductController.getAllProducts);
 
 /**
  * @swagger
@@ -110,7 +111,7 @@ router.get('/', ProductController.getAllProducts);
  *                 status:
  *                   type: boolean
  */
-router.get('/:id', ProductController.getProductById);
+router.get('/:id', cacheInterceptor, ProductController.getProductById);
 
 
 /**
@@ -176,7 +177,7 @@ router.get('/:id', ProductController.getProductById);
  *                 message:
  *                   type: string
  */
-router.get('/vendor/:vendorId', ProductController.getProductsByVendor);
+router.get('/vendor/:vendorId', cacheInterceptor, ProductController.getProductsByVendor);
 
 /**
  * @swagger

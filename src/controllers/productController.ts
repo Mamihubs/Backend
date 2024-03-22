@@ -7,6 +7,7 @@ import {
 import mongoose from "mongoose";
 import upload from "../utils/multerConfig"; // Path to your multer configuration
 import { ObjectId } from "mongodb";
+import { storeDataInCacheMemory } from "../interceptors";
 
 const productService = new ProductService();
 
@@ -119,11 +120,14 @@ class ProductController {
       });
     }
 
-    return res.status(200).json({
+    const data = {
       status: true,
       message: "Product retrieved successfully",
       data: product,
-    });
+    }
+    // store cache in memory
+    storeDataInCacheMemory(req, data, 10)
+    return res.status(200).json(data);
   };
 
   getProductsByVendor = async (req: Request, res: Response) => {
@@ -142,9 +146,14 @@ class ProductController {
           .status(404)
           .json({ message: "No products found for this vendor" });
       }
-      return res
-        .status(200)
-        .json({ data: products, message: "Successfully fetched products" });
+      const data = {
+        status: true,
+        message: "Products retrieved successfully",
+        data: products,
+      }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
     } catch (error) {
       return res.status(500).json({ message: "An error occurred", error });
     }
@@ -172,9 +181,10 @@ class ProductController {
       if (!products || products.length === 0) {
         return res.status(404).json({ message: "No products found" });
       }
-      return res
-        .status(200)
-        .json({ data: products, message: "Successfully fetched products" });
+      const data = { data: products, message: "Successfully fetched products" }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
     } catch (error) {
       return res.status(500).json({ message: "An error occurred", error });
     }

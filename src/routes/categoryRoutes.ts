@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import AuthenticateUser from "../middlewares/authCheck"
 import  CategoryController from "../controllers/categoryController";
+import { cacheInterceptor } from "../interceptors";
 
 
 /**
@@ -62,7 +63,7 @@ router.post("/", AuthenticateUser.deserialToken, CategoryController.createCatego
  *             schema:
  *               $ref: '#/components/schemas/CategoriesResponse'
  */
-router.get('/', CategoryController.getCategories);
+router.get('/', cacheInterceptor, CategoryController.getCategories);
 
 /**
  * @swagger
@@ -86,7 +87,7 @@ router.get('/', CategoryController.getCategories);
  *             schema:
  *               $ref: '#/components/schemas/CategoriesResponse'
  */
-router.get('/categories/:categoryId/subcategories', CategoryController.getSubCategories);
+router.get('/categories/:categoryId/subcategories', cacheInterceptor, CategoryController.getSubCategories);
 
 /**
  * @swagger

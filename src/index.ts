@@ -7,6 +7,10 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerDocOptions from "./swagger";
 
+//security
+import helmet from "helmet";
+import compression from "compression";
+
 
 env.config();
 
@@ -17,7 +21,9 @@ import "./utils/connectDB"
 
 
 // Middlewares
-app.use(cors({origin:"*"}));
+app.use(cors({origin:"*", credentials: true}));
+app.use(helmet());
+app.use(compression());
 app.use(express.json());
 
 // Routers

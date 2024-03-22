@@ -4,6 +4,7 @@ import { UpdatelocationsValidation, locationValidation, locationsValidation } fr
 import { RegionDto } from "../dto/LocationDto";
 import * as fs from 'fs';
 import csv from 'csv-parser';
+import { storeDataInCacheMemory } from "../interceptors";
 
 class LocationController extends LocationService{
     constructor(){
@@ -43,13 +44,15 @@ class LocationController extends LocationService{
     fetchAllRegions = async(req: Request, res: Response) =>{
         try {
             const result = await this.getAllRegion();
-            return res.status(200).json({
+            const data = {
                 error: false,
                 message: "region fetched",
-                data:result
-            })
+                data: result
+            }
+            // store cache in memory
+            storeDataInCacheMemory(req, data, 10)
+            return res.status(200).json(data);
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 error: true,
                 message: error
@@ -66,11 +69,14 @@ class LocationController extends LocationService{
                     message: "record doesnt exist"
                 })
             }
-            return res.status(200).json({
+            const data = {
                 error: false,
                 message: "region fetched",
                 data:result
-            })
+            }
+            // store cache in memory
+            storeDataInCacheMemory(req, data, 10)
+            return res.status(200).json(data)
         } catch (error) {
             console.log(error);
             return res.status(500).json({
@@ -145,11 +151,14 @@ class LocationController extends LocationService{
     fetchAllLocations = async(req: Request, res: Response) =>{
         try {
             const result = await this.getAllLocation();
-            return res.status(200).json({
+            const data = {
                 error: false,
                 message: "location fetched",
                 data:result
-            })
+            }
+            // store cache in memory
+            storeDataInCacheMemory(req, data, 10)
+            return res.status(200).json(data)
         } catch (error) {
             console.log(error);
             return res.status(500).json({
@@ -168,11 +177,14 @@ class LocationController extends LocationService{
                     message: "record doesnt exist"
                 })
             }
-            return res.status(200).json({
+            const data = {
                 error: false,
                 message: "location fetched",
                 data:result
-            })
+            }
+            // store cache in memory
+            storeDataInCacheMemory(req, data, 10)
+            return res.status(200).json(data)
         } catch (error) {
             console.log(error);
             return res.status(500).json({

@@ -1,6 +1,7 @@
 import express from "express"
 import UserAuth from "../controllers/userController"
 import walletController from "../controllers/walletController"
+import { cacheInterceptor } from "../interceptors"
 
 const router = express.Router()
 
@@ -150,7 +151,7 @@ router.post("/login", UserAuth.loginUser)
 /**
  * @swagger
  * 
- * /api/users/getWallet/{userId}:
+ * /api/users/{userId}/wallets:
  *   get:
  *     tags: [User]
  *     description: Get user wallets
@@ -167,9 +168,16 @@ router.post("/login", UserAuth.loginUser)
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/GetUserWalletsResponse'
- *       400:
- *         description: Bad request, missing required fields
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                    type: array
+ *                    items:
+ *                       $ref: '#/components/schemas/WalletResponse'
+ *       404:
+ *         description: Not found
  *         content:
  *           application/json:
  *             schema:
@@ -180,7 +188,7 @@ router.post("/login", UserAuth.loginUser)
  *                 message:
  *                   type: string
  */
-router.get("/getWallet/:userId",walletController.getUserWallets)
+router.get("/:userId/wallets", cacheInterceptor, walletController.getUserWallets)
  
 
 export default router

@@ -3,6 +3,7 @@ import express from "express";
 const router = express.Router();
 
 import CourierController from "../controllers/courierController";
+import { cacheInterceptor } from "../interceptors";
 
 /*
 "get-destinations" endpoint is used to fetch origin and destination
@@ -61,7 +62,7 @@ which can be used to populate dropdowns in frontend
  *                 message:
  *                   type: string
  */
-router.get("/get-destinations", CourierController.getCourierDestinations);
+router.get("/get-destinations", cacheInterceptor, CourierController.getCourierDestinations);
 // router.get("/get-courier-token", CourierController.getCourierToken);
 // router.post("/get-delivery-town", CourierController.getDeliveryTown);
 // router.post("/get-onforwarding-town", CourierController.getOnforwardingTown);

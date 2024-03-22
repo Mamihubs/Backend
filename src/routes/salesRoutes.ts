@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import SalesController from "../controllers/salesController";
+import { cacheInterceptor } from "../interceptors";
 
 // router.post("/", SalesController.c);
 
@@ -48,7 +49,7 @@ import SalesController from "../controllers/salesController";
  *                 message:
  *                   type: string
  */
-router.get("/", SalesController.getSales);
+router.get("/", cacheInterceptor, SalesController.getSales);
 
 /**
  * @swagger
@@ -94,7 +95,7 @@ router.get("/", SalesController.getSales);
  *                 message:
  *                   type: string
  */
-router.get("/user", SalesController.getUserSales);
+router.get("/user", cacheInterceptor, SalesController.getUserSales);
 
 /**
  * @swagger
@@ -147,7 +148,7 @@ router.get("/user", SalesController.getUserSales);
  *                 message:
  *                   type: string
  */
-router.get("/delivery-status", SalesController.getDeliveryStats);
+router.get("/delivery-status", cacheInterceptor, SalesController.getDeliveryStats);
 
 /**
  * @swagger
@@ -193,7 +194,7 @@ router.get("/delivery-status", SalesController.getDeliveryStats);
  *                 message:
  *                   type: string
  */
-router.get("/top-sales_product", SalesController.topProductSales);
+router.get("/top-sales_product", cacheInterceptor, SalesController.topProductSales);
 
 
 
@@ -241,7 +242,7 @@ router.get("/top-sales_product", SalesController.topProductSales);
  *                 message:
  *                   type: string
  */
-router.get("/top-sales-categories", SalesController.topSellingCategories);
+router.get("/top-sales-categories", cacheInterceptor, SalesController.topSellingCategories);
 
 
 /**
@@ -407,6 +408,6 @@ router.delete("/:id", SalesController.deleteSales);
  *                 message:
  *                   type: string
  */
-router.get("/stats", SalesController.getMonthlySales);
+router.get("/stats", cacheInterceptor, SalesController.getMonthlySales);
 
 export default router;

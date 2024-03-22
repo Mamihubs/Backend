@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 //importing field validations
 import { categoryValidation } from "../validations/categoryValidation";
 import { CategoryService } from "../services/category.service";
+import { storeDataInCacheMemory } from "../interceptors";
 
 
 
@@ -117,6 +118,8 @@ class CategoryController extends CategoryService{
     // getting all categories
     getCategories = async (req: Request, res: Response) => {
         const data = await this.getAllCategories();
+        // save a cached copy
+        storeDataInCacheMemory(req, data, 10)
         return res.status(200).json(data);
     }
 
@@ -125,6 +128,8 @@ class CategoryController extends CategoryService{
         const {id} = req.params;
         try {
             const data = await this.getAllSubCategoriesUnderACategory(id)
+            // save a cached copy
+            storeDataInCacheMemory(req, data, 10)
             return res.status(200).json(data)
         } catch (err) {
             console.log(err)

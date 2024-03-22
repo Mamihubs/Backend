@@ -1,5 +1,6 @@
 import { Router } from "express";
 import likedItemController from "../controllers/likedItemController";
+import { cacheInterceptor } from "../interceptors";
 
 
 const likedRoute = Router()
@@ -95,7 +96,7 @@ likedRoute.post("/", likedItemController.createLikeItem)
  *                 message:
  *                   type: string
  */
-likedRoute.get("/:id", likedItemController.fetchLikeItem)
+likedRoute.get("/:id", cacheInterceptor, likedItemController.fetchLikeItem)
 
 
 /**

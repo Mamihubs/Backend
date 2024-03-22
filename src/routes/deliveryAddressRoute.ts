@@ -1,5 +1,6 @@
 import { Router } from "express";
 import deliveryAddressController from "../controllers/deliveryAddressController";
+import { cacheInterceptor } from "../interceptors";
  
 
 const deliveryAddressRouter = Router();
@@ -95,7 +96,7 @@ deliveryAddressRouter.post("/add", deliveryAddressController.createDeliveryAddre
  *                 message:
  *                   type: string
  */
-deliveryAddressRouter.get("/all/:id", deliveryAddressController.allDeliveryAddress)
+deliveryAddressRouter.get("/all/:id", cacheInterceptor, deliveryAddressController.allDeliveryAddress)
 
 /**
  * @swagger
@@ -135,7 +136,7 @@ deliveryAddressRouter.get("/all/:id", deliveryAddressController.allDeliveryAddre
  *                 message:
  *                   type: string
  */
-deliveryAddressRouter.get("/:id", deliveryAddressController.fetchDeliveryAddress)
+deliveryAddressRouter.get("/:id", cacheInterceptor, deliveryAddressController.fetchDeliveryAddress)
 
 
 /**

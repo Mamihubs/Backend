@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import ProfileController from "../controllers/profileController"
+import { cacheInterceptor } from "../interceptors";
 
 /**
  * @swagger
@@ -108,11 +109,11 @@ router.put("/:email", ProfileController.updateUserProfile);
  *                 message:
  *                   type: string
  */
-router.get("/:email", ProfileController.getUserProfile);
+router.get("/:email", cacheInterceptor, ProfileController.getUserProfile);
 
 /**
  * @swagger
- * /api/profiles/all:
+ * /api/profiles/:
  *   get:
  *     tags: [Profile]
  *     description: Get all profiles
@@ -123,14 +124,9 @@ router.get("/:email", ProfileController.getUserProfile);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 data:
- *                   type: array
- *                   items:
- *                      $ref: '#/components/schemas/ProfileResponse'
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/ProfileResponse'
  *       404:
  *         description: Not found
  *         content:
@@ -154,7 +150,7 @@ router.get("/:email", ProfileController.getUserProfile);
  *                 message:
  *                   type: string
  */
-router.get("/all", ProfileController.getUsersProfile);
+router.get("/", cacheInterceptor, ProfileController.getUsersProfile);
 
 /**
  * @swagger

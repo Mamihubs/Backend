@@ -1,12 +1,13 @@
 import express from 'express';
 import walletController from '../controllers/walletController';
+import { cacheInterceptor } from '../interceptors';
 
 
 const router = express.Router();
 
 /**
  * @swagger
- * /api/wallets/{userId}:
+ * /api/wallets/users/{userId}:
  *   get:
  *     tags: ['Wallet']
  *     description: Get user wallet
@@ -55,12 +56,12 @@ const router = express.Router();
  *                 message:
  *                   type: string
  */
-router.get("/:userId", walletController.getUserWallets);
+router.get("/users/:userId", cacheInterceptor, walletController.getUserWallets);
 
 
 /**
  * @swagger
- * /api/wallets/get-wallet/{id}:
+ * /api/wallets/{id}:
  *   get:
  *     tags: ['Wallet']
  *     description: Get a wallet details
@@ -107,7 +108,7 @@ router.get("/:userId", walletController.getUserWallets);
  *                 message:
  *                   type: string
  */
-router.get("/get-wallet/:id", walletController.getWalletById);
+router.get("/:id", cacheInterceptor, walletController.getWalletById);
 
 /**
  * @swagger

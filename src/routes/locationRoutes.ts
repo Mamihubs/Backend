@@ -4,6 +4,7 @@ import AuthenticateUser from "../middlewares/authCheck"
 import locationController from "../controllers/locationController";
 import multer, { diskStorage, FileFilterCallback, StorageEngine } from 'multer';
 import path from 'path';
+import { cacheInterceptor } from "../interceptors";
 
 declare global {
     namespace Express {
@@ -130,7 +131,7 @@ router.post("/region", locationController.createRegions);
  *                 message:
  *                   type: string
  */
-router.get("/region", locationController.fetchAllRegions);
+router.get("/region", cacheInterceptor, locationController.fetchAllRegions);
 
 /**
  * @swagger
@@ -181,7 +182,7 @@ router.get("/region", locationController.fetchAllRegions);
  *                 message:
  *                   type: string
  */
-router.get("/region/:id", locationController.fetchOneRegion);
+router.get("/region/:id", cacheInterceptor, locationController.fetchOneRegion);
 
 
 /**
@@ -338,7 +339,7 @@ router.post("/", locationController.createLocations);
  *                 message:
  *                   type: string
  */
-router.get("/", locationController.fetchAllLocations);
+router.get("/", cacheInterceptor, locationController.fetchAllLocations);
 
 /**
  * @swagger
@@ -378,7 +379,7 @@ router.get("/", locationController.fetchAllLocations);
  *                 message:
  *                   type: string
  */
-router.get("/:id", locationController.fetchOneLocation);
+router.get("/:id", cacheInterceptor, locationController.fetchOneLocation);
 
 /**
  * @swagger

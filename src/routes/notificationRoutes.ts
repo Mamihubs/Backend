@@ -1,11 +1,12 @@
 import express from 'express';
 import notificationController from '../controllers/notificationController'
+import { cacheInterceptor } from '../interceptors';
 
 const router = express.Router();
 
 /**
  * @swagger
- * /api/notifications/${id}:
+ * /api/notifications/users/${id}:
  *   get:
  *     tags: [Notification]
  *     description: Get a user's notfications
@@ -23,14 +24,9 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                 data:
- *                     type: array
- *                     items:
- *                      $ref: '#/components/schemas/NotificationResponse'
+ *               type: array
+ *               items:
+ *                   $ref: '#/components/schemas/NotificationResponse'
  *       500:
  *         description: Server error
  *         content:
@@ -43,12 +39,12 @@ const router = express.Router();
  *                 message:
  *                   type: string
  */
-router.get('/:id', notificationController.getNotification) //Get all notifications for a user: id is the ID of the user
+router.get('/users/:id', cacheInterceptor, notificationController.getNotification) //Get all notifications for a user: id is the ID of the user
 
 
 /**
  * @swagger
- * /api/notifications/view/{id}:
+ * /api/notifications/{id}:
  *   get:
  *     tags: [Notification]
  *     description: View notification details
@@ -65,14 +61,7 @@ router.get('/:id', notificationController.getNotification) //Get all notificatio
  *         content:
  *           application/json:
  *             schema:
- *                 type: object
- *                 properties:
- *                      status:
- *                          type: boolean
- *                      message:
- *                          type: string
- *                      data:
- *                          $ref: '#/components/schemas/NotificationResponse'
+ *                $ref: '#/components/schemas/NotificationResponse'
  *       500:
  *         description: Server error
  *         content:
@@ -85,7 +74,7 @@ router.get('/:id', notificationController.getNotification) //Get all notificatio
  *                 message:
  *                   type: string
  */
-router.get('/view/:id', notificationController.getOneNotification) //Get Notification by id
+router.get('/:id', cacheInterceptor, notificationController.getOneNotification) //Get Notification by id
 
 /**
  * @swagger

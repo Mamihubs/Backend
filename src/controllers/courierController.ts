@@ -7,6 +7,7 @@ dotenv.config();
 
 // const mongoClient = mongodb.MongoClient;
 import { MongoClient } from "mongodb";
+import { storeDataInCacheMemory } from "../interceptors";
 
 /*
 Endpoints to do
@@ -72,12 +73,14 @@ export class CourierController {
         message: "An error occured while trying to fetch destinations"
       })
     }
-    // console.log(response)
-    return res.status(200).json({
+    const data = {
       status: true,
       message: "Possible destinations fetched successfully",
       data: response
-    });
+    }
+    // store cache in memory
+    storeDataInCacheMemory(req, data, 10)
+    return res.status(200).json(data);
 
   }
 }

@@ -1,5 +1,6 @@
 import express from "express";
 import adminController from "../controllers/adminController";
+import { cacheInterceptor } from "../interceptors";
 const router = express.Router();
 
 /**
@@ -16,7 +17,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/AdminDashboardResponse'
  */
-router.get("/", adminController.getDashboard);
+router.get("/", cacheInterceptor, adminController.getDashboard);
 /**
  * @swagger
  * /api/admin/analytics:
@@ -31,7 +32,7 @@ router.get("/", adminController.getDashboard);
  *             schema:
  *               $ref: '#/components/schemas/AdminDashboardResponse'
  */
-router.get("/analytics", adminController.getAnalytics);
+router.get("/analytics", cacheInterceptor, adminController.getAnalytics);
 /**
  * @swagger
  * /api/admin/products:
@@ -46,7 +47,7 @@ router.get("/analytics", adminController.getAnalytics);
  *             schema:
  *               $ref: '#/components/schemas/AdminProductsResponse'
  */
-router.get("/products", adminController.getProducts);
+router.get("/products", cacheInterceptor, adminController.getProducts);
 /**
  * @swagger
  * /api/admin/vendor-details/{id}:
@@ -69,7 +70,7 @@ router.get("/products", adminController.getProducts);
  *             schema:
  *               $ref: '#/components/schemas/AdminVendorDetailsResponse'
  */
-router.get("/vendor-details/:id", adminController.getAllVendorDetails);
+router.get("/vendor-details/:id", cacheInterceptor, adminController.getAllVendorDetails);
 
 /**
  * @swagger
@@ -85,7 +86,7 @@ router.get("/vendor-details/:id", adminController.getAllVendorDetails);
  *             schema:
  *               $ref: '#/components/schemas/AdminVendorsResponse'
  */
-router.get("/vendors", adminController.getVendors);
+router.get("/vendors", cacheInterceptor, adminController.getVendors);
 
 /**
  * @swagger
@@ -101,7 +102,7 @@ router.get("/vendors", adminController.getVendors);
  *             schema:
  *               $ref: '#/components/schemas/AdminCustomersResponse'
  */
-router.get("/customers", adminController.getCustomers);
+router.get("/customers", cacheInterceptor, adminController.getCustomers);
 
 /**
  * @swagger
@@ -117,7 +118,7 @@ router.get("/customers", adminController.getCustomers);
  *             schema:
  *               $ref: '#/components/schemas/AdminOrdersResponse'
  */
-router.get("/orders", adminController.getOrders);
+router.get("/orders", cacheInterceptor, adminController.getOrders);
 
 /**
  * @swagger
@@ -133,7 +134,7 @@ router.get("/orders", adminController.getOrders);
  *             schema:
  *               $ref: '#/components/schemas/AdminIntegrationResponse'
  */
-router.get("/integration", adminController.getIntegration);
+router.get("/integration", cacheInterceptor, adminController.getIntegration);
 
 /**
  * @swagger
@@ -149,7 +150,7 @@ router.get("/integration", adminController.getIntegration);
  *             schema:
  *               $ref: '#/components/schemas/AdminSettingsResponse'
  */
-router.get("/settings", adminController.getSettings);
+router.get("/settings", cacheInterceptor, adminController.getSettings);
 
 /**
  * @swagger
@@ -217,7 +218,7 @@ router.post("/add-vendor", adminController.addVendor);
  *             schema:
  *               $ref: '#/components/schemas/AdminVendorDataResponse'
  */
-router.get("/vendor/:id", adminController.getVendorId);
+router.get("/vendor/:id", cacheInterceptor, adminController.getVendorId);
 
 /**
  * @swagger
@@ -270,7 +271,7 @@ router.patch("/account-update/:id", adminController.updateAccount);
  *             schema:
  *               $ref: '#/components/schemas/SingleOrderResponse'
  */
-router.get("/order/:id", adminController.getOrder);
+router.get("/order/:id", cacheInterceptor, adminController.getOrder);
 
 /**
  * @swagger
@@ -294,7 +295,7 @@ router.get("/order/:id", adminController.getOrder);
  *             schema:
  *               $ref: '#/components/schemas/SingleOrderResponse'
  */
-router.get("/transaction/:id", adminController.getTransaction);
+router.get("/transaction/:id", cacheInterceptor, adminController.getTransaction);
 
 /**
  * @swagger
@@ -318,6 +319,6 @@ router.get("/transaction/:id", adminController.getTransaction);
  *             schema:
  *               $ref: '#/components/schemas/SingleProductResponse'
  */
-router.get("/product/:id", adminController.getProduct);
+router.get("/product/:id", cacheInterceptor, adminController.getProduct);
 
 export default router;

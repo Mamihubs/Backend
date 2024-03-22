@@ -42,8 +42,8 @@ export class AdminService {
       const products = await Product.find({ created_by: id });
 
       return { user, profile, sales, orders, products };
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw error
     }
   }
 
@@ -51,19 +51,25 @@ export class AdminService {
     try {
       const products = await Product.find();
       return products;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
   async getProductById(id: string) {
     try {
       const products = await Product.findOne({ _id: id });
       return products;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
   async getAllOrders() {
     try {
       const orders = await SalesOrder.find();
       return orders;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
   async getVendorDetails(id: string) {
     try {
@@ -76,24 +82,32 @@ export class AdminService {
       });
       const business = await Business.findOne({ user: id });
       return { profile, identity_company, identity_individual, bank, business };
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
   async getOrderById(id: string) {
     try {
       const orders = await SalesOrder.findOne({ _id: id });
       return orders;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
   async getAllSales() {
     try {
       const sales = await Sales.find();
       return sales;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
   async getSaleById(id: string) {
     try {
       const sales = await Sales.findOne({ _id: id });
       return sales;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
 }
