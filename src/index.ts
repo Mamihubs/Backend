@@ -33,9 +33,11 @@ import promotionPlanRoutes from "./routes/promotionPlanRoutes";
 import walletRoutes from "./routes/walletRoutes";
 import deliveryAddressRouter from "./routes/deliveryAddressRoute";
 
+
 import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes";
 import courierRoutes from "./routes/courierRoutes";
+import withdrawRoute from "./routes/withdrawalRoutes";
 
 // Middlewares
 
@@ -54,6 +56,7 @@ app.use("/api/notification", notificationRoutes);
 app.use("/api/promotion", promotionRoutes);
 app.use("/api/promotion-plan", promotionPlanRoutes);
 app.use("/api/wallet", walletRoutes);
+app.use("/api/withdrawal", withdrawRoute);
 app.use("/api/delivery-address", deliveryAddressRouter);
 
 app.use("/api/cart", cartRoutes);
