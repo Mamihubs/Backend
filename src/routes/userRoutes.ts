@@ -2,6 +2,7 @@ import express from "express"
 import UserAuth from "../controllers/userController"
 import walletController from "../controllers/walletController"
 import { cacheInterceptor } from "../interceptors"
+import expressRateLimiter from "../middlewares/expressRateLimiter"
 
 const router = express.Router()
 
@@ -47,7 +48,7 @@ const router = express.Router()
  *                 message:
  *                   type: string
  */
-router.post("/register", UserAuth.createUser)
+router.post("/register", expressRateLimiter(), UserAuth.createUser)
 
 /**
  * @swagger
@@ -91,7 +92,7 @@ router.post("/register", UserAuth.createUser)
  *                 message:
  *                   type: string
  */
-router.post("/vendor-register", UserAuth.createVendor)
+router.post("/vendor-register", expressRateLimiter(), UserAuth.createVendor)
 
 /**
  * @swagger
@@ -146,7 +147,7 @@ router.post("/vendor-register", UserAuth.createVendor)
  *                 message:
  *                   type: string
  */
-router.post("/login", UserAuth.loginUser)
+router.post("/login", expressRateLimiter(), UserAuth.loginUser)
 
 /**
  * @swagger

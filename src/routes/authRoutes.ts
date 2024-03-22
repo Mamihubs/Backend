@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import AuthController from "../controllers/authController"
+import expressRateLimiter from "../middlewares/expressRateLimiter";
 
 /**
  * @swagger
@@ -44,7 +45,7 @@ import AuthController from "../controllers/authController"
  *                 message:
  *                   type: string
  */
-router.post("/register", AuthController.userRegistration);
+router.post("/register", expressRateLimiter(), AuthController.userRegistration);
 
 /**
  * @swagger

@@ -16,7 +16,7 @@ export const cacheInterceptor = async(req: Request, res: Response, next: NextFun
     try {
         const key = req?.url;
         const store = await cacheMemoryStore()
-        const data = store.get(key)
+        const data = await store.get(key)
         if(!data) return next();
         return res.json(data)
     } catch (error) {
