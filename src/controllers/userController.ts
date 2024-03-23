@@ -11,6 +11,7 @@ import { VerificationCodeRepository } from "../repository/VerificationCodeReposi
 import { VerificationCodeService } from "../services/verificationcode.service";
 import JwtAuth from "../middlewares/JwtAuth";
 import VerificationCode from "../models/VerificationCode";
+import User from "../models/User";
 
 const general = new GeneralUtils();
 const verificationCodeRepo = new VerificationCodeRepository();
@@ -75,7 +76,7 @@ class UserAuth extends JwtAuth {
       data: newUser,
     });
   };
-  
+
   createVendor = async (req: Request, res: Response) => {
     // Data Validation
     const { error } = vendorRegistrationValidation(req.body);
@@ -221,6 +222,20 @@ class UserAuth extends JwtAuth {
             message: "Server error occured",
           });
         });
+    }
+  };
+
+  // get user by ID
+  getUserById = async (req: Request, res: Response) => {
+    // Check if user exists
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    } else {
+      return res.status(200).json(user);
     }
   };
 }
