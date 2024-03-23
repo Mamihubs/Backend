@@ -5,6 +5,8 @@ const router = express.Router();
 router.get("/", adminController.getDashboard);
 router.get("/analytics", adminController.getAnalytics);
 router.get("/products", adminController.getProducts);
+router.get("/products/store/:id", adminController.getAdminStoreProducts);
+router.delete("/products/:id", adminController.deleteProduct);
 router.get("/vendor-details/:id", adminController.getAllVendorDetails);
 router.get("/vendors", adminController.getVendors);
 router.get("/customers", adminController.getCustomers);

@@ -1,8 +1,8 @@
 import Product from "../models/Product";
 import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import { CreateNewProductDto, UpdateVariationDto } from "../dto/ProductDto";
-import mongoose, {isValidObjectId, FilterQuery } from "mongoose";
-import { ObjectId } from 'mongodb';
+import mongoose, { isValidObjectId, FilterQuery } from "mongoose";
+import { ObjectId } from "mongodb";
 
 export class ProductRepository {
   // Create a Product
@@ -146,31 +146,36 @@ export class ProductRepository {
   }
 
   // Update Variation
-  async updateQuantity(productId: mongoose.Types.ObjectId, variationId: mongoose.Types.ObjectId, quantityChange: number) {
-
+  async updateQuantity(
+    productId: mongoose.Types.ObjectId,
+    variationId: mongoose.Types.ObjectId,
+    quantityChange: number
+  ) {
     const productObjectId = new ObjectId(productId);
     const variationObjectId = new ObjectId(variationId);
-    
+
     try {
       const updatedProduct = await Product.findOneAndUpdate(
-        { _id: productObjectId, 'variations._id': variationObjectId },
-        { $inc: { 'variations.$.quantity': quantityChange } },
+        { _id: productObjectId, "variations._id": variationObjectId },
+        { $inc: { "variations.$.quantity": quantityChange } },
         { new: true }
       );
 
       if (!updatedProduct) {
-        throw new Error('Product or Variation not found');
+        throw new Error("Product or Variation not found");
       }
 
-      const updatedVariation = updatedProduct.variations.find(variation => variation._id.equals(variationId));
+      const updatedVariation = updatedProduct.variations.find((variation) =>
+        variation._id.equals(variationId)
+      );
 
       if (!updatedVariation) {
-        throw new Error('Variation not found');
+        throw new Error("Variation not found");
       }
 
       return updatedVariation;
-    } catch (error:any) {
+    } catch (error: any) {
       throw new Error(`Failed to update quantity: ${error?.message}`);
     }
-};
+  }
 }
