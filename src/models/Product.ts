@@ -111,7 +111,7 @@ const ProductSchema = new Schema<IProduct>(
     product_quantity: { type: Number },
     tags: [],
     shipping: [ShippingSchema],
-    product_price: {type: Number},
+    product_price: { type: Number },
     // date_start: { type: Date },
     // date_end: { type: Date },
     // available_threshold: { type: String },

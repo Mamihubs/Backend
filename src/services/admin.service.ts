@@ -49,7 +49,7 @@ export class AdminService {
 
   async getAllProducts() {
     try {
-      const products = await Product.find();
+      const products = await Product.find().populate("created_by", "fullName");
       return products;
     } catch (error) {
       throw error
@@ -57,7 +57,9 @@ export class AdminService {
   }
   async getProductById(id: string) {
     try {
-      const products = await Product.findOne({ _id: id });
+      const products = await Product.findOne({ _id: id }).populate(
+        "created_by"
+      );
       return products;
     } catch (error) {
       throw error

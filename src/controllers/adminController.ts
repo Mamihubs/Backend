@@ -239,6 +239,28 @@ class AdminController {
   settingsOrders = async (req: Request, res: Response) => {
     return res.status(200).json({});
   };
+
+  // delete product
+  deleteProduct = async (req: Request, res: Response) => {
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+
+    if (deletedProduct) {
+      return res.status(200).json("Product successfully deleted!");
+    } else {
+      return res.status(400).json("Error deleting this product!");
+    }
+  };
+
+  // get admin store products
+  getAdminStoreProducts = async (req: Request, res: Response) => {
+    const products = await Product.find({ created_by: req.params.id });
+
+    if (products) {
+      return res.status(200).json(products);
+    } else {
+      return res.status(404).json("Products not found!");
+    }
+  };
 }
 
 export default new AdminController();

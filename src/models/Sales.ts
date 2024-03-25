@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Model } from 'mongoose';
+import mongoose, { Document, Schema, Model } from "mongoose";
 
 // Define interfaces for the schemas
 export interface IItem extends Document {
@@ -38,19 +38,19 @@ export enum DeliveryStatus {
 const itemSchema = new Schema<IItem>({
   product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
+    ref: "Product",
   },
   quantity: {
     type: Number,
-    required: true
+    required: true,
   },
   variation: {
     type: String,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
 });
 
@@ -59,40 +59,40 @@ const SaleSchema = new Schema<ISale>(
   {
     order_by: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
     },
     updated_by: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
     },
     phone: {
       type: String,
-      required: true
+      required: true,
     },
     address: {
       type: String,
-      required: true
+      required: true,
     },
     payment_method: {
       type: String,
-      required: true
+      required: true,
     },
     items: [itemSchema],
     date_ordered: {
       type: Date,
-      default: Date.now
+      default: Date.now,
     },
     date_delivered: {
-      type: Date
+      type: Date,
     },
-    delivery_status:{
+    delivery_status: {
       type: String,
       enum: Object.values(DeliveryStatus),
       default: DeliveryStatus.PENDING,
     },
     currency_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Currency'
+      ref: "Currency",
     },
     amount_total: { type: Number },
     total_tax: { type: Number },
@@ -103,5 +103,5 @@ const SaleSchema = new Schema<ISale>(
 );
 
 // Export the model with its TypeScript type
-const SaleModel: Model<ISale> = mongoose.model<ISale>('Sales', SaleSchema);
+const SaleModel: Model<ISale> = mongoose.model<ISale>("Sales", SaleSchema);
 export default SaleModel;

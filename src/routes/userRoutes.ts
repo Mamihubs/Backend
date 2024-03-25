@@ -4,7 +4,7 @@ import walletController from "../controllers/walletController"
 import { cacheInterceptor } from "../interceptors"
 import expressRateLimiter from "../middlewares/expressRateLimiter"
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @swagger
