@@ -34,7 +34,9 @@
     "nodemailer": "^6.9.3",
     "otp-generator": "^4.0.1",
     "sib-api-v3-sdk": "^8.5.0",
-    "swagger-autogen": "^2.23.7"
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -53,8 +55,6 @@
     "nodemon": "^3.0.1",
     "prisma": "^5.10.2",
     "rimraf": "^5.0.1",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }
