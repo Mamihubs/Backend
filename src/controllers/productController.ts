@@ -110,7 +110,7 @@ class ProductController {
 
   getProductById = async (req: Request, res: Response) => {
     const product = await productService.getProductById(
-      new mongoose.Types.ObjectId(req.params.product_id)
+      new mongoose.Types.ObjectId(req.params.id)
     );
 
     if (!product) {
@@ -160,6 +160,7 @@ class ProductController {
   };
 
   getAllProducts = async (req: Request, res: Response) => {
+    console.log("this is get all products ", req.query)
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const pageNumber = parseInt(req.query.pageNumber as string) || 1;
 
