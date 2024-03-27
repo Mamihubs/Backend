@@ -122,6 +122,9 @@ const ProductSchema = new Schema<IProduct>(
   { timestamps: true }
 );
 
+// index search fields
+ProductSchema.index({ product_name: 'text', product_desc: 'text', brand: 'text' });
+
 // Export the model with its TypeScript type
 const ProductModel: Model<IProduct> = mongoose.model<IProduct>(
   "Product",

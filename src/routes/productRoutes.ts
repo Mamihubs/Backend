@@ -418,7 +418,75 @@ router.patch('/update_quantity', ProductController.updateQuantity);
  */
 router.delete('/delete-image', ProductController.removeImage);
 
-
+/**
+ * @swagger
+ * /api/products/search:
+ *   get:
+ *     tags: [Products]
+ *     description: Search all products
+ *     parameters:
+ *       - in: query
+ *         name: pageSize
+ *         required: true
+ *         schema:
+ *              type: integer
+ *              minimum: 1
+ *              default: 10
+ *       - in: query
+ *         name: pageNumber
+ *         required: true
+ *         schema:
+ *              type: integer
+ *              minimum: 1
+ *              default: 10
+ *         description: Page number
+ *       - in: query
+ *         name: searchQuery
+ *         required: true
+ *         schema:
+ *              type: string
+ *         description: search query
+ *       - in: query
+ *         name: filters
+ *         schema:
+ *              type: string
+ *         description: additional filters
+ * 
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+router.get('/search', cacheInterceptor, ProductController.getSearchProducts);
 
 
 
