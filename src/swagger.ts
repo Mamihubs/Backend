@@ -15,6 +15,10 @@ const swaggerDocOptions:swaggerJSDoc.Options = {
                 url: 'http://localhost:8081',
                 description: 'Development server',
             },
+            {
+                url: 'https://mamihub-server.vercel.app',
+                description: "Production server",
+            }
         ],
         security: [
             {
