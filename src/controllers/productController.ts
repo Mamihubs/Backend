@@ -190,6 +190,30 @@ class ProductController {
     }
   };
 
+  getSearchProducts = async (req: Request, res: Response) => {
+    console.log("Search Products ", req.query)
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const pageNumber = parseInt(req.query.pageNumber as string) || 1;
+    const searchQuery = req.query.searchQuery as string
+    const filters = req.query.filters as Record<string, any>
+    try {
+      const products = await productService.getSearchProducts(searchQuery,
+        pageSize,
+        pageNumber,
+        filters
+      );
+      if (!products || products.length === 0) {
+        return res.status(404).json({ message: "No products found" });
+      }
+      const data = { data: products, message: "Successfully fetched products" }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({ message: "An error occurred", error });
+    }
+  };
+
   
   async updateQuantity(req: Request, res: Response) {
     const { product_id, variation_id, quantity } = req.body;

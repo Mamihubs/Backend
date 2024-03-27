@@ -124,6 +124,50 @@ export class ProductRepository {
     }
   }
 
+  async searchProducts(searchQuery: string, pageSize: number, pageNumber: number, filters: Record<string, any>
+  ) {
+    const query: FilterQuery<any> = {};
+    if (filters.brand) {
+      query.brand = filters.brand;
+    }
+
+    if (filters.category_id) {
+      query.category_id = filters.category_id;
+    }
+
+    if (filters.is_flash_sale !== undefined) {
+      query.is_flash_sale = filters.is_flash_sale;
+    }
+
+    if (filters.min_price !== undefined && filters.max_price !== undefined) {
+      query["variations.price"] = {
+        $gte: filters.min_price,
+        $lte: filters.max_price,
+      };
+    } else if (filters.min_price !== undefined) {
+      query["variations.price"] = { $gte: filters.min_price };
+    } else if (filters.max_price !== undefined) {
+      query["variations.price"] = { $lte: filters.max_price };
+    }
+
+    // Handle new arrivals filter
+    if (filters.new_arrival === true) {
+      // Sort by most recent if new_arrival is true
+      const products = await Product.find({$text : { $search: searchQuery, $caseSensitive: false}})
+        .sort({ createdAt: -1 })
+        .skip((pageNumber - 1) * pageSize)
+        .limit(pageSize);
+
+      return products;
+    } else {
+      // Add more filters as needed...
+
+      const products = await Product.find({$text : { $search: searchQuery, $caseSensitive: false}}).skip((pageNumber - 1) * pageSize).limit(pageSize);
+
+      return products;
+    }
+  }
+
   // Delete one product
   async DeleteOne(productId: mongoose.Types.ObjectId) {
     try {

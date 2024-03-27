@@ -74,6 +74,10 @@ export class ProductService {
     return await this.productRepository.findAll(pageSize, pageNumber,filters);
   }
 
+  async getSearchProducts(searchQuery: string, pageSize: number, pageNumber: number, filters: Record<string, any>) {
+    return await this.productRepository.searchProducts(searchQuery, pageSize, pageNumber, filters );
+  }
+
   async updateQuantity(productId: mongoose.Types.ObjectId, variationId: mongoose.Types.ObjectId, quantity: number) {
     return await this.productRepository.updateQuantity(productId, variationId, quantity);
   }
