@@ -52,9 +52,8 @@ import { UserType } from "./models/User";
 
 const swaggerSpec = swaggerJSDoc(swaggerDocOptions);
 
-if (process.env.NODE_ENV !== "production") {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-}
+// docs middleware
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Middlewares
 app.use("/api/auth", authRouter);
