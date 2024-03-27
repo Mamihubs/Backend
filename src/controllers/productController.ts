@@ -160,7 +160,6 @@ class ProductController {
   };
 
   getAllProducts = async (req: Request, res: Response) => {
-    console.log("this is get all products ", req.query)
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const pageNumber = parseInt(req.query.pageNumber as string) || 1;
 
