@@ -4,13 +4,12 @@ import cors from "cors";
 import env from "dotenv";
 // swagger documentation
 import swaggerUi from "swagger-ui-express";
-import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerJSDoc from "swagger-jsdoc";
 import swaggerDocOptions from "./swagger";
 
 //security
 import helmet from "helmet";
 import compression from "compression";
-
 
 env.config();
 
@@ -20,7 +19,7 @@ const app = express();
 import "./utils/connectDB";
 
 // Middlewares
-app.use(cors({origin:"*", credentials: true}));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
@@ -44,18 +43,17 @@ import walletRoutes from "./routes/walletRoutes";
 import deliveryAddressRouter from "./routes/deliveryAddressRoute";
 
 import cartRoutes from "./routes/cartRoutes";
-import paystackRoutes from "./routes/paystackRoutes"
-import courierRoutes from "./routes/courierRoutes"
+import paystackRoutes from "./routes/paystackRoutes";
+import courierRoutes from "./routes/courierRoutes";
 import likedRoutes from "./routes/likedItemRoute";
 import withdrawRoute from "./routes/withdrawalRoutes";
 import authCheck from "./middlewares/authCheck";
 import { UserType } from "./models/User";
 
-
 const swaggerSpec = swaggerJSDoc(swaggerDocOptions);
 
-if(process.env.NODE_ENV !== 'production'){
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+if (process.env.NODE_ENV !== "production") {
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
 // Middlewares
@@ -66,27 +64,25 @@ app.use("/api/users", userRouter);
 app.use("/api/code", verificationCodeRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/sales", salesRoutes);
-app.use("/api/admin", authCheck.deserialToken, authCheck.restictedTo(UserType.STAFF), adminRoutes);
+app.use(
+  "/api/admin",
+  authCheck.deserialToken,
+  authCheck.restictedTo(UserType.STAFF),
+  adminRoutes
+);
 app.use("/api/vendors", vendorRoutes);
-app.use("/api/locations", locationRouter)
-app.use('/api/onboarding', onboardingRoutes)
-app.use('/api/notifications', notificationRoutes)
-app.use('/api/promotions', promotionRoutes)
-app.use('/api/promotion-plans', promotionPlanRoutes)
-app.use('/api/wallets', walletRoutes)
-app.use('/api/delivery-address', deliveryAddressRouter)
+app.use("/api/locations", locationRouter);
+app.use("/api/onboarding", onboardingRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/promotions", promotionRoutes);
+app.use("/api/promotion-plans", promotionPlanRoutes);
+app.use("/api/wallets", walletRoutes);
+app.use("/api/delivery-address", deliveryAddressRouter);
 app.use("/api/carts", cartRoutes);
-app.use("/api/paystack", paystackRoutes)
-app.use("/api/couriers", courierRoutes)
-app.use("/api/likes", likedRoutes)
+app.use("/api/paystack", paystackRoutes);
+app.use("/api/couriers", courierRoutes);
+app.use("/api/likes", likedRoutes);
 app.use("/api/withdrawal", withdrawRoute);
-
-
-
-
-
-
-
 
 app.get("/", (req: Request, res: Response) => {
   console.log("Just to make sure it's all running.");
