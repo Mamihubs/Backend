@@ -23,7 +23,7 @@ import { cacheInterceptor } from "../interceptors";
  *         schema:
  *              type: integer
  *              minimum: 1
- *              default: 10
+ *              default: 1
  *         description: Page number
  * 
  *     responses:
