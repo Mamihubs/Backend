@@ -56,17 +56,6 @@ class ProfileController {
           message: "email required to get user information",
         });
 
-<<<<<<< HEAD
-    try {
-      // call the service to get user using the getProfileByEmail function
-      const data = await getProfileByEmail(email);
-
-      if (!data)
-        return res.status(400).json({
-          error: true,
-          message: "user profile information not created",
-        });
-=======
         try {
             // call the service to get user using the getProfileByEmail function
             const data = await getProfileByEmail(email)
@@ -82,16 +71,6 @@ class ProfileController {
         } catch (err) {
             return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
         }
->>>>>>> 0d586bb69b45974e63712ed63221ad17682d1109
-
-      // return the user information
-      return res.status(200).json({
-        error: false,
-        data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
   };
   // delete a usr profile
   deleteUserProfile = async (req: Request, res: Response) => {
@@ -122,14 +101,6 @@ class ProfileController {
     }
   };
 
-<<<<<<< HEAD
-  // get all the users profiles
-  // applicable to admin
-  getUsersProfile = async (req: Request, res: Response) => {
-    const data = await getProfiles();
-    return res.status(200).json(data);
-  };
-=======
     // get all the users profiles
     // applicable to admin
     getUsersProfile = async (req: Request, res: Response) => {
@@ -138,7 +109,6 @@ class ProfileController {
         storeDataInCacheMemory(req, data, 10)
         return res.status(200).json(data)
     }
->>>>>>> 0d586bb69b45974e63712ed63221ad17682d1109
 }
 
 export default new ProfileController();
