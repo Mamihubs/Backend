@@ -33,7 +33,6 @@ import promotionPlanRoutes from "./routes/promotionPlanRoutes";
 import walletRoutes from "./routes/walletRoutes";
 import deliveryAddressRouter from "./routes/deliveryAddressRoute";
 
-
 import cartRoutes from "./routes/cartRoutes";
 import paystackRoutes from "./routes/paystackRoutes";
 import courierRoutes from "./routes/courierRoutes";
