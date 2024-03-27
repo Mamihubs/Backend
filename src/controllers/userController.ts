@@ -225,20 +225,16 @@ class UserAuth extends JwtAuth {
     }
   };
 
-  // get user by ID
-  getUserById = async (req: Request, res: Response) => {
-    // Check if user exists
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({
-        status: false,
-        message: "User not found",
-      });
-    } else {
-      return res.status(200).json(user);
+  addDeliveryAddress = async (req: Request, res: Response) => {
+    try {
+      
+    } catch (error) {
+      
     }
-  };
+  }
 }
+
+
 
 export default new UserAuth();
 

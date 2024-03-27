@@ -27,12 +27,14 @@ export class OnboardingController {
       //     referral_code:req.body.referral_code === undefined ?'':req.body.referral_code
       // }
 
+      console.log(req.body)
+
       const businessInformation =
         await this.onboardingRepo.CreateBusinessInformation({
           ...req.body
         });
 
-      return res.status(201).json({ businessInformation });
+      return res.status(201).json({ data: businessInformation });
     } catch (error) {}
   };
   updateBusinessInformation = async (req: Request, res: Response) => {
@@ -46,7 +48,7 @@ export class OnboardingController {
       const businessInformation =
         await this.onboardingRepo.UpdateBusinessInformation(business);
 
-      return res.status(200).json({ businessInformation });
+      return res.status(200).json({ data: businessInformation });
     } catch (error) {}
   };
   // identity individual
@@ -64,7 +66,7 @@ export class OnboardingController {
           ...req.body
         });
 
-      return res.status(201).json({ identityIndividual });
+      return res.status(201).json({ data: identityIndividual });
     } catch (error) {}
   };
   updateIdentityIndividual = async (req: Request, res: Response) => {
@@ -78,7 +80,7 @@ export class OnboardingController {
       const businessInformation =
         await this.onboardingRepo.UpdateIdentityIndividual(identity);
 
-      return res.status(200).json({ businessInformation });
+      return res.status(200).json({ data: businessInformation });
     } catch (error) {}
   };
 
@@ -100,7 +102,7 @@ export class OnboardingController {
           ...req.body
         });
 
-      return res.status(201).json({ identityIndividual });
+      return res.status(201).json({ data: identityIndividual });
     } catch (error) {}
   };
   updateIdentityCompany = async (req: Request, res: Response) => {
@@ -114,7 +116,7 @@ export class OnboardingController {
       const businessInformation =
         await this.onboardingRepo.UpdateIdentityCompany(identity);
 
-      return res.status(200).json({ businessInformation });
+      return res.status(200).json({ data: businessInformation });
     } catch (error) {}
   };
 
@@ -132,7 +134,7 @@ export class OnboardingController {
       };
       const bankDetails = await this.onboardingRepo.CreateBank(bank);
 
-      return res.status(201).json({ bankDetails });
+      return res.status(201).json({ data: bankDetails });
     } catch (error) {
       console.log(error);
       
@@ -148,7 +150,7 @@ export class OnboardingController {
       };
       const bankDetails = await this.onboardingRepo.UpdateBank(bank);
 
-      return res.status(200).json({ bankDetails });
+      return res.status(200).json({ data: bankDetails });
     } catch (error) {}
   };
 }

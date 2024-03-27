@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 //importing field validations
 import { categoryValidation } from "../validations/categoryValidation";
 import { CategoryService } from "../services/category.service";
+import { storeDataInCacheMemory } from "../interceptors";
 import Category from "../models/Category";
 
 class CategoryController extends CategoryService {
@@ -110,41 +111,31 @@ class CategoryController extends CategoryService {
     }
   };
 
-  // getting all categories
-  getCategories = async (req: Request, res: Response) => {
-    const data = await this.getAllCategories();
-    return res.status(200).json(data);
-  };
+    // getting all categories
+    getCategories = async (req: Request, res: Response) => {
+        const data = await this.getAllCategories();
+        // save a cached copy
+        storeDataInCacheMemory(req, data, 10)
+        return res.status(200).json(data);
+    }
 
-  //getting all sub categories under a category
-  getSubCategories = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-      const data = await this.getAllSubCategoriesUnderACategory(id);
-      return res.status(200).json(data);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        error: true,
-        message: err,
-      });
+    //getting all sub categories under a category
+    getSubCategories = async (req:Request, res:Response) =>{
+        const {id} = req.params;
+        try {
+            const data = await this.getAllSubCategoriesUnderACategory(id)
+            // save a cached copy
+            storeDataInCacheMemory(req, data, 10)
+            return res.status(200).json(data)
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({
+                error: true,
+                message: err
+            }); 
+        }
     }
   };
 
-  //getting a single category by id
-  getCategory = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-      const data = await Category.findById(id);
-      return res.status(200).json(data);
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        error: true,
-        message: err,
-      });
-    }
-  };
-}
 
 export default new CategoryController();

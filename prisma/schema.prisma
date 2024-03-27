@@ -182,3 +182,21 @@ model wallets {
   updatedAt DateTime @db.Date
   user      String   @db.ObjectId
 }
+
+model states {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  createdAt DateTime @db.Date
+  name      String
+  updatedAt DateTime @db.Date
+  user      String   @db.ObjectId
+}
+
+model lgas {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  name      String
+  stateId   String   @db.ObjectId
+  createdAt DateTime @db.Date
+  updatedAt DateTime @db.Date
+}

@@ -16,6 +16,7 @@ import { ProfileRepository } from "../repository/ProfileRepository";
 import Sales from "../models new/Sales";
 import Product from "../models/Product";
 import SalesOrder from "../models/SalesOrder";
+import { storeDataInCacheMemory } from "../interceptors";
 
 class AdminController {
   private SalesService: SalesService = new SalesService();
@@ -28,49 +29,91 @@ class AdminController {
   private adminService: AdminService = new AdminService();
 
   getDashboard = async (req: Request, res: Response) => {
-    const sales = await this.adminService.getAllSales();
-    const products = await this.adminService.getAllProducts();
-    const orders = await this.adminService.getAllOrders();
-    return res.status(200).json({ sales, products, orders });
+    try {
+      const sales = await this.adminService.getAllSales();
+      const products = await this.adminService.getAllProducts();
+      const orders = await this.adminService.getAllOrders();
+      const data = { sales, products, orders }
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
 
   getAnalytics = async (req: Request, res: Response) => {
-    const sales = await this.adminService.getAllSales();
-    const products = await this.adminService.getAllProducts();
-    const orders = await this.adminService.getAllOrders();
-    return res.status(200).json({ sales, products, orders });
+    try {
+      const sales = await this.adminService.getAllSales();
+      const products = await this.adminService.getAllProducts();
+      const orders = await this.adminService.getAllOrders();
+      const data = { sales, products, orders }
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   getProducts = async (req: Request, res: Response) => {
-    const products = await this.adminService.getAllProducts();
-
-    return res.status(200).json({ products });
+    try {
+      const products = await this.adminService.getAllProducts();
+      const data = { products }
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   getOrders = async (req: Request, res: Response) => {
-    const orders = await this.adminService.getAllOrders();
-    return res.status(200).json({ orders });
+    try {
+      const orders = await this.adminService.getAllOrders();
+      const data = { orders }
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   getAllVendorDetails = async (req: Request, res: Response) => {
-    const details = await this.adminService.getVendorDetails(req.params.id);
-    return res.status(200).json({ details });
+    try {
+      const details = await this.adminService.getVendorDetails(req.params.id);
+    const data = { data: details }
+    storeDataInCacheMemory(req, data, 10)
+    return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
 
   getCustomers = async (req: Request, res: Response) => {
-    const users = await User.find({ type: "Customer" });
-
-    return res.status(200).json({ users });
+    try {
+      const users = await User.find({ type: "Customer" });
+      const data = { users }
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
 
   getVendors = async (req: Request, res: Response) => {
-    const users = await User.find({ type: "Vendor" });
-
-    return res.status(200).json({ users });
+    try {
+      const users = await User.find({ type: "Vendor" });
+      const data = { users }
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   getVendorId = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
+    try {
+      const { id } = req.params;
     const data = await this.adminService.getVendorById(id);
-
+    storeDataInCacheMemory(req, data, 10)
     return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   addVendor = async (req: Request, res: Response) => {
     const { error } = userRegistrationValidation(req.body);
@@ -133,19 +176,34 @@ class AdminController {
   };
 
   getProduct = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const data = await this.adminService.getProductById(id);
-    return res.status(200).json({ data });
+    try {
+      const { id } = req.params;
+      const data = await this.adminService.getProductById(id);
+      storeDataInCacheMemory(req, data, 10)
+    return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   getOrder = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const data = await this.adminService.getOrderById(id);
-    return res.status(200).json({ data });
+    try {
+      const { id } = req.params;
+      const data = await this.adminService.getOrderById(id);
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
   getTransaction = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const data = await this.adminService.getOrderById(id);
-    return res.status(200).json({ data });
+    try {
+      const { id } = req.params;
+      const data = await this.adminService.getOrderById(id);
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json({message: "Sorry an error occurred, trying to process request. Try again later"})
+    }
   };
 
   updateAccount = async (req: Request, res: Response) => {

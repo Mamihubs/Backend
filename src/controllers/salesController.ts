@@ -3,6 +3,7 @@ import SalesService from "../services/sales.service";
 import { IItem, ISale } from "../models/Sales";
 import ProductModel from "../models/Product";
 import Sales from "../models/Sales";
+import { storeDataInCacheMemory } from "../interceptors";
 
 class SalesController {
   private SalesService: SalesService = new SalesService();
@@ -75,7 +76,11 @@ class SalesController {
       //     console.log(`${index + 1}. Product ID: ${productId}, Total Quantity Sold: ${quantity}`);
       // });
 
-      return res.status(200).json({ sortedTopProducts });
+      const data =  { data: sortedTopProducts }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+
+      return res.status(200).json(data);
     }
   };
 
@@ -123,9 +128,11 @@ class SalesController {
             }. Category ID: ${categoryId}, Total Quantity Sold: ${quantity}`
           );
         });
-
-      // Return the top-selling categories
-      return res.status(200).json({ sortedTopCategories });
+        const data =  { data: sortedTopCategories }
+        // store cache in memory
+        storeDataInCacheMemory(req, data, 10)
+        // Return the top-selling categories
+        return res.status(200).json(data);
     }
   };
 
@@ -161,14 +168,17 @@ class SalesController {
   // getting  all sales admin
   getSales = async (req: Request, res: Response) => {
     const sales = await this.SalesService.FindAll();
-    return res.status(200).json({ sales });
+    return res.status(200).json({ data: sales });
   };
 
   // getting  all sales for a user
   getUserSales = async (req: Request, res: Response) => {
     try {
       const sales = await this.SalesService.FindAll({ order_by: req.user });
-      return res.status(200).json({ sales });
+      const data = { data: sales }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
     } catch (err) {
       console.log(err);
       return res.status(500).json({
@@ -189,7 +199,10 @@ class SalesController {
       });
 
     const sales = await this.SalesService.FindAll(req.body.delivery_status);
-    return res.status(200).json({ sales });
+    const data =  { data: sales }
+    // store cache in memory
+    storeDataInCacheMemory(req, data, 10)
+    return res.status(200).json(data);
   };
 
   getMonthlySales = async (req: Request, res: Response) => {
@@ -222,7 +235,12 @@ class SalesController {
         },
       ];
 
-      return series;
+      const data =  { data: series }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+      
+      return res.status(200).json(data);
+
     } catch (error) {
       console.error("Error retrieving monthly sales data:", error);
       throw error;

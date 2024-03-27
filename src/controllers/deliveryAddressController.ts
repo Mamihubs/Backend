@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { DeliveryAddressRepository } from "../repository/DeliveryAddressRepository";
 import { DeliveryAddressUpdateDto } from "../dto/DeliveryAddressDto";
 import { UpdateWriteOpResult } from "mongoose";
+import { storeDataInCacheMemory } from "../interceptors";
 
  
  class DeliveryAddressController{
@@ -37,10 +38,10 @@ import { UpdateWriteOpResult } from "mongoose";
         const {id} = req.params
 
         const deliveryData = await this.deliveryAddress.fetchDeliveryAddress(id);
-        return res.status(200).json({
-            status:true,
-            data: deliveryData
-        })
+        const data = { status:true, data: deliveryData}
+        // store cache in memory
+        storeDataInCacheMemory(req, data, 10)
+        return res.status(200).json(data)
     } catch (error:any) {
         return res.status(400).json({
             status:false,
@@ -53,10 +54,10 @@ import { UpdateWriteOpResult } from "mongoose";
         
         const {id} = req.params
         const deliveryData = await this.deliveryAddress.allDeliveryAddress(id);
-        return res.status(200).json({
-            status:true,
-            data: deliveryData
-        })
+        const data = { status:true, data: deliveryData}
+        // store cache in memory
+        storeDataInCacheMemory(req, data, 10)
+        return res.status(200).json(data)
     } catch (error:any) {
         return res.status(400).json({
             status:false,
@@ -77,7 +78,7 @@ import { UpdateWriteOpResult } from "mongoose";
         return res.status(200).json({
             status:true,
             message: "Delivery address updated",
-            updateDeliveryAddress
+            data: updateDeliveryAddress
         })
     } catch (error:any) {
         return res.status(400).json({

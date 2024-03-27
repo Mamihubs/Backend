@@ -3,6 +3,7 @@ import { PromotionPlanRepository } from "../repository/PromotionPlanRepository";
 import { PromotionPlanService } from "../services/promotionplan.service";
 import { UpdateProductDto } from "../dto/ProductDto";
 import { UpdatePromotionPlanDto } from "../dto/PromotionPlanDto";
+import { storeDataInCacheMemory } from "../interceptors";
 
 class PromotionPlanController{
         private promoService: PromotionPlanService;
@@ -41,10 +42,10 @@ class PromotionPlanController{
         findAllPromoPlan = async(req:Request, res:Response) =>{
             try{
                 const allPromotions = await this.promoService.findAllPromoPlan();
-                return res.status(200).json({
-                    status:true,
-                   data:allPromotions
-                })
+                const data = { message:"success", data:allPromotions }
+                // store cache in memory
+                storeDataInCacheMemory(req, data, 10)
+                return res.status(200).json(data)
             }catch(e){
                 return res.status(500).json({
                     status:false,
@@ -56,10 +57,13 @@ class PromotionPlanController{
             try{
                 const {id} = req.params;
                 const promo = await this.promoService.findPromoPlanById(id);
-                return res.status(200).json({
-                    status:true,
-                   data:promo
-                })
+                const data = {
+                    message: "success",
+                    data: promo
+                }
+                // store cache in memory
+                storeDataInCacheMemory(req, data, 10)
+                return res.status(200).json(data)
             }catch(e){
                 return res.status(500).json({
                     status:false,

@@ -4,6 +4,7 @@ import { WalletRepository } from "../repository/WalletRepository";
 import { UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import { WalletDto } from "../dto/WalletDto";
 import { PromotionPlanService } from "../services/promotionplan.service";
+import { storeDataInCacheMemory } from "../interceptors";
 
 class PromotionController {
   private promoService: PromotionService;
@@ -114,11 +115,10 @@ class PromotionController {
           message: "An error occurred while fetching the promotion",
         });
       }
-
-      return res.status(200).json({
-        status: true,
-        data: allpromotion,
-      });
+      const data = { message: "success", data: allpromotion }
+      // store cache in memory
+      storeDataInCacheMemory(req, data, 10)
+      return res.status(200).json(data);
     } catch (e) {
       return res.status(500).json({
         status: false,

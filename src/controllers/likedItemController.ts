@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { LikedItemRepository } from "../repository/LikedItemRepository";
+import { storeDataInCacheMemory } from "../interceptors";
 
 class LikedItemController{
 
@@ -19,11 +20,13 @@ class LikedItemController{
                 message:"You don't have any liked items"
             })
         }
-
-        return res.status(200).json({
+        // store cache in memory
+        const data = {
             status:true,
-            data:allItem
-        })
+            data: allItem
+        }
+        storeDataInCacheMemory(req, data, 10)
+        return res.status(200).json(data)
 
         } catch (error:any) {
             return res.status(400).json({
