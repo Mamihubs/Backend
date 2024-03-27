@@ -17,7 +17,6 @@ export class ProductService {
   }
 
   async updateProduct(id: mongoose.Types.ObjectId, updateFields: Partial<CreateNewProductDto>) {
-    console.log(updateFields);
     const updateOneDto: UpdateOneDto = {
       _id: id.toString(),
       update: updateFields

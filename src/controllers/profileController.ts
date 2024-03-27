@@ -10,6 +10,8 @@ import {
 import { profileValidation } from "../validations/authValidations";
 import { storeDataInCacheMemory } from "../interceptors";
 import { UserService } from "../services/user.service";
+import { updateUserInfo } from "../models/User";
+import bcrypt from "bcryptjs";
 
 const userService = new UserService();
 
@@ -42,7 +44,9 @@ class ProfileController {
         });
       }
 
-      // 
+      // update user password
+      const hashPassword = await bcrypt.hash(new_password, 10)
+      await updateUserInfo(user._id, {password: hashPassword})
 
       // update user profile
       const updatedProfile = await updateProfile(email, {

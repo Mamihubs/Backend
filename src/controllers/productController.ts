@@ -191,7 +191,6 @@ class ProductController {
   };
 
   getSearchProducts = async (req: Request, res: Response) => {
-    console.log("Search Products ", req.query)
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const pageNumber = parseInt(req.query.pageNumber as string) || 1;
     const searchQuery = req.query.searchQuery as string
@@ -229,7 +228,7 @@ class ProductController {
         data: updatedVariation,
       });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
 
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
