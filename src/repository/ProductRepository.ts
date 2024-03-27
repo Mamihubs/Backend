@@ -3,6 +3,7 @@ import { UpdateManyDto, UpdateOneDto, searchDto } from "../dto/GeneralDto";
 import { CreateNewProductDto, UpdateVariationDto } from "../dto/ProductDto";
 import mongoose, { isValidObjectId, FilterQuery } from "mongoose";
 import { ObjectId } from "mongodb";
+import { boolFromString, getFilterParams, getSortByParams } from "../utils/helpers";
 
 export class ProductRepository {
   // Create a Product
@@ -90,22 +91,22 @@ export class ProductRepository {
     }
 
     if (filters.is_flash_sale !== undefined) {
-      query.is_flash_sale = filters.is_flash_sale;
+      query.is_flash_sale = boolFromString(filters.is_flash_sale);
     }
 
     if (filters.min_price !== undefined && filters.max_price !== undefined) {
       query["variations.price"] = {
-        $gte: filters.min_price,
-        $lte: filters.max_price,
+        $gte: parseFloat(filters.min_price),
+        $lte: parseFloat(filters.max_price),
       };
     } else if (filters.min_price !== undefined) {
-      query["variations.price"] = { $gte: filters.min_price };
+      query["variations.price"] = { $gte: parseFloat(filters.min_price) };
     } else if (filters.max_price !== undefined) {
-      query["variations.price"] = { $lte: filters.max_price };
+      query["variations.price"] = { $lte: parseFloat(filters.max_price) };
     }
 
     // Handle new arrivals filter
-    if (filters.new_arrival === true) {
+    if (boolFromString(filters.new_arrival)) {
       // Sort by most recent if new_arrival is true
       const products = await Product.find(query)
         .sort({ createdAt: -1 })
@@ -124,37 +125,52 @@ export class ProductRepository {
     }
   }
 
-  async searchProducts(searchQuery: string, pageSize: number, pageNumber: number, filters: Record<string, any>
+  async searchProducts({searchQuery, pageSize, pageNumber, filters, sortBy}: {searchQuery: string, pageSize: number, pageNumber: number, filters?: string, sortBy?: string}
   ) {
-    const query: FilterQuery<any> = {};
-    if (filters.brand) {
-      query.brand = filters.brand;
-    }
+    // convert query to object
+    let _filters = getFilterParams<Record<string, any>>(filters as string);
 
-    if (filters.category_id) {
-      query.category_id = filters.category_id;
+    let _sortBy = {} //{ createdAt: -1 }
+    if(sortBy){
+      _sortBy = getSortByParams(sortBy)
     }
-
-    if (filters.is_flash_sale !== undefined) {
-      query.is_flash_sale = filters.is_flash_sale;
-    }
-
-    if (filters.min_price !== undefined && filters.max_price !== undefined) {
-      query["variations.price"] = {
-        $gte: filters.min_price,
-        $lte: filters.max_price,
-      };
-    } else if (filters.min_price !== undefined) {
-      query["variations.price"] = { $gte: filters.min_price };
-    } else if (filters.max_price !== undefined) {
-      query["variations.price"] = { $lte: filters.max_price };
-    }
-
-    // Handle new arrivals filter
-    if (filters.new_arrival === true) {
-      // Sort by most recent if new_arrival is true
+    if(!_filters) {
+      // Add more filters as needed...
       const products = await Product.find({$text : { $search: searchQuery, $caseSensitive: false}})
-        .sort({ createdAt: -1 })
+      .sort(_sortBy)
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize);
+      return products;
+    }
+    const query: FilterQuery<any> = {};
+    
+    if (_filters.brand) {
+      query.brand = _filters.brand;
+    }
+
+    if (_filters.category_id) {
+      query.category_id = _filters.category_id;
+    }
+
+    if (_filters.is_flash_sale !== undefined) {
+      query.is_flash_sale = boolFromString(_filters.is_flash_sale);
+    }
+
+    if (_filters.min_price !== undefined && _filters.max_price !== undefined) {
+      query["variations.price"] = {
+        $gte: parseFloat(_filters.min_price),
+        $lte: parseFloat(_filters.max_price),
+      };
+    } else if (_filters.min_price !== undefined) {
+      query["variations.price"] = { $gte: parseFloat(_filters.min_price) };
+    } else if (_filters.max_price !== undefined) {
+      query["variations.price"] = { $lte: parseFloat(_filters.max_price) };
+    }
+    // Handle new arrivals filter
+    if (boolFromString(_filters.new_arrival)) {
+      // Sort by most recent if new_arrival is true
+      const products = await Product.find({$text : { $search: searchQuery, $caseSensitive: false},...query})
+        .sort(_sortBy)
         .skip((pageNumber - 1) * pageSize)
         .limit(pageSize);
 
@@ -162,7 +178,10 @@ export class ProductRepository {
     } else {
       // Add more filters as needed...
 
-      const products = await Product.find({$text : { $search: searchQuery, $caseSensitive: false}}).skip((pageNumber - 1) * pageSize).limit(pageSize);
+      const products = await Product.find({$text : { $search: searchQuery, $caseSensitive: false},...query})
+      .sort(_sortBy)
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize);
 
       return products;
     }

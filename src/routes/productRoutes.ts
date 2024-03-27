@@ -3,6 +3,84 @@ const router = express.Router()
 import ProductController from "../controllers/productController"
 import { cacheInterceptor } from "../interceptors";
 
+
+/**
+ * @swagger
+ * /api/products/search:
+ *   get:
+ *     tags: [Products]
+ *     description: Search all products
+ *     parameters:
+ *       - in: query
+ *         name: pageSize
+ *         required: true
+ *         schema:
+ *              type: integer
+ *              minimum: 1
+ *              default: 10
+ *       - in: query
+ *         name: pageNumber
+ *         required: true
+ *         schema:
+ *              type: integer
+ *              minimum: 1
+ *              default: 1
+ *         description: Page number
+ *       - in: query
+ *         name: searchQuery
+ *         required: true
+ *         schema:
+ *              type: string
+ *         description: search query
+ *       - in: query
+ *         name: filters
+ *         schema:
+ *              type: string
+ *              default: min_price:20,max_price:100
+ *         description: additional filters
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *              type: string
+ *              default: createdAt:-1,product_name:-1
+ *         description: Sort the result. e.g product_name:-1 in desc or product_name:1 in asc
+ * 
+ * 
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/ProductResponse'
+ *       404:
+ *         description: Not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+router.get('/search', cacheInterceptor, ProductController.getSearchProducts);
+
 /**
  * @swagger
  * /api/products:
@@ -418,75 +496,6 @@ router.patch('/update_quantity', ProductController.updateQuantity);
  */
 router.delete('/delete-image', ProductController.removeImage);
 
-/**
- * @swagger
- * /api/products/search:
- *   get:
- *     tags: [Products]
- *     description: Search all products
- *     parameters:
- *       - in: query
- *         name: pageSize
- *         required: true
- *         schema:
- *              type: integer
- *              minimum: 1
- *              default: 10
- *       - in: query
- *         name: pageNumber
- *         required: true
- *         schema:
- *              type: integer
- *              minimum: 1
- *              default: 10
- *         description: Page number
- *       - in: query
- *         name: searchQuery
- *         required: true
- *         schema:
- *              type: string
- *         description: search query
- *       - in: query
- *         name: filters
- *         schema:
- *              type: string
- *         description: additional filters
- * 
- * 
- *     responses:
- *       200:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/ProductResponse'
- *       404:
- *         description: Not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *       500:
- *         description: Server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- */
-router.get('/search', cacheInterceptor, ProductController.getSearchProducts);
 
 
 

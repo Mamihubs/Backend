@@ -73,8 +73,8 @@ export class ProductService {
     return await this.productRepository.findAll(pageSize, pageNumber,filters);
   }
 
-  async getSearchProducts(searchQuery: string, pageSize: number, pageNumber: number, filters: Record<string, any>) {
-    return await this.productRepository.searchProducts(searchQuery, pageSize, pageNumber, filters );
+  async getSearchProducts({searchQuery, pageSize, pageNumber, filters, sortBy}: {searchQuery: string, pageSize: number, pageNumber: number, filters?: string, sortBy?: string}) {
+    return await this.productRepository.searchProducts({searchQuery, pageSize, pageNumber, filters, sortBy} );
   }
 
   async updateQuantity(productId: mongoose.Types.ObjectId, variationId: mongoose.Types.ObjectId, quantity: number) {

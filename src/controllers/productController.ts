@@ -162,16 +162,6 @@ class ProductController {
   getAllProducts = async (req: Request, res: Response) => {
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const pageNumber = parseInt(req.query.pageNumber as string) || 1;
-
-    // const filters: Record<string, any> = {};
-    // if (req.query.brand) {
-    //   filters.brand = req.query.brand;
-    // }
-    // if (req.query.categoryId) {
-    //   filters.categoryId = req.query.categoryId;
-    // }
-    // Add more filters as needed based on your product schema
-
     try {
       const products = await productService.getAllProducts(
         pageSize,
@@ -194,12 +184,17 @@ class ProductController {
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const pageNumber = parseInt(req.query.pageNumber as string) || 1;
     const searchQuery = req.query.searchQuery as string
-    const filters = req.query.filters as Record<string, any>
+    const filters = req.query?.filters as string | undefined
+    const sortBy = req.query?.sortBy as string
     try {
-      const products = await productService.getSearchProducts(searchQuery,
-        pageSize,
-        pageNumber,
-        filters
+      const products = await productService.getSearchProducts(
+        {
+          searchQuery,
+          pageSize,
+          pageNumber,
+          filters,
+          sortBy,
+        }
       );
       if (!products || products.length === 0) {
         return res.status(404).json({ message: "No products found" });
@@ -208,7 +203,7 @@ class ProductController {
       // store cache in memory
       storeDataInCacheMemory(req, data, 10)
       return res.status(200).json(data);
-    } catch (error) {
+    } catch (error:any) {
       return res.status(500).json({ message: "An error occurred", error });
     }
   };
