@@ -63,7 +63,7 @@ router.get('/', cacheInterceptor, ProductController.getAllProducts);
 
 /**
  * @swagger
- * /api/products/${id}:
+ * /api/products/{id}:
  *   get:
  *     tags: [Products]
  *     description: Get a single product

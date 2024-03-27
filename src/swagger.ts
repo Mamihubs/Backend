@@ -943,6 +943,19 @@ const swaggerDocOptions:swaggerJSDoc.Options = {
                     }
                 },
 
+                ProfileUpdateRequest: {
+                    type: 'object',
+                    allOf: [
+                        { $ref: '#/components/schemas/ProfileBaseRequest' },
+                        {
+                            properties: {
+                                password: { type: 'string'},
+                                new_password: { type: 'string'},  
+                            }
+                        }
+                    ]
+                },
+
                 ProfileResponse: {
                     type: 'object',
                     allOf: [

@@ -21,7 +21,7 @@ import { cacheInterceptor } from "../interceptors";
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ProfileBaseRequest'
+ *             $ref: '#/components/schemas/ProfileUpdateRequest'
  *     responses:
  *       200:
  *         description: OK
