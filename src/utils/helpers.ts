@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export const getSortByParams = <T>(queryParam: string | undefined) => {
     let obj: Partial<T> = {};
     if (queryParam) {
@@ -32,3 +34,13 @@ export const getSortByParams = <T>(queryParam: string | undefined) => {
     }
     return Boolean(JSON.parse(String(value.trim())));
   };
+
+
+export const isValidEmailAddress = (str: string) =>{
+  // Regular expression for validating email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Check if the email matches the regex pattern
+  return emailRegex.test(str);
+
+}

@@ -5,6 +5,11 @@ export interface searchDto{
     value: string
 }
 
+export interface DeleteDto{
+    field: string,
+    value: string
+}
+
 export interface UpdateOneDto{
     _id: string,
     update: object

@@ -1377,6 +1377,24 @@ const swaggerDocOptions:swaggerJSDoc.Options = {
                             }
                         },
                     }
+                },
+
+                CreateSubscriberRequest: {
+                    type: 'object',
+                    properties: {
+                        email: { type: 'string' },
+                    },
+                    required: ['email'],
+                },
+
+                SubscriberResponse: {
+                    type: 'object',
+                    properties: {
+                        _id: { type: 'string' },
+                        email: { type: 'string' },
+                        createdAt: { type: 'string' },
+                        updatedAt: { type: 'number' },
+                    }
                 }
 
                

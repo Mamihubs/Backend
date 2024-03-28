@@ -47,6 +47,8 @@ import paystackRoutes from "./routes/paystackRoutes";
 import courierRoutes from "./routes/courierRoutes";
 import likedRoutes from "./routes/likedItemRoute";
 import withdrawRoute from "./routes/withdrawalRoutes";
+import subscriberRoutes from "./routes/subscriberRoutes";
+
 import authCheck from "./middlewares/authCheck";
 import { UserType } from "./models/User";
 
@@ -82,6 +84,8 @@ app.use("/api/paystack", paystackRoutes);
 app.use("/api/couriers", courierRoutes);
 app.use("/api/likes", likedRoutes);
 app.use("/api/withdrawal", withdrawRoute);
+app.use("/api/subscribers", subscriberRoutes);
+
 
 app.get("/", (req: Request, res: Response) => {
   console.log("Just to make sure it's all running.");
